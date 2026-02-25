@@ -1,0 +1,53 @@
+
+
+/* importing the font */
+@font-face {
+    font-family: "Raleway";
+    src: url("/src/assets/fonts/Raleway-Regular.ttf") format(truetype);
+    font-style: normal;
+    font-weight: 400;
+} 
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("/src/assets/fonts/Montserrat-Regular.ttf") format(truetype);
+    font-style: normal;
+    font-weight: 400;
+} 
+
+.font-montserrat{
+    font-family: "Montserrat", sans-serif ;
+}
+
+.font-raleway{
+    font-family: "Raleway", sans-serif ;
+}
+
+.bg-custom-blue{
+    background-color: #1a71eb;
+}
+.bg-accent-blue{
+    background-color: #f7fbff;
+}
+.bg-soft-blue{
+    background-color: #e8f1ff;
+}
+
+.bg-light-blue{
+    background-color: #f7faff;
+}
+
+.bg-hover-blue{
+    background-color: #dae8ff;
+}
+
+.text-custom-blue{
+    color: #1a71eb;
+}
+
+.bg-custom-yellow{
+    background-color: #ffd166;
+}
+
+
+@import "tailwindcss";
