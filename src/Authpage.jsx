@@ -8,7 +8,7 @@ const Authpage = () => {
     return (
         <div className="auth-page flex font-montserrat">
             <div className="bg-gradient-to-br from-[#1e40a9] to-[#1e2b42] w-[50%] h-screen text-white py-6 px-8">
-                <p className="text-4xl mb-4 mt-76">Your voice matters in building a better campus.</p>
+                <p className="text-4xl mb-4 mt-66">Your voice matters in building a better campus.</p>
                 <p className="font-raleway">Join thousands of students securely casting their votes for student union leaders, faculty representatives, and campus initiatives.</p>
                 <div className="px-4 py-8 my-8 grid gap-4 border border-gray-50/10 rounded-lg bg-white/10 backdrop-blur-md">
                     <div>
