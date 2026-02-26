@@ -1,4 +1,10 @@
+import ProfileOne from './assets/img/Profile-photo-one.jpeg';
+import ProfileTwo from './assets/img/Profile-photo-two.jpeg';
+import ProfileThree from './assets/img/Profile-photo-three.jpeg';
+
 const PollsDashboard = ({ setactiveTab }) => {
+    let PollInitTime = 2
+    let percentage = 65
     return (
         <div>
             <div className='bg-white border-b border-gray-200'>
@@ -44,37 +50,90 @@ const PollsDashboard = ({ setactiveTab }) => {
                 <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1 ">
                     <p className="text-gray-600">All Polls</p>
                 </div>
-                 <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1">
+                <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1">
                     <p className="text-gray-600">Trending</p>
                 </div>
-                 <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1">
+                <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1">
                     <p className="text-gray-600">Campus Life</p>
                 </div>
-                 <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1">
+                <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1">
                     <p className="text-gray-600">Academics</p>
                 </div>
-                 <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1">
+                <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1">
                     <p className="text-gray-600">Relationships</p>
                 </div>
-                 <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1">
+                <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1">
                     <p className="text-gray-600">Entertainment</p>
                 </div>
-                 <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1">
+                <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1">
                     <p className="text-gray-600">Cafeteria</p>
                 </div>
-                 <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1">
+                <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1">
                     <p className="text-gray-600">Sports</p>
                 </div>
             </div>
             <div className="flex gap-2 px-6 mt-4 items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6 text-red-700">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z" />
                 </svg>
                 <p className="text-xl">Trending Now</p>
             </div>
             <div>
-            
+                <div className='w-96'>
+                    <div className='grid grid-cols-[0.1fr_1fr] gap-x-2 items-center'>
+                        <div>
+                            <img src={ProfileOne} alt="" className='h-8 w-8 rounded-full object-cover' />
+                        </div>
+                        <div className='grid grid-cols-[1fr_0.3fr] items-center'>
+                            <div>
+                                <p className='text-extrabold'>Gun Jeum Di</p>
+                                <p className='text-[14px] text-gray-600 font raleway'>Posted {PollInitTime} hrs ago</p>
+                            </div>
+                            <div className='h-7 w-13 bg-red-200 flex items-center justify-center rounded-md'>
+                                <p className='font-raleway text-red-600'>HOT</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <p>Who should win Content Creator of the Year?</p>
+                </div>
+                <div className='grid gap-y-3'>
+                    <div className='w-80 h-10 bg-blue-50 flex items-center justify-between rounded-md'>
+                        <div className='w-54 h-10 bg-blue-100 flex items-center rounded-md'>
+                            <p className='ml-2'>Ishowspeed</p>
+                        </div>
+                        <p className='mr-2 font-sans text-blue-500'>{percentage}%</p>
+                    </div>
+                    <div className='w-80 h-10 bg-blue-50 flex items-center justify-between rounded-md'>
+                        <div className='w-20 h-10 bg-blue-100 flex items-center rounded-md'>
+                            <p className='ml-2'>Mirabel</p>
+                        </div>
+                        <p className='mr-2 font-sans text-blue-500'>{25}%</p>
+                    </div>
+                    <div className='w-80 h-10 bg-blue-50 flex items-center justify-between rounded-md'>
+                        <div className='w-8 h-10 bg-blue-100 flex items-center rounded-md'>
+                            <p className='ml-2'>Ishowspeed</p>
+                        </div>
+                        <p className='mr-2 font-sans text-blue-500'>{10}%</p>
+                    </div>
+                </div>
+                <hr className='w-80 my-4 text-gray-400' />
+                <div>
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                        </svg>
+                        <p>2,435 voted</p>
+                    </span>
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <p>Ends in 3h</p>
+                    </span>
+                </div>
             </div>
         </div>
     );
