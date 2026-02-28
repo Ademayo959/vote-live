@@ -145,7 +145,7 @@ const PollsDashboard = ({ setactiveTab }) => {
                             </div>
                             <div className='flex justify-between items-center '>
                                 <div>
-                                    <p className='text-extrabold'>Peter Tanner</p>
+                                    <p className='text-extrabold'>Adeleye Dolapo</p>
                                     <p className='text-[14px] text-gray-600 font raleway'>Posted {PollInitTime[1]} hrs ago</p>
                                 </div>
                                 <div className='h-7 w-13 bg-red-200 flex items-center justify-center rounded-md'>
@@ -216,16 +216,16 @@ const PollsDashboard = ({ setactiveTab }) => {
                     </div>
                     <div className='grid gap-y-3'>
                         <div className='w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md'>
-                            <div className='w-31 h-10 z-0 bg-blue-100 flex items-center rounded-md whitespace-nowrap'>
+                            <div className='w-61 h-10 z-0 bg-blue-100 flex items-center rounded-md whitespace-nowrap'>
                                 <p className='ml-2 z-10'>Yes</p>
                             </div>
-                            <p className='mr-2 font-sans text-blue-500'>{31}%</p>
+                            <p className='mr-2 font-sans text-blue-500'>{61}%</p>
                         </div>
                         <div className='w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md'>
-                            <div className='w-27 h-10 z-0 bg-blue-100 flex items-center rounded-md whitespace-nowrap'>
+                            <div className='w-39 h-10 z-0 bg-blue-100 flex items-center rounded-md whitespace-nowrap'>
                                 <p className='ml-2 z-1 overflow-x-visible'>No</p>
                             </div>
-                            <p className='mr-2 font-sans text-blue-500'>{27}%</p>
+                            <p className='mr-2 font-sans text-blue-500'>{39}%</p>
                         </div>
                     </div>
                     <hr className='my-4 text-gray-400' />
