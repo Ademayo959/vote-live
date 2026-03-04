@@ -7,7 +7,7 @@ const MainDashboardPage = ({ setactiveTab }) => {
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-gray-500">
                                    <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                               </svg>
-                              <input type="text" className="outline-none w-72 font-raleway placeholder:text-raleway placeholder:text-sm" placeholder="Search Elections, polls, or candidates..." />
+                              <input type="text" className="outline-none w-72 font-raleway placeholder:text-raleway placeholder:text-sm max-md:w-32" placeholder="Search Elections, polls, or candidates..." />
                          </div>
                          <div className="flex gap-4">
                               <div className='cursor-pointer p-2 border border-gray-300 w-10 flex items-center justify-center rounded-full h-10 text-gray-600'>
@@ -24,13 +24,13 @@ const MainDashboardPage = ({ setactiveTab }) => {
                          </div>
                     </div>
                </div>
-               <div className="grid grid-cols-[70%_30%] gap-6 mt-8 px-6">
+               <div className="grid grid-cols-[70%_30%] gap-6 mt-8 px-6 max-md:grid-cols-1">
                     <div>
                          <div className="flex justify-between font-raleway">
                               <p className="font-extrabold text-lg">Active Elections</p>
                               <p className="text-custom-blue underline text-sm cursor-pointer" onClick={() => { setactiveTab("ElectionsDashboard") }}>View All</p>
                          </div>
-                         <div className="grid grid-cols-2 gap-10 mt-6">
+                         <div className="grid grid-cols-2 gap-10 mt-6 max-md:grid-cols-1">
                               <div className="border border-gray-300 h-60 w-90 rounded-lg grid grid-rows-2 shadow-lg">
                                    <div className="bg-gray-100 p-4 rounded-lg">
                                         <div className="bg-gray-900 w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">

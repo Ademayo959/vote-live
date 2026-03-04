@@ -14,7 +14,7 @@ const Dashboard = () => {
     return (
         <div className="dashboard font-montserrat overflow-hidden">
             <div className="grid grid-cols-[20%_80%] p-0 min-h-screen">
-                <div className='bg-accent-blue px-6 flex flex-col border-r border-gray-300'>
+                <div className='bg-accent-blue px-6 flex flex-col border-r border-gray-300 max-md:hidden'>
                     <Link to="/">
                         <div className='mt-2[]'>
                             <img src={logo} alt="logo" className='h-16 w-47 max-sm:h-14 max-sm:w-96' />

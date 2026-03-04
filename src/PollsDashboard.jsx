@@ -3,7 +3,7 @@ import ProfileTwo from './assets/img/about-us-dev9.jpg';
 import ProfileThree from './assets/img/about-us-dev11.jpg';
 
 const PollsDashboard = ({ setactiveTab }) => {
-    let PollInitTime = [2,17,81]
+    let PollInitTime = [2,17,9]
     let percentage = 65
     return (
         <div>
@@ -88,7 +88,7 @@ const PollsDashboard = ({ setactiveTab }) => {
                             </div>
                             <div className='flex justify-between items-center '>
                                 <div>
-                                    <p className='text-extrabold'>Gun Jeum Di</p>
+                                    <p className='text-extrabold'>Peter Tanner</p>
                                     <p className='text-[14px] text-gray-600 font raleway'>Posted {PollInitTime[0]} hrs ago</p>
                                 </div>
                                 <div className='h-7 w-13 bg-red-200 flex items-center justify-center rounded-md'>
@@ -202,8 +202,8 @@ const PollsDashboard = ({ setactiveTab }) => {
                             </div>
                             <div className='flex justify-between items-center '>
                                 <div>
-                                    <p className='text-extrabold'>Peter Tanner</p>
-                                    <p className='text-[14px] text-gray-600 font raleway'>Posted {PollInitTime[1]} hrs ago</p>
+                                    <p className='text-extrabold'>Geum Jan Di</p>
+                                    <p className='text-[14px] text-gray-600 font raleway'>Posted {PollInitTime[2]} hrs ago</p>
                                 </div>
                                 <div className='h-7 w-13 bg-red-200 flex items-center justify-center rounded-md'>
                                     <p className='font-raleway text-red-600'>HOT</p>
@@ -234,7 +234,7 @@ const PollsDashboard = ({ setactiveTab }) => {
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
                             </svg>
-                            <p className='font-raleway'>571 voted</p>
+                            <p className='font-raleway'>92 voted</p>
                         </span>
                         <span className='flex items-center'>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-5">
