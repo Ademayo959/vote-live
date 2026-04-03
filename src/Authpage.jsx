@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import ProfileTwo from './assets/img/Old Nigerian.jpg';
 
 const Authpage = () => {
@@ -32,10 +33,10 @@ const Authpage = () => {
                         <p className='text-gray-500 text-center text-[14px] font-raleway'>Enter your details below to get started</p>
                     </div>
                     <div className='w-96 h-12 bg-soft-blue flex items-center justify-center gap-2 rounded-md mb-6'>
-                        <div className={`flex items-center justify-center w-46 h-10 rounded-md ${clickedOne ? "bg-white shadow-sm" : "bg-transparent"}`} onClick={()=>{setactiveMenu("signup"); setClickedOne(true)}}>
+                        <div className={`flex items-center justify-center w-46 h-10 rounded-md ${clickedOne ? "bg-white shadow-sm" : "bg-transparent"}`} onClick={() => { setactiveMenu("signup"); setClickedOne(true) }}>
                             <p>Sign Up</p>
                         </div>
-                        <div className={`flex items-center justify-center w-46 h-10 rounded-md ${clickedTwo ? "bg-white shadow-sm" : "bg-transparent"}`} onClick={()=>{setactiveMenu("login"); setClickedTwo(true)}}>
+                        <div className={`flex items-center justify-center w-46 h-10 rounded-md ${clickedTwo ? "bg-white shadow-sm" : "bg-transparent"}`} onClick={() => { setactiveMenu("login"); setClickedTwo(true) }}>
                             <p>Log In</p>
                         </div>
                     </div>
@@ -93,9 +94,13 @@ const Authpage = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className='text-center'>
+                                <div className='text-center flex items-center justify-between'>
                                     <p className='text-[12px] text-gray-500'>Having Trouble? <a href="#" className='text-blue-500 underline'>Contact Support</a></p>
+                                    <Link to="/">
+                                    <p className='text-[13px] text-blue-500 font-raleway'>Back to Home</p>
+                                </Link>
                                 </div>
+                                
                             </div>}
                         {activeMenu === "login" &&
                             <div>
@@ -129,9 +134,13 @@ const Authpage = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className='text-center'>
+                                <div className='text-center flex items-center justify-between'>
                                     <p className='text-[12px] text-gray-500'>Having Trouble? <a href="#" className='text-blue-500 underline'>Contact Support</a></p>
+                                    <Link to="/">
+                                        <p className='text-[13px] text-blue-500 font-raleway'>Back to Home</p>
+                                    </Link>
                                 </div>
+
                             </div>}
                     </div>
                 </div>
