@@ -142,19 +142,19 @@ const Home = () => {
                 </div>
                 <div className="mt-24">
                     <div>
-                        <h1 className="text-4xl">Trending Now</h1>
+                        <h1 className="text-4xl max-sm:text-3xl">Trending Now</h1>
                         <div className="flex justify-between items-center">
-                            <p className="font-raleway my-2 text-gray-600">Active elections and polls from across the platform</p>
-                            <div className="flex gap-2 h-11 w-42 items-center justify-center border border-gray-300 rounded-lg">
-                                <p>Browse All</p>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                            <p className="font-raleway my-2 text-gray-600 max-sm:text-[13px]">Active elections and polls from across the platform</p>
+                            <div className="flex gap-2 h-11 w-42 items-center justify-center border border-gray-300 rounded-lg max-sm:h-8 max-sm:w-24">
+                                <p className="max-sm:text-[13px]">Browse All</p>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 max-sm:hidden">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                                 </svg>
                             </div>
                         </div>
                     </div>
-                    <div className="grid grid-cols-3 gap-12 my-12">
-                        <div className="w-90 rounded-2xl bg-white shadow-lg h-70 grid grid-rows-[20%_10%_10%_50%] gap-2 py-6 px-6 pt-2">
+                    <div className="grid grid-cols-3 gap-12 my-12 max-sm:grid-cols-1">
+                        <div className="w-90 rounded-2xl bg-white shadow-lg h-70 grid grid-rows-[20%_10%_10%_50%] gap-2 py-6 px-6 pt-2 max-sm:px-3 max-sm:w-[99%]">
                             <div className="flex items-center justify-between w-78 mt-0 mb-0">
                                 <div className="bg-custom-yellow h-8 w-20 flex items-center justify-center rounded-md">
                                     <p className="text-custom-blue font-extrabold font-raleway">Election</p>
@@ -208,7 +208,7 @@ const Home = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="w-90 rounded-2xl bg-white shadow-lg h-70 grid grid-rows-[20%_10%_10%_50%] gap-2 py-6 px-6 pt-2">
+                        <div className="w-90 rounded-2xl bg-white shadow-lg h-70 grid grid-rows-[20%_10%_10%_50%] gap-2 py-6 px-6 pt-2 max-sm:px-3 max-sm:w-[99%]">
                             <div className="flex items-center justify-between w-78 mt-0 mb-0">
                                 <div className="bg-green-100 h-7 w-12 flex items-center justify-center rounded-md">
                                     <p className="text-green-600 font-extrabold font-raleway">Poll</p>
@@ -249,7 +249,7 @@ const Home = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="w-90 rounded-2xl bg-white shadow-lg h-70 grid grid-rows-[20%_10%_10%_50%] gap-2 py-6 px-6 pt-2">
+                        <div className="w-90 rounded-2xl bg-white shadow-lg h-70 grid grid-rows-[20%_10%_10%_50%] gap-2 py-6 px-6 pt-2 max-sm:px-3 max-sm:w-[99%]">
                             <div className="flex items-center justify-between w-78 mt-0 mb-0">
                                 <div className="bg-custom-yellow h-8 w-20 flex items-center justify-center rounded-md">
                                     <p className="text-custom-blue font-extrabold font-raleway">Election</p>
@@ -305,14 +305,14 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-                <div className="bg-custom-blue text-center py-16 rounded-2xl my-24">
+                <div className="bg-custom-blue text-center py-16 rounded-2xl my-24 max-sm:px-4">
                     <h1 className="text-white text-4xl my-3 font-extrabold">Ready to host your next Election?</h1>
                     <p className="text-gray-200 font-raleway">Get started with Votelive today. Secure, simple, and effective.</p>
-                    <div className="flex gap-4 justify-self-center items-center mt-8">
-                        <button className="bg-white text-custom-blue h-11 w-40 rounded-md">
+                    <div className="flex gap-4 justify-self-center items-center mt-8 max-sm:gap-6">
+                        <button className="bg-white text-custom-blue h-11 w-40 rounded-md max-sm:h-9 max-sm:w-32 max-sm:text-[14px]">
                             Create Election
                         </button>
-                        <button className="bg-custom-blue border border-white text-white h-11 w-40 rounded-md">
+                        <button className="bg-custom-blue border border-white text-white h-11 w-40 rounded-md max-sm:h-9 max-sm:w-32 max-sm:text-[14px]">
                             Contact Sales
                         </button>
                     </div>

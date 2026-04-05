@@ -8,6 +8,9 @@ export default defineConfig({
   ],
   theme: {
     extend: {
+      screen: {
+        'xs': {'max': '380px'},
+      },
       colors: {
         primary: "#1c71e8",
       },

@@ -6,7 +6,7 @@ import MainDashboardPage from './MainDashboardPage';
 import ElectionsDashboard from './ElectionsDashboard';
 import PollsDashboard from './PollsDashboard';
 import HistoryDashboard from './HistoryDashboard';
-import SettingsDasboard from './SettingsDashboard';
+
 
 const Dashboard = () => {
     const [activeTab, setactiveTab] = useState("MainDashboardPage")

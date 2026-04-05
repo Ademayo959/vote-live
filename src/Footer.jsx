@@ -2,9 +2,9 @@ import logo from './assets/img/votelive-logo.png'
 
 const Footer = () => {
     return (
-        <div className="Footer m-w-full bg-white h-72 border-t border-gray-300 font-montserrat">
+        <div className="Footer m-w-full bg-white h-72 border-t border-gray-300 font-montserrat max-sm:px-4">
             <div className="max-w-7xl justify-self-center grid grid-rows-[70%_10%_20%] gap-1">
-                <div className="grid grid-cols-[40%_20%_20%_20%] gap-6 mb-26 mt-12 max-w-full">
+                <div className="grid grid-cols-[40%_20%_20%_20%] gap-6 mb-26 mt-12 max-w-full max-sm:grid-cols-1">
                     <div>
                         <img src={logo} alt="" className='h-16 w-46' />
                         <p className='text-gray-500'>Empowering universities with secure, transparent, and accessible digital voting solutions.</p>
@@ -37,11 +37,11 @@ const Footer = () => {
                     </div>
                 </div>
                 <div>
-                    <hr className='text-gray-300' />
+                    <hr className='text-gray-300 max-sm:hidden' />
                 </div>
-                <div className='flex items-center justify-between mt-0 text-gray-600'>
+                <div className='flex items-center justify-between mt-0 text-gray-600 max-sm:grid'>
                     <p>© 2025 Votelive platform. All rights reserved</p>
-                    <div className='flex items-center text-sm'>
+                    <div className='flex items-center text-sm max-sm:justify-self-center max-sm:text-[16px]'>
                         <span>Built with</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" />
