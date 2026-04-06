@@ -26,7 +26,7 @@ const Authpage = () => {
                     </div>
                 </div>
             </div>
-            <div className='bg-accent-blue flex w-[50%] max-sm:w-full'>
+            <div className='bg-accent-blue flex w-[50%] max-sm:w-full max-sm:overflow-hidden max-sm:h-screen'>
                 <div className='mx-auto'>
                     <div className='mb-8'>
                         <p className='text-2xl font-extrabold mt-4 mb-2 text-center'>Create an account</p>
