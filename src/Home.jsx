@@ -19,8 +19,8 @@ const Home = () => {
                             <p className="font-raleway font-extrabold">Verified & Secure</p>
                         </div>
                         <div className="my-10">
-                            <h1 className="text-6xl font-extrabold max-sm:text-7xl ">The Future of</h1>
-                            <h1 className="text-6xl font-extrabold text-custom-blue max-sm:text-6xl ">Student Democracy</h1>
+                            <h1 className="text-6xl font-extrabold max-sm:text-6xl ">The Future of</h1>
+                            <h1 className="text-6xl font-extrabold text-custom-blue max-sm:text-[55px] ">Student Democracy</h1>
                         </div>
                         <div>
                             <p className=" text-gray-500 leading-6 text-lg">Secure, transparent, and easy-to-use digital voting <br /> platform for universities. Vote from anywhere using your <br /> matric number.</p>
