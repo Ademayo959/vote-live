@@ -1,4 +1,13 @@
 const ElectionsDashboard = ({ setactiveTab }) => {
+    const elections = [
+        { id: 1, title: "ACOMS 2026 Executives", voted: "540", positions: "6", endsIn: "17h: 03m: 59s" },
+        { id: 2, title: "IFT CLASS 29 Rep", voted: "24", positions: "1", endsIn: "23h: 49m: 09s" },
+        { id: 3, title: "SPS Governorship Election", voted: "114", positions: "2", endsIn: "07h: 12m: 29s" },
+        { id: 4, title: "NAOSS Executives Election", voted: "56", positions: "8", endsIn: "00h: 43m: 01s" },
+        { id: 5, title: "NUESA 2026 Executives", voted: "5.2k", positions: "10", endsIn: "17h: 03m: 59s" },
+        { id: 6, title: "MBBS'29 Course Representatives", voted: "19", positions: "2", endsIn: "20h: 20m: 19s" },
+        { id: 7, title: "MCE 2026 Executives", voted: "47", positions: "9", endsIn: "21h: 53m: 53s" },
+    ]
     let ActiveElections = 3
     return (
         <div>
@@ -63,272 +72,46 @@ const ElectionsDashboard = ({ setactiveTab }) => {
                     </div>
                 </div>
                 <div className="mt-8 grid grid-cols-3 gap-y-6 max-sm:grid-cols-1">
-                    <div className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 shadow-md">
-                        <div className="bg-gray-100 rounded-lg p-4">
-                            <div className="bg-white w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
-                                <div className="h-2 w-2 bg-red-500 rounded-full"></div>
-                                <p className="font-mono text-[10px] text-red-500">LIVE</p>
-                            </div>
-                        </div>
-                        <div className="grid grid-rows-3 gap-1 p-3">
-                            <div>
-                                <p className="text-lg">ACOMS 2026 Executives</p>
-                            </div>
-                            <div className="flex gap-2 items-center font-raleway mb-3">
-                                <div className="flex items-center text-gray-500 gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                                    </svg>
-                                    <p className="text-sm">540 Voted</p>
-                                </div>
-                                <div className="flex items-center text-gray-500 gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
-                                    </svg>
-                                    <p className="text-sm">6 Positions</p>
+                    {elections.map((election) => (
+                        <div key={election.id} className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 shadow-md max-sm:w-full">
+                            <div className="bg-gray-100 p-4 rounded-lg">
+                                <div className="bg-white w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
+                                    <div className="h-2 w-2 bg-red-500 rounded-full"></div>
+                                    <p className="font-mono text-[10px] text-red-500">LIVE</p>
                                 </div>
                             </div>
-                            <div className="flex gap-4 items-center">
-                                <div className="bg-soft-blue w-[60%] text-blue-900 flex h-8 justify-center items-center rounded-lg">
-                                    <p className="text-sm">Ends in: 17h: 03m: 59s </p>
+                            <div className="grid grid-rows-3 gap-1 p-3">
+                                <div>
+                                    <p className="text-lg">{election.title}</p>
                                 </div>
-                                <div className="flex gap-2 items-center text-[15px] text-custom-blue font-extrabold hover:gap-4 transition-all">
-                                    <p className="font-raleway">Vote Now</p>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                    </svg>
+                                <div className="flex gap-2 items-center font-raleway mb-3">
+                                    <div className="flex items-center text-gray-500 gap-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                                        </svg>
+                                        <p className="text-sm">{election.voted} Voted</p>
+                                    </div>
+                                    <div className="flex items-center text-gray-500 gap-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
+                                        </svg>
+                                        <p className="text-sm">{election.positions} Positions</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 shadow-md">
-                        <div className="bg-gray-100 p-4 rounded-lg">
-                            <div className="bg-white w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
-                                <div className="h-2 w-2 bg-red-500 rounded-full"></div>
-                                <p className="font-mono text-[10px] text-red-500">LIVE</p>
-                            </div>
-                        </div>
-                        <div className="grid grid-rows-3 gap-1 p-3">
-                            <div>
-                                <p className="text-lg">IFT CLASS 29 Rep</p>
-                            </div>
-                            <div className="flex gap-2 items-center font-raleway mb-3">
-                                <div className="flex items-center text-gray-500 gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                                    </svg>
-                                    <p className="text-sm">24 Voted</p>
-                                </div>
-                                <div className="flex items-center text-gray-500 gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
-                                    </svg>
-                                    <p className="text-sm">1 Position</p>
-                                </div>
-                            </div>
-                            <div className="flex gap-4 items-center">
-                                <div className="bg-soft-blue w-[60%] text-blue-900 flex h-8 justify-center items-center rounded-lg">
-                                    <p className="text-sm">Ends in: 23h: 49m: 09s </p>
-                                </div>
-                                <div className="flex gap-2 text-[15px] items-center text-custom-blue font-extrabold hover:gap-4 transition-all">
-                                    <p className="font-raleway">Vote Now</p>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                    </svg>
+                                <div className="flex gap-4 items-center">
+                                    <div className="bg-soft-blue w-[60%] text-blue-900 flex h-8 justify-center items-center rounded-lg">
+                                        <p className="text-sm">Ends in: {election.endsIn}</p>
+                                    </div>
+                                    <div className="flex gap-2 items-center text-[15px] text-custom-blue font-extrabold hover:gap-4 transition-all">
+                                        <p className="font-raleway">Vote Now</p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                        </svg>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 shadow-md">
-                        <div className="bg-gray-100 p-4 rounded-lg">
-                            <div className="bg-white w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
-                                <div className="h-2 w-2 bg-red-500 rounded-full"></div>
-                                <p className="font-mono text-[10px] text-red-500">LIVE</p>
-                            </div>
-                        </div>
-                        <div className="grid grid-rows-3 gap-1 p-3">
-                            <div>
-                                <p className="text-lg">SPS Governorship Election</p>
-                            </div>
-                            <div className="flex gap-2 items-center font-raleway mb-3">
-                                <div className="flex items-center text-gray-500 gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                                    </svg>
-                                    <p className="text-sm">114 Voted</p>
-                                </div>
-                                <div className="flex items-center text-gray-500 gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
-                                    </svg>
-                                    <p className="text-sm">2 Positions</p>
-                                </div>
-                            </div>
-                            <div className="flex gap-4 items-center">
-                                <div className="bg-soft-blue w-[60%] text-blue-900 flex h-8 justify-center items-center rounded-lg">
-                                    <p className="text-sm">Ends in: 07h: 12m: 29s </p>
-                                </div>
-                                <div className="flex gap-2 items-center text-[15px] text-custom-blue font-extrabold hover:gap-4 transition-all">
-                                    <p className="font-raleway">Vote Now</p>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 shadow-md">
-                        <div className="bg-gray-100 p-4 rounded-lg">
-                            <div className="bg-white w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
-                                <div className="h-2 w-2 bg-red-500 rounded-full"></div>
-                                <p className="font-mono text-[10px] text-red-500">LIVE</p>
-                            </div>
-                        </div>
-                        <div className="grid grid-rows-3 gap-1 p-3">
-                            <div>
-                                <p className="text-lg">NAOSS Executives Election</p>
-                            </div>
-                            <div className="flex gap-2 items-center font-raleway mb-3">
-                                <div className="flex items-center text-gray-500 gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                                    </svg>
-                                    <p className="text-sm">56 Voted</p>
-                                </div>
-                                <div className="flex items-center text-gray-500 gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
-                                    </svg>
-                                    <p className="text-sm">8 Positions</p>
-                                </div>
-                            </div>
-                            <div className="flex gap-4 items-center">
-                                <div className="bg-soft-blue w-[60%] text-blue-900 flex h-8 justify-center items-center rounded-lg">
-                                    <p className="text-sm">Ends in: 00h: 43m: 01s </p>
-                                </div>
-                                <div className="flex gap-2 items-center text-[15px] text-custom-blue font-extrabold hover:gap-4 transition-all">
-                                    <p className="font-raleway">Vote Now</p>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 shadow-md">
-                        <div className="bg-gray-100 p-4 rounded-lg">
-                            <div className="bg-white w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
-                                <div className="h-2 w-2 bg-red-500 rounded-full"></div>
-                                <p className="font-mono text-[10px] text-red-500">LIVE</p>
-                            </div>
-                        </div>
-                        <div className="grid grid-rows-3 gap-1 p-3">
-                            <div>
-                                <p className="text-lg">NUESA 2026 Executives</p>
-                            </div>
-                            <div className="flex gap-2 items-center font-raleway mb-3">
-                                <div className="flex items-center text-gray-500 gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                                    </svg>
-                                    <p className="text-sm">5.2k Voted</p>
-                                </div>
-                                <div className="flex items-center text-gray-500 gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
-                                    </svg>
-                                    <p className="text-sm">10 Positions</p>
-                                </div>
-                            </div>
-                            <div className="flex gap-4 items-center">
-                                <div className="bg-soft-blue w-[60%] text-blue-900 flex h-8 justify-center items-center rounded-lg">
-                                    <p className="text-sm">Ends in: 17h: 03m: 59s </p>
-                                </div>
-                                <div className="flex gap-2 items-center text-[15px] text-custom-blue font-extrabold hover:gap-4 transition-all">
-                                    <p className="font-raleway">Vote Now</p>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 shadow-md">
-                        <div className="bg-gray-100 p-4 rounded-lg">
-                            <div className="bg-white w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
-                                <div className="h-2 w-2 bg-red-500 rounded-full"></div>
-                                <p className="font-mono text-[10px] text-red-500">LIVE</p>
-                            </div>
-                        </div>
-                        <div className="grid grid-rows-3 gap-1 p-3">
-                            <div>
-                                <p className="text-lg">MBBS'29 Course Representatives</p>
-                            </div>
-                            <div className="flex gap-2 items-center font-raleway mb-3">
-                                <div className="flex items-center text-gray-500 gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                                    </svg>
-                                    <p className="text-sm">19 Voted</p>
-                                </div>
-                                <div className="flex items-center text-gray-500 gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
-                                    </svg>
-                                    <p className="text-sm">2 Positions</p>
-                                </div>
-                            </div>
-                            <div className="flex gap-4 items-center">
-                                <div className="bg-soft-blue w-[60%] text-blue-900 flex h-8 justify-center items-center rounded-lg">
-                                    <p className="text-sm">Ends in: 20h: 20m: 19s </p>
-                                </div>
-                                <div className="flex gap-2 items-center text-[15px] text-custom-blue font-extrabold hover:gap-4 transition-all">
-                                    <p className="font-raleway">Vote Now</p>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 shadow-md">
-                        <div className="bg-gray-100 p-4 rounded-lg">
-                            <div className="bg-white w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
-                                <div className="h-2 w-2 bg-red-500 rounded-full"></div>
-                                <p className="font-mono text-[10px] text-red-500">LIVE</p>
-                            </div>
-                        </div>
-                        <div className="grid grid-rows-3 gap-1 p-3">
-                            <div>
-                                <p className="text-lg">MCE 2026 Executives</p>
-                            </div>
-                            <div className="flex gap-2 items-center font-raleway mb-3">
-                                <div className="flex items-center text-gray-500 gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                                    </svg>
-                                    <p className="text-sm">47 Voted</p>
-                                </div>
-                                <div className="flex items-center text-gray-500 gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
-                                    </svg>
-                                    <p className="text-sm">9 Positions</p>
-                                </div>
-                            </div>
-                            <div className="flex gap-4 items-center">
-                                <div className="bg-soft-blue w-[60%] text-blue-900 flex h-8 justify-center items-center rounded-lg">
-                                    <p className="text-sm">Ends in: 21h: 53m: 53s </p>
-                                </div>
-                                <div className="flex gap-2 items-center text-[15px] text-custom-blue font-extrabold hover:gap-4 transition-all">
-                                    <p className="font-raleway">Vote Now</p>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </div>
         </div>

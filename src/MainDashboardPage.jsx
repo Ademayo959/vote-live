@@ -24,14 +24,14 @@ const MainDashboardPage = ({ setactiveTab }) => {
                          </div>
                     </div>
                </div>
-               <div className="grid grid-cols-[70%_30%] gap-6 mt-8 px-6 max-md:grid-cols-1 max-sm:justify-self-center max-sm:px-2">
+               <div className="grid grid-cols-[70%_30%] gap-6 mt-8 px-6 max-md:grid-cols-1 max-sm:justify-self-center max-sm:px-4 max-sm:w-full">
                     <div>
-                         <div className="flex justify-between font-raleway max-sm:px-4">
+                         <div className="flex justify-between font-raleway max-sm:px-0">
                               <p className="font-extrabold text-lg">Active Elections</p>
                               <p className="text-custom-blue underline text-sm cursor-pointer" onClick={() => { setactiveTab("ElectionsDashboard") }}>View All</p>
                          </div>
-                         <div className="grid grid-cols-2 gap-10 mt-6 max-md:grid-cols-1 max-sm:justify-self-center">
-                              <div className="border border-gray-300 h-60 w-90 rounded-lg grid grid-rows-2 shadow-lg">
+                         <div className="grid grid-cols-2 gap-10 mt-6 max-md:grid-cols-1 max-sm:justify-self-center max-sm:w-full">
+                              <div className="border border-gray-300 h-60 w-90 rounded-lg grid grid-rows-2 shadow-lg max-sm:w-full">
                                    <div className="bg-gray-100 p-4 rounded-lg">
                                         <div className="bg-gray-900 w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
                                              <div className="h-2 w-2 bg-red-500 rounded-full"></div>
@@ -61,7 +61,7 @@ const MainDashboardPage = ({ setactiveTab }) => {
                                         </div>
                                    </div>
                               </div>
-                              <div className="border border-gray-300 h-60 w-90 rounded-lg grid grid-rows-2 shadow-lg">
+                              <div className="border border-gray-300 h-60 w-90 rounded-lg grid grid-rows-2 shadow-lg max-sm:w-full">
                                    <div className="bg-gray-100 p-4 rounded-lg">
                                         <div className="bg-gray-900 w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
                                              <div className="h-2 w-2 bg-red-500 rounded-full"></div>
@@ -91,7 +91,7 @@ const MainDashboardPage = ({ setactiveTab }) => {
                                         </div>
                                    </div>
                               </div>
-                              <div className="border border-gray-300 h-60 w-90 rounded-lg grid grid-rows-2 shadow-lg">
+                              <div className="border border-gray-300 h-60 w-90 rounded-lg grid grid-rows-2 shadow-lg max-sm:w-full">
                                    <div className="bg-gray-100 p-4 rounded-lg">
                                         <div className="bg-gray-900 w-fit px-2 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
                                              <div className="h-2 w-2 bg-red-500 rounded-full"></div>
@@ -133,7 +133,7 @@ const MainDashboardPage = ({ setactiveTab }) => {
                                              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
                                         </svg>
                                    </div>
-                                   <div>
+                                   <div className="w-full">
                                         <p>Which new cafteria do you prefer?</p>
                                         <div className="grid grid-cols-[25%_60%] gap-1.5 items-center my-1.5 max-sm:gap-1 max-sm:grid-cols-1">
                                              <div>
@@ -169,7 +169,7 @@ const MainDashboardPage = ({ setactiveTab }) => {
                                              <path strokeLinecap="round" strokeLinejoin="round" d="m9 9 10.5-3m0 6.553v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 1 1-.99-3.467l2.31-.66a2.25 2.25 0 0 0 1.632-2.163Zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 0 1-.99-3.467l2.31-.66A2.25 2.25 0 0 0 9 15.553Z" />
                                         </svg>
                                    </div>
-                                   <div>
+                                   <div className="w-full">
                                         <p>Anime of the Year?</p>
                                         <div className="grid grid-cols-[25%_60%] gap-1.5 items-center my-1.5 max-sm:gap-1 max-sm:grid-cols-1">
                                              <div>
@@ -201,8 +201,8 @@ const MainDashboardPage = ({ setactiveTab }) => {
                               </div>
                          </div>
                     </div>
-                    <div className="flex flex-col gap-6 max-sm:justify-self-center">
-                         <div className="bg-white py-6 px-6 w-76 rounded-2xl shadow-md cursor-pointer">
+                    <div className="flex flex-col gap-6 max-sm:justify-self-center max-sm:w-full max-sm:mb-12">
+                         <div className="bg-white py-6 px-6 w-76 rounded-2xl shadow-md cursor-pointer max-sm:w-full">
                               <h1 className="font-extrabold text-lg font-raleway">Trending Elections</h1>
                               <div className="mt-6 flex flex-col gap-2">
                                    <div className="flex gap-6 items-center border-b border-gray-300 py-2">
@@ -228,7 +228,7 @@ const MainDashboardPage = ({ setactiveTab }) => {
                                    </div>
                               </div>
                          </div>
-                         <div className="cursor-pointer rounded-xl shadow-lg w-76 py-6 px-6 bg-gray-100 text-center">
+                         <div className="cursor-pointer rounded-xl shadow-lg w-76 py-6 px-6 bg-gray-100 text-center max-sm:w-full">
                               <p>Have an Issue?</p>
                               <p className="text-sm text-gray-400">Contact the electoral commitee or report irregularities.</p>
                               <div className="bg-white flex justify-center rounded-md my-2 h-8 items-center">
