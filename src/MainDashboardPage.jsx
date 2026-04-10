@@ -2,21 +2,21 @@ const MainDashboardPage = ({ setactiveTab }) => {
      return (
           <div className="bg-accent-blue">
                <div className="border-b border-gray-300 bg-white pt-4">
-                    <div className="flex justify-between px-6 pb-4">
-                         <div className="flex gap-2 bg-gray-100 items-center rounded-md px-4 ">
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-gray-500">
+                    <div className="flex justify-between px-6 pb-4 max-sm:px-3">
+                         <div className="flex gap-2  bg-gray-100 items-center rounded-md px-4 max-sm:px-1.5">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-gray-500 max-sm:w-5">
                                    <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                               </svg>
-                              <input type="text" className="outline-none w-72 font-raleway placeholder:text-raleway placeholder:text-sm max-md:w-32" placeholder="Search Elections, polls, or candidates..." />
+                              <input type="text" className="outline-none flex-1 font-raleway placeholder:text-raleway placeholder:text-sm max-md:w-full max-sm:text-[13px]" placeholder="Search Elections, polls, or candidates..." />
                          </div>
                          <div className="flex gap-4">
-                              <div className='cursor-pointer p-2 border border-gray-300 w-10 flex items-center justify-center rounded-full h-10 text-gray-600'>
+                              <div className='cursor-pointer p-2 border border-gray-300 w-10 flex items-center justify-center rounded-full h-10 text-gray-600 max-sm:hidden'>
                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
                                    </svg>
                               </div>
-                              <div className="flex cursor-pointer bg-custom-blue text-white w-40 h-11 items-center justify-center rounded-lg text-sm font-raleway gap-2">
-                                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                              <div className="flex cursor-pointer bg-custom-blue text-white w-40 h-11 items-center justify-center rounded-lg text-sm font-raleway gap-2 max-sm:w-30 max-sm:text-[13px] max-sm:gap-1 max-sm:h-8">
+                                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 max-sm:w-5">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                    </svg>
                                    <p>Host Elections</p>
@@ -24,13 +24,13 @@ const MainDashboardPage = ({ setactiveTab }) => {
                          </div>
                     </div>
                </div>
-               <div className="grid grid-cols-[70%_30%] gap-6 mt-8 px-6 max-md:grid-cols-1">
+               <div className="grid grid-cols-[70%_30%] gap-6 mt-8 px-6 max-md:grid-cols-1 max-sm:justify-self-center max-sm:px-2">
                     <div>
-                         <div className="flex justify-between font-raleway">
+                         <div className="flex justify-between font-raleway max-sm:px-4">
                               <p className="font-extrabold text-lg">Active Elections</p>
                               <p className="text-custom-blue underline text-sm cursor-pointer" onClick={() => { setactiveTab("ElectionsDashboard") }}>View All</p>
                          </div>
-                         <div className="grid grid-cols-2 gap-10 mt-6 max-md:grid-cols-1">
+                         <div className="grid grid-cols-2 gap-10 mt-6 max-md:grid-cols-1 max-sm:justify-self-center">
                               <div className="border border-gray-300 h-60 w-90 rounded-lg grid grid-rows-2 shadow-lg">
                                    <div className="bg-gray-100 p-4 rounded-lg">
                                         <div className="bg-gray-900 w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
@@ -122,7 +122,7 @@ const MainDashboardPage = ({ setactiveTab }) => {
                                    </div>
                               </div>
                          </div>
-                         <div className="flex justify-between font-raleway my-6">
+                         <div className="flex justify-between font-raleway my-6 max-sm:px-4">
                               <p className="font-extrabold text-lg">Public Polls & Surveys</p>
                               <p className="underline text-custom-blue text-sm cursor-pointer">Browse All</p>
                          </div>
@@ -201,7 +201,7 @@ const MainDashboardPage = ({ setactiveTab }) => {
                               </div>
                          </div>
                     </div>
-                    <div className="flex flex-col gap-6">
+                    <div className="flex flex-col gap-6 max-sm:justify-self-center">
                          <div className="bg-white py-6 px-6 w-76 rounded-2xl shadow-md cursor-pointer">
                               <h1 className="font-extrabold text-lg font-raleway">Trending Elections</h1>
                               <div className="mt-6 flex flex-col gap-2">
