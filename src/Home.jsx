@@ -1,4 +1,5 @@
 import Navbar from "./Navbar";
+import { Link } from 'react-router-dom';
 import Footer from "./Footer";
 import HeroImg from './assets/img/Votelive-hero-img.png';
 import ProfileOne from './assets/img/Profile-photo-one.jpeg';
@@ -26,7 +27,9 @@ const Home = () => {
                             <p className=" text-gray-500 leading-6 text-lg">Secure, transparent, and easy-to-use digital voting <br /> platform for universities. Vote from anywhere using your <br /> matric number.</p>
                         </div>
                         <div className="flex gap-4 my-8 items-center">
-                            <button className="bg-custom-blue text-white h-12 w-36 rounded-lg">Start Voting</button>
+                            <Link to="/dashboard">
+                                <button className="bg-custom-blue text-white h-12 w-36 rounded-lg">Start Voting</button>
+                            </Link>
                             <div className="flex gap-1 border border-gray-300 h-12 w-40 items-center justify-center rounded-lg">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
