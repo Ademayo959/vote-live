@@ -1,7 +1,7 @@
 const HistoryDashboard = ({ setactiveTab }) => {
     return (
         <div>
-            <div className='bg-white border-b border-gray-200'>
+            <div className='bg-white border-b border-gray-200 max-[840px]:hidden'>
                 <div className='flex justify-between p-6'>
                     <div className='flex items-center gap-2'>
                         <p className="text-gray-500 cursor-pointer" onClick={() => setactiveTab("MainDashboardPage")}>Dashboard</p>

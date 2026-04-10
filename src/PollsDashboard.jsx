@@ -3,11 +3,15 @@ import ProfileTwo from './assets/img/about-us-dev9.jpg';
 import ProfileThree from './assets/img/about-us-dev11.jpg';
 
 const PollsDashboard = ({ setactiveTab }) => {
-    let PollInitTime = [2,17,9]
-    let percentage = 65
+    let polls = [
+        { id: 1, name: 'Peter Tanner', time: "2", img: ProfileThree, question: 'Who should win Content Creator of the Year?', options: [{ option: 'Ishowspeed', percentage: "65" }, { option: 'Mirabel', percentage: "25" }, { option: 'Simi', percentage: "10" }], Votes: "2435" },
+        { id: 2, name: 'Adeleye Dolapo', time: "17", img: ProfileTwo, question: 'Anime of the Year????', options: [{ option: 'Demon Slayer', percentage: "31" }, { option: 'Jujustu Kaisen', percentage: "27" }, { option: 'Attack on titan', percentage: "42" }], Votes: "571" },
+        { id: 3, name: 'Geum Jan Di', time: "9", img: ProfileOne, question: 'Should lecturers implement the proposed test system', options: [{ option: 'Yes', percentage: "61" }, { option: 'No', percentage: "39" }], Votes: "92" }
+    ]
+
     return (
         <div>
-            <div className='bg-white border-b border-gray-200'>
+            <div className='bg-white border-b border-gray-200 max-[840px]:hidden'>
                 <div className='flex justify-between p-6'>
                     <div className='flex items-center gap-2'>
                         <p className="text-gray-500 cursor-pointer" onClick={() => setactiveTab("MainDashboardPage")}>Dashboard</p>
@@ -30,23 +34,21 @@ const PollsDashboard = ({ setactiveTab }) => {
                     </div>
                 </div>
             </div>
-            <div className="px-6 mt-4">
-                <div className="flex justify-between">
+            <div className="px-6 mt-4 max-sm:px-2">
+                <div className="flex justify-between max-sm:w-full">
                     <div>
-                        <p className="font-extrabold text-2xl font-montserrat">Polls & Surveys</p>
-                        <p className="text-gray-500 font-raleway font-extralight">Participate in campus discussions or create your own.</p>
+                        <p className="font-extrabold text-2xl font-montserrat max-sm:text-[16px]">Polls & Surveys</p>
+                        <p className="text-gray-500 font-raleway font-extralight max-[840px]:text-[12px] max-sm:w-48">Participate in campus discussions or create your own.</p>
                     </div>
-                    <div>
-                        <div className="flex cursor-pointer bg-custom-blue text-white w-40 h-10 px-2 items-center justify-center rounded-lg text-sm font-raleway gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                            </svg>
-                            <p>Create New Poll</p>
-                        </div>
+                    <div className="flex cursor-pointer bg-custom-blue text-white w-40 h-10 px-2 items-center justify-center rounded-lg text-sm font-raleway gap-2 max-sm:w-[30%]">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                        <p className='max-sm:text-[12px]'>Create New Poll</p>
                     </div>
                 </div>
             </div>
-            <div className="px-6 flex gap-4 mt-4">
+            <div className="px-6 flex gap-4 mt-4 max-sm:px-4 flex-wrap">
                 <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1 ">
                     <p className="text-gray-600">All Polls</p>
                 </div>
@@ -72,178 +74,62 @@ const PollsDashboard = ({ setactiveTab }) => {
                     <p className="text-gray-600">Sports</p>
                 </div>
             </div>
-            <div className="flex gap-2 px-6 mt-4 items-center">
+            <div className="flex gap-2 px-6 mt-4 items-center max-sm:px-3">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6 text-red-700">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" />
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z" />
                 </svg>
                 <p className="text-xl">Trending Now</p>
             </div>
-            <div className='grid grid-cols-2 gap-6 px-12 my-4'>
-                <div className='w-fit rounded-lg bg-white shadow-md p-6 max-w-115'>
-                    <div className=''>
-                        <div className='grid grid-cols-[0.1fr_1fr] gap-x-2 items-center'>
-                            <div>
-                                <img src={ProfileThree} alt="" className='h-8 w-8 rounded-full object-cover' />
-                            </div>
-                            <div className='flex justify-between items-center '>
+            <div className='grid grid-cols-2 gap-6 px-12 my-4 max-[840px]:px-4 max-[840px]:grid-cols-1'>
+                {polls.map((poll) => (
+                    <div key={poll.id} className='w-fit rounded-lg bg-white shadow-md p-6 max-w-115 max-[840px]:w-full'>
+                        <div className=''>
+                            <div className='grid grid-cols-[0.1fr_1fr] gap-x-2 items-center'>
                                 <div>
-                                    <p className='text-extrabold'>Peter Tanner</p>
-                                    <p className='text-[14px] text-gray-600 font raleway'>Posted {PollInitTime[0]} hrs ago</p>
+                                    <img src={poll.img} alt="" className='h-8 w-8 rounded-full object-cover' />
                                 </div>
-                                <div className='h-7 w-13 bg-red-200 flex items-center justify-center rounded-md'>
-                                    <p className='font-raleway text-red-600'>HOT</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <p className='my-4'>Who should win Content Creator of the Year?</p>
-                    </div>
-                    <div className='grid gap-y-3'>
-                        <div className='w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md'>
-                            <div className='w-65 h-10 bg-blue-100 flex items-center rounded-md whitespace-nowrap'>
-                                <p className='ml-2'>Ishowspeed</p>
-                            </div>
-                            <p className='mr-2 font-sans text-blue-500'>{percentage}%</p>
-                        </div>
-                        <div className='w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md'>
-                            <div className='w-25 h-10 bg-blue-100 flex items-center rounded-md whitespace-nowrap'>
-                                <p className='ml-2'>Mirabel</p>
-                            </div>
-                            <p className='mr-2 font-sans text-blue-500'>{25}%</p>
-                        </div>
-                        <div className='w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md'>
-                            <div className='w-10 h-10 bg-blue-100 flex items-center rounded-md whitespace-nowrap'>
-                                <p className='ml-2'>Simi</p>
-                            </div>
-                            <p className='mr-2 font-sans text-blue-500'>{10}%</p>
-                        </div>
-                    </div>
-                    <hr className='my-4 text-gray-400' />
-                    <div className='text-gray-500 flex justify-between '>
-                        <span className='flex items-center'>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-5">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                            </svg>
-                            <p className='font-raleway'>2,435 voted</p>
-                        </span>
-                        <span className='flex items-center'>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-5">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>
-                            <p className='font-raleway'>Ends in {24 - PollInitTime[0]}h</p>
-                        </span>
-                    </div>
-                </div>
-                
-                <div className='w-fit rounded-lg bg-white shadow-md p-6 max-w-115'>
-                    <div className=''>
-                        <div className='grid grid-cols-[0.1fr_1fr] gap-x-2 items-center'>
-                            <div>
-                                <img src={ProfileTwo} alt="" className='h-8 w-8 rounded-full object-cover' />
-                            </div>
-                            <div className='flex justify-between items-center '>
-                                <div>
-                                    <p className='text-extrabold'>Adeleye Dolapo</p>
-                                    <p className='text-[14px] text-gray-600 font raleway'>Posted {PollInitTime[1]} hrs ago</p>
-                                </div>
-                                <div className='h-7 w-13 bg-red-200 flex items-center justify-center rounded-md'>
-                                    <p className='font-raleway text-red-600'>HOT</p>
+                                <div className='flex justify-between items-center '>
+                                    <div>
+                                        <p className='text-extrabold'>{poll.name}</p>
+                                        <p className='text-[14px] text-gray-600 font raleway'>Posted {poll.time} hrs ago</p>
+                                    </div>
+                                    <div className='h-7 w-13 bg-red-200 flex items-center justify-center rounded-md'>
+                                        <p className='font-raleway text-red-600'>HOT</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <p className='my-4'>Anime of the Year????</p>
-                    </div>
-                    <div className='grid gap-y-3'>
-                        <div className='w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md'>
-                            <div className='w-31 h-10 z-0 bg-blue-100 flex items-center rounded-md whitespace-nowrap'>
-                                <p className='ml-2 z-10'>Demon Slayer</p>
-                            </div>
-                            <p className='mr-2 font-sans text-blue-500'>{31}%</p>
+                        <div>
+                            <p className='my-4'>{poll.question}</p>
                         </div>
-                        <div className='w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md'>
-                            <div className='w-27 h-10 z-0 bg-blue-100 flex items-center rounded-md whitespace-nowrap'>
-                                <p className='ml-2 z-1 overflow-x-visible'>Jujustu Kaisen</p>
-                            </div>
-                            <p className='mr-2 font-sans text-blue-500'>{27}%</p>
-                        </div>
-                        <div className='w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md'>
-                            <div className='w-42 h-10 bg-blue-100 flex items-center rounded-md whitespace-nowrap'>
-                                <p className='ml-2 z-10'>Attack on titan</p>
-                            </div>
-                            <p className='mr-2 font-sans text-blue-500'>{42}%</p>
-                        </div>
-                    </div>
-                    <hr className='my-4 text-gray-400' />
-                    <div className='text-gray-500 flex justify-between '>
-                        <span className='flex items-center'>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-5">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                            </svg>
-                            <p className='font-raleway'>571 voted</p>
-                        </span>
-                        <span className='flex items-center'>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-5">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>
-                            <p className='font-raleway'>Ends in {24-PollInitTime[1]}h</p>
-                        </span>
-                    </div>
-                </div>
-
-                <div className='w-fit rounded-lg bg-white shadow-md p-6 max-w-115'>
-                    <div className=''>
-                        <div className='grid grid-cols-[0.1fr_1fr] gap-x-2 items-center'>
-                            <div>
-                                <img src={ProfileOne} alt="" className='h-8 w-8 rounded-full object-cover' />
-                            </div>
-                            <div className='flex justify-between items-center '>
-                                <div>
-                                    <p className='text-extrabold'>Geum Jan Di</p>
-                                    <p className='text-[14px] text-gray-600 font raleway'>Posted {PollInitTime[2]} hrs ago</p>
+                        <div className='grid gap-y-3'>
+                            {poll.options.map((option) => (
+                                <div className='w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md max-sm:w-full'>
+                                    <div className='w-31 h-10 z-0 bg-blue-100 flex items-center rounded-md whitespace-nowrap'>
+                                        <p className='ml-2 z-10'>{option.option}</p>
+                                    </div>
+                                    <p className='mr-2 font-sans text-blue-500'>{option.percentage}%</p>
                                 </div>
-                                <div className='h-7 w-13 bg-red-200 flex items-center justify-center rounded-md'>
-                                    <p className='font-raleway text-red-600'>HOT</p>
-                                </div>
-                            </div>
+                            ))}
+                        </div>
+                        <hr className='my-4 text-gray-400' />
+                        <div className='text-gray-500 flex justify-between '>
+                            <span className='flex items-center'>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-5">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                                </svg>
+                                <p className='font-raleway'>{poll.Votes} voted</p>
+                            </span>
+                            <span className='flex items-center'>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-5">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                </svg>
+                                <p className='font-raleway'>Ends in {24 - poll.time}h</p>
+                            </span>
                         </div>
                     </div>
-                    <div>
-                        <p className='my-4 flex wrap-break-word'>Should lecturers implement the proposed test system</p>
-                    </div>
-                    <div className='grid gap-y-3'>
-                        <div className='w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md'>
-                            <div className='w-61 h-10 z-0 bg-blue-100 flex items-center rounded-md whitespace-nowrap'>
-                                <p className='ml-2 z-10'>Yes</p>
-                            </div>
-                            <p className='mr-2 font-sans text-blue-500'>{61}%</p>
-                        </div>
-                        <div className='w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md'>
-                            <div className='w-39 h-10 z-0 bg-blue-100 flex items-center rounded-md whitespace-nowrap'>
-                                <p className='ml-2 z-1 overflow-x-visible'>No</p>
-                            </div>
-                            <p className='mr-2 font-sans text-blue-500'>{39}%</p>
-                        </div>
-                    </div>
-                    <hr className='my-4 text-gray-400' />
-                    <div className='text-gray-500 flex justify-between '>
-                        <span className='flex items-center'>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-5">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                            </svg>
-                            <p className='font-raleway'>92 voted</p>
-                        </span>
-                        <span className='flex items-center'>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-5">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>
-                            <p className='font-raleway'>Ends in {24-PollInitTime[1]}h</p>
-                        </span>
-                    </div>
-                </div>
+                ))}
             </div>
         </div>
     );

@@ -30,7 +30,7 @@ const MainDashboardPage = ({ setactiveTab }) => {
                               <p className="font-extrabold text-lg">Active Elections</p>
                               <p className="text-custom-blue underline text-sm cursor-pointer" onClick={() => { setactiveTab("ElectionsDashboard") }}>View All</p>
                          </div>
-                         <div className="grid grid-cols-2 gap-10 mt-6 max-md:grid-cols-1 max-sm:justify-self-center max-sm:w-full">
+                         <div className="grid grid-cols-2 gap-10 mt-6 max-[840px]:grid-cols-1 max-md:grid-cols-1 max-sm:justify-self-center max-sm:w-full">
                               <div className="border border-gray-300 h-60 w-90 rounded-lg grid grid-rows-2 shadow-lg max-sm:w-full">
                                    <div className="bg-gray-100 p-4 rounded-lg">
                                         <div className="bg-gray-900 w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">

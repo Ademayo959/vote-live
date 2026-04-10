@@ -75,3 +75,22 @@ const Dashboard = () => {
 }
 
 export default Dashboard;
+
+<div className='w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md'>
+                                <div className='w-31 h-10 z-0 bg-blue-100 flex items-center rounded-md whitespace-nowrap'>
+                                    <p className='ml-2 z-10'>Demon Slayer</p>
+                                </div>
+                                <p className='mr-2 font-sans text-blue-500'>{31}%</p>
+                            </div>
+                            <div className='w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md'>
+                                <div className='w-27 h-10 z-0 bg-blue-100 flex items-center rounded-md whitespace-nowrap'>
+                                    <p className='ml-2 z-1 overflow-x-visible'>Jujustu Kaisen</p>
+                                </div>
+                                <p className='mr-2 font-sans text-blue-500'>{27}%</p>
+                            </div>
+                            <div className='w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md'>
+                                <div className='w-42 h-10 bg-blue-100 flex items-center rounded-md whitespace-nowrap'>
+                                    <p className='ml-2 z-10'>Attack on titan</p>
+                                </div>
+                                <p className='mr-2 font-sans text-blue-500'>{42}%</p>
+                            </div>

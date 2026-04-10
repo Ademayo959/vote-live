@@ -15,7 +15,7 @@ const Dashboard = () => {
     return (
         <div className="dashboard font-montserrat">
             {/* Mobile top bar */}
-            <div className="md:hidden flex items-center justify-between px-4 py-3 bg-accent-blue border-b border-gray-300 sticky top-0 z-40">
+            <div className="min-[840px]:hidden flex items-center justify-between px-4 py-3 bg-accent-blue border-b border-gray-300 sticky top-0 z-40">
                 <button onClick={() => setSidebarOpen(true)} className="p-2 rounded-md text-gray-600">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -24,25 +24,32 @@ const Dashboard = () => {
                 <Link to="/">
                     <img src={logo} alt="logo" className='h-12' />
                 </Link>
-                <div className='cursor-pointer p-2 border border-gray-300 w-9 flex items-center justify-center rounded-full h-9 text-gray-600'>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
-                    </svg>
+                <div className='flex gap-2'>
+                    <div className='cursor-pointer p-2 border border-gray-300 w-10 flex items-center justify-center rounded-full h-10 text-gray-600'>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+                        </svg>
+                    </div>
+                    <div className='cursor-pointer p-2 border border-gray-300 w-9 flex items-center justify-center rounded-full h-9 text-gray-600'>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+                        </svg>
+                    </div>
                 </div>
             </div>
             {/* Backdrop */}
             {sidebarOpen && (
                 <div
-                    className="fixed inset-0 bg-black/50 z-40 md:hidden"
+                    className="fixed inset-0 bg-black/50 z-40 min-[840px]:hidden"
                     onClick={() => setSidebarOpen(false)}
                 />
             )}
-            <div className="grid grid-cols-1 md:grid-cols-[20%_80%] p-0 h-screen">
+            <div className="grid grid-cols-1 min-[840px]:grid-cols-[20%_80%] p-0 h-screen">
                 {/* Sidebar */}
                 <div className={`
                     bg-accent-blue px-6 flex flex-col border-r border-gray-300 overflow-y-auto
                     fixed top-0 left-0 h-full z-50 w-72 transition-transform duration-300
-                    md:sticky md:w-auto md:z-auto md:translate-x-0
+                    min-[840px]:sticky min-[840px]:w-auto min-[840px]:z-auto min-[840px]:translate-x-0
                     ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
                 `}>
                     <div className="flex items-center justify-between">
@@ -50,7 +57,7 @@ const Dashboard = () => {
                             <img src={logo} alt="logo" className='h-16 w-47' />
                         </Link>
                         {/* Close button — mobile only */}
-                        <button onClick={() => setSidebarOpen(false)} className="md:hidden p-2 text-gray-600">
+                        <button onClick={() => setSidebarOpen(false)} className="min-[840px]:hidden p-2 text-gray-600">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                             </svg>

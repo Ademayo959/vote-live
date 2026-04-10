@@ -11,7 +11,7 @@ const ElectionsDashboard = ({ setactiveTab }) => {
     let ActiveElections = 3
     return (
         <div>
-            <div className='bg-white border-b border-gray-200'>
+            <div className='bg-white border-b border-gray-200 max-[840px]:hidden'>
                 <div className='flex justify-between p-6'>
                     <div className='flex items-center gap-2'>
                         <p className="text-gray-500 cursor-pointer" onClick={() => setactiveTab("MainDashboardPage")}>Dashboard</p>
@@ -38,40 +38,42 @@ const ElectionsDashboard = ({ setactiveTab }) => {
                 <div className="flex justify-between">
                     <div>
                         <p className="font-extrabold text-2xl font-montserrat">Elections</p>
-                        <p className="text-gray-500 font-raleway font-extralight">View elections, vote for candidates, or create your own.</p>
+                        <p className="text-gray-500 font-raleway font-extralight max-[840px]:text-[12px] max-sm:w-48">View elections, vote for candidates, or create your own.</p>
                     </div>
                     <div>
-                        <div className="flex cursor-pointer bg-custom-blue text-white w-40 h-10 px-2 items-center justify-center rounded-lg text-sm font-raleway gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                        <div className="flex cursor-pointer bg-custom-blue text-white w-40 h-10 px-2 items-center justify-center rounded-lg text-sm font-raleway gap-2 max-sm:px-1 max-sm:gap-1 max-sm:w-30 max-sm:h-8">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 max-sm:w-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
-                            <p>Create Elections</p>
+                            <p className="max-sm:text-[11px]">Create Elections</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div className="mx-6 my-6">
-                <div className="flex gap-6">
-                    <div className="flex gap-2 bg-white border border-gray-300 items-center rounded-md px-4 py-2 w-[80%]">
+                <div className="flex gap-6 max-sm:grid max-sm:gap-3">
+                    <div className="flex gap-2 bg-white border border-gray-300 items-center rounded-md px-4 py-2 w-[80%] max-sm:w-full">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-gray-500">
                             <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                         </svg>
                         <input type="text" className="outline-none w-[99%] font-raleway placeholder:text-raleway placeholder:text-sm" placeholder="Search by Election Name, ID or Department...." />
                     </div>
-                    <div className="flex gap-2 w-24 border bg-white border-gray-300 items-center justify-center text-gray-600 rounded-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
-                        </svg>
-                        <p>Filters</p>
-                    </div>
-                    <div className="flex gap-2 w-24 border bg-white border-gray-300 items-center justify-center text-gray-600 rounded-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5" />
-                        </svg>
-                        <p>Sort</p>
+                    <div className="flex gap-6 max-sm:gap-3">
+                        <div className="flex gap-2 w-24 border bg-white border-gray-300 items-center justify-center text-gray-600 rounded-md max-sm:p-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
+                            </svg>
+                            <p>Filters</p>
+                        </div>
+                        <div className="flex gap-2 w-24 border bg-white border-gray-300 items-center justify-center text-gray-600 rounded-md max-sm:p-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5" />
+                            </svg>
+                            <p>Sort</p>
+                        </div>
                     </div>
                 </div>
-                <div className="mt-8 grid grid-cols-3 gap-y-6 max-sm:grid-cols-1">
+                <div className="my-8 grid grid-cols-3 gap-y-6 gap-x-6 justify-self-center max-[840px]:grid-cols-2 max-sm:w-full max-sm:grid-cols-1">
                     {elections.map((election) => (
                         <div key={election.id} className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 shadow-md max-sm:w-full">
                             <div className="bg-gray-100 p-4 rounded-lg">
