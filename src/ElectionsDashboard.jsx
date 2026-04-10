@@ -82,7 +82,7 @@ const ElectionsDashboard = ({ setactiveTab }) => {
                             </div>
                             <div className="grid grid-rows-3 gap-1 p-3">
                                 <div>
-                                    <p className="text-lg">{election.title}</p>
+                                    <p className="text-[16px]">{election.title}</p>
                                 </div>
                                 <div className="flex gap-2 items-center font-raleway mb-3">
                                     <div className="flex items-center text-gray-500 gap-1">
