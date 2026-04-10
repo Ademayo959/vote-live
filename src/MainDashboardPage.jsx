@@ -127,7 +127,7 @@ const MainDashboardPage = ({ setactiveTab }) => {
                               <p className="underline text-custom-blue text-sm cursor-pointer">Browse All</p>
                          </div>
                          <div className="grid gap-6">
-                              <div className="flex gap-4 items-start bg-white p-4 rounded-md w-fit">
+                              <div className="flex gap-4 items-start bg-white p-4 rounded-md w-full max-sm:grid max-sm:p-3">
                                    <div className="bg-gray-200  rounded-md w-12 h-12 flex justify-center items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 text-gray-500">
                                              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
@@ -135,26 +135,26 @@ const MainDashboardPage = ({ setactiveTab }) => {
                                    </div>
                                    <div>
                                         <p>Which new cafteria do you prefer?</p>
-                                        <div className="grid grid-cols-[25%_60%] gap-1.5 items-center my-1.5">
+                                        <div className="grid grid-cols-[25%_60%] gap-1.5 items-center my-1.5 max-sm:gap-1 max-sm:grid-cols-1">
                                              <div>
-                                                  <p className="text-[17px] font-raleway">Chikini Monie</p>
+                                                  <p className="text-[17px] font-raleway max-sm:text-[15px]">Chikini Monie</p>
                                              </div>
-                                             <div className="flex gap-2 items-center">
-                                                  <div className="h-2 w-100 bg-blue-100 rounded-2xl">
-                                                       <div className="h-2 w-62 bg-blue-400 rounded-2xl"></div>
+                                             <div className="flex gap-2 items-center w-full">
+                                                  <div className="h-2 w-full bg-blue-100 rounded-2xl">
+                                                       <div className="h-2 w-[62%] bg-blue-400 rounded-2xl"></div>
                                                   </div>
                                                   <div>
                                                        <p>62%</p>
                                                   </div>
                                              </div>
                                         </div>
-                                        <div className="grid grid-cols-[25%_60%] gap-1.5 items-center my-1.5">
+                                        <div className="grid grid-cols-[25%_60%] gap-1.5 items-center my-1.5 max-sm:gap-1 max-sm:grid-cols-1">
                                              <div className="w-fit">
-                                                  <p className="text-[17px] font-raleway">Savour Restaurant</p>
+                                                  <p className="text-[17px] font-raleway max-sm:text-[15px]">Savour Restaurant</p>
                                              </div>
-                                             <div className="flex gap-2 items-center">
-                                                  <div className="h-2 w-100 bg-gray-200 rounded-2xl">
-                                                       <div className="h-2 w-36 bg-gray-400 rounded-2xl"></div>
+                                             <div className="flex gap-2 items-center w-full">
+                                                  <div className="h-2 w-full bg-gray-200 rounded-2xl">
+                                                       <div className="h-2 w-[36%] bg-gray-400 rounded-2xl"></div>
                                                   </div>
                                                   <div>
                                                        <p>36%</p>
@@ -163,7 +163,7 @@ const MainDashboardPage = ({ setactiveTab }) => {
                                         </div>
                                    </div>
                               </div>
-                              <div className="flex gap-4 items-start bg-white p-4 rounded-md w-fit">
+                              <div className="flex gap-4 items-start bg-white p-4 rounded-md w-full max-sm:grid max-sm:p-3">
                                    <div className="bg-gray-200  rounded-md w-12 h-12 flex justify-center items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 text-gray-500">
                                              <path strokeLinecap="round" strokeLinejoin="round" d="m9 9 10.5-3m0 6.553v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 1 1-.99-3.467l2.31-.66a2.25 2.25 0 0 0 1.632-2.163Zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 0 1-.99-3.467l2.31-.66A2.25 2.25 0 0 0 9 15.553Z" />
@@ -171,26 +171,26 @@ const MainDashboardPage = ({ setactiveTab }) => {
                                    </div>
                                    <div>
                                         <p>Anime of the Year?</p>
-                                        <div className="grid grid-cols-[25%_60%] gap-1.5 items-center my-1.5">
+                                        <div className="grid grid-cols-[25%_60%] gap-1.5 items-center my-1.5 max-sm:gap-1 max-sm:grid-cols-1">
                                              <div>
-                                                  <p className="text-[17px] font-raleway">Death Note 💀</p>
+                                                  <p className="text-[17px] font-raleway max-sm:text-[15px]">Death Note 💀</p>
                                              </div>
-                                             <div className="flex gap-2 items-center">
-                                                  <div className="h-2 w-100 bg-blue-100 rounded-2xl">
-                                                       <div className="h-2 w-57 bg-blue-400 rounded-2xl"></div>
+                                             <div className="flex gap-2 items-center w-full">
+                                                  <div className="h-2 w-full bg-blue-100 rounded-2xl">
+                                                       <div className="h-2 w-[57%] bg-blue-400 rounded-2xl"></div>
                                                   </div>
                                                   <div>
                                                        <p>57%</p>
                                                   </div>
                                              </div>
                                         </div>
-                                        <div className="grid grid-cols-[25%_60%] gap-1.5 items-center my-1.5">
+                                        <div className="grid grid-cols-[25%_60%] gap-1.5 items-center my-1.5 max-sm:gap-1 max-sm:grid-cols-1">
                                              <div className="w-fit">
-                                                  <p className="text-[17px] font-raleway">Chainsaw Man 🤖</p>
+                                                  <p className="text-[17px] font-raleway max-sm:text-[15px]">Chainsaw Man 🤖</p>
                                              </div>
-                                             <div className="flex gap-2 items-center">
-                                                  <div className="h-2 w-100 bg-gray-200 rounded-2xl">
-                                                       <div className="h-2 w-43 bg-gray-400 rounded-2xl"></div>
+                                             <div className="flex gap-2 items-center w-full">
+                                                  <div className="h-2 w-full bg-gray-200 rounded-2xl">
+                                                       <div className="h-2 w-[43%] bg-gray-400 rounded-2xl"></div>
                                                   </div>
                                                   <div>
                                                        <p>43%</p>

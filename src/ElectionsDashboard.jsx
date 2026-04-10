@@ -62,7 +62,7 @@ const ElectionsDashboard = ({ setactiveTab }) => {
                         <p>Sort</p>
                     </div>
                 </div>
-                <div className="mt-8 grid grid-cols-3 gap-y-6">
+                <div className="mt-8 grid grid-cols-3 gap-y-6 max-sm:grid-cols-1">
                     <div className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 shadow-md">
                         <div className="bg-gray-100 rounded-lg p-4">
                             <div className="bg-white w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
