@@ -24,10 +24,10 @@ const HistoryDashboard = ({ setactiveTab }) => {
                     </div>
                 </div>
             </div>
-            <div className="px-6 mt-4">
+            <div className="px-6 mt-4 max-sm:px-2 max-sm:pb-18">
                 <h1 className="font-montserrat text-2xl font-extrabold">Voting History</h1>
                 <p className="my-2 text-[15px] font-raleway text-gray-400">Track your past participation in Elections and polls</p>
-                <div className="grid grid-cols-3 gap-x-10">
+                <div className="grid grid-cols-3 gap-x-10 max-sm:grid-cols-1 max-sm:gap-y-8 max-sm:px-2">
                     <div className="bg-white border border-gray-200 h-36 rounded-md p-6">
                         <p className="mb-3 text-gray-500">Total Votes Cast</p>
                         <p className="text-4xl">28</p>
@@ -43,11 +43,11 @@ const HistoryDashboard = ({ setactiveTab }) => {
                 </div>
                 <h1 className="font-montserrat text-2xl font-extrabold mt-4">Settings</h1>
                 <p className="my-2 text-[15px] font-raleway text-gray-400">Manage your Digital Identity and Security</p>
-                <div className="bg-white border border-gray-200 my-4 h-76 rounded-lg py-4 px-6 max-w-4xl">
+                <div className="bg-white border border-gray-200 my-4 h-76 rounded-lg py-4 px-6 max-w-4xl max-sm:h-fit">
                     <p className="text-[22px]">Personal Information</p>
                     <p className="text-[14px] font-raleway text-gray-400">Update your contact details.</p>
                     <hr className="text-gray-200 my-3" />
-                    <div className="grid grid-cols-2 gap-y-4">
+                    <div className="grid grid-cols-2 gap-y-4 max-sm:grid-cols-1">
                         <div>
                             <p className="text-gray-600 text-[14px] font-extrabold">Full Name</p>
                             <input type="text" className="bg-white border border-gray-300 h-8 w-72 rounded-sm outline-0 px-3 text-[14px]" />
