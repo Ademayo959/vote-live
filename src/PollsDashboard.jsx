@@ -1,3 +1,5 @@
+import { useState } from "react"
+import HelpModal from "./HelpModal";
 import ProfileOne from './assets/img/Profile-photo-one.jpeg';
 import ProfileTwo from './assets/img/about-us-dev9.jpg';
 import ProfileThree from './assets/img/about-us-dev11.jpg';
@@ -8,6 +10,7 @@ const PollsDashboard = ({ setactiveTab }) => {
         { id: 2, name: 'Adeleye Dolapo', time: "17", img: ProfileTwo, question: 'Anime of the Year????', options: [{ option: 'Demon Slayer', percentage: "31" }, { option: 'Jujustu Kaisen', percentage: "27" }, { option: 'Attack on titan', percentage: "42" }], Votes: "571" },
         { id: 3, name: 'Geum Jan Di', time: "9", img: ProfileOne, question: 'Should lecturers implement the proposed test system', options: [{ option: 'Yes', percentage: "61" }, { option: 'No', percentage: "39" }], Votes: "92" }
     ]
+    const [isModalActive, setIsModalActive] = useState(false);
 
     return (
         <div>
@@ -21,7 +24,7 @@ const PollsDashboard = ({ setactiveTab }) => {
                         <p className="cursor-pointer">Polls & Surveys</p>
                     </div>
                     <div className='flex gap-4'>
-                        <div className='cursor-pointer p-2 border border-gray-300 w-10 flex items-center justify-center rounded-full h-10 text-gray-600'>
+                        <div onClick={() => {setIsModalActive(true)}} className='cursor-pointer p-2 border border-gray-300 w-10 flex items-center justify-center rounded-full h-10 text-gray-600'>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
                             </svg>
@@ -87,7 +90,7 @@ const PollsDashboard = ({ setactiveTab }) => {
                         <div className=''>
                             <div className='grid grid-cols-[0.1fr_1fr] gap-x-2 items-center'>
                                 <div>
-                                    <img src={poll.img} alt="" className='h-8 w-8 rounded-full object-cover' />
+                                    <img src={poll.img} alt="" className='h-8 w-8 rounded-full object-cover max-sm:w-6 max-sm:h-6' />
                                 </div>
                                 <div className='flex justify-between items-center '>
                                     <div>
@@ -131,6 +134,11 @@ const PollsDashboard = ({ setactiveTab }) => {
                     </div>
                 ))}
             </div>
+            { isModalActive && (
+                <div className="fixed inset-0 bg-black/70 z-99" onClick={() => setIsModalActive(false)}>
+                    <HelpModal setIsModalActive={setIsModalActive} onClose={() => setIsModalActive(false)} />
+                </div>
+            )}
         </div>
     );
 }
