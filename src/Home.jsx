@@ -10,32 +10,32 @@ const Home = () => {
     return (
         <div className="Home bg-accent-blue">
             <Navbar />
-            <div className="Landing-Page justify-self-center mt-26 font-montserrat max-w-full max-sm:px-3 max-sm:mt-16 ">
-                <div className="Hero-section flex gap-10 max-w-7xl ">
+            <div className="Landing-Page justify-self-center mt-26 font-montserrat max-w-full max-sm:px-3 max-sm:mt-12 max-sm:w-full">
+                <div className="Hero-section flex gap-10 max-w-7xl max-sm:w-full max-sm:flex-col">
                     <div>
-                        <div className="bg-custom-yellow w-42 rounded-2xl flex gap-1 p-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                        <div className="bg-custom-yellow w-42 rounded-2xl flex gap-1 p-1 items-center max-sm:w-fit max-sm:px-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
                             </svg>
-                            <p className="font-raleway font-extrabold">Verified & Secure</p>
+                            <p className="font-raleway font-extrabold max-sm:text-[14px]">Verified & Secure</p>
                         </div>
                         <div className="my-10">
-                            <h1 className="text-6xl font-extrabold max-sm:text-6xl ">The Future of</h1>
-                            <h1 className="text-6xl font-extrabold text-custom-blue max-sm:text-[55px] ">Student Democracy</h1>
+                            <h1 className="text-6xl font-extrabold max-sm:text-[12vw] max-sm:w-full">The Future of</h1>
+                            <h1 className="text-6xl font-extrabold text-custom-blue max-sm:text-[50px] ">Student Democracy</h1>
                         </div>
                         <div>
-                            <p className=" text-gray-500 leading-6 text-lg">Secure, transparent, and easy-to-use digital voting <br /> platform for universities. Vote from anywhere using your <br /> matric number.</p>
+                            <p className=" text-gray-500 w-130 leading-6 text-lg max-sm:w-full max-sm:text-[4vw]">Secure, transparent, and easy-to-use digital voting platform for universities. Vote from anywhere using your matric number.</p>
                         </div>
-                        <div className="flex gap-4 my-8 items-center">
-                            <Link to="/dashboard">
-                                <button className="bg-custom-blue text-white h-12 w-36 rounded-lg">Start Voting</button>
+                        <div className="flex gap-4 my-8 items-center max-sm:grid max-sm:w-full">
+                            <Link to="/dashboard" className="max-sm:w-full">
+                                <button className="bg-custom-blue text-white h-12 w-36 rounded-lg max-sm:w-full max-sm:text-[5vw]">Start Voting</button>
                             </Link>
-                            <div className="flex gap-1 border border-gray-300 h-12 w-40 items-center justify-center rounded-lg">
+                            <div className="flex gap-1 border border-gray-300 h-12 w-40 items-center justify-center rounded-lg max-sm:w-full">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.91 11.672a.375.375 0 0 1 0 .656l-5.603 3.113a.375.375 0 0 1-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112Z" />
                                 </svg>
-                                <p>How it works</p>
+                                <p className="max-sm:text-[5vw]">How it works</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-2 max-sm:pl-4">
@@ -53,10 +53,11 @@ const Home = () => {
                         <img src={HeroImg} alt="A polls card" className="h-120 rounded-2xl max-sm:hidden" />
                     </div>
                 </div>
+                <hr className="hidden text-gray-300 max-sm:block" />
                 <div className="max-w-full ">
-                    <div className="mt-28 max-w-7xl">
-                        <h1 className="text-5xl text-center my-6 max-sm:text-4xl max-sm:text-left">Why choose Votelive?</h1>
-                        <p className="text-md text-gray-500 text-center pb-12 max-sm:text-left max-sm:text-lg max-sm:font-raleway">We ensure that every vote counts with enterprise-grade security tailored for <br /> academic institutions</p>
+                    <div className="mt-28 max-w-7xl max-sm:mt-12">
+                        <h1 className="text-5xl text-center font-extrabold my-6 max-sm:text-[8vw] max-sm:text-left">Why choose Votelive?</h1>
+                        <p className="text-md text-gray-500 text-center pb-12 max-sm:text-left max-sm:text-[4vw] max-sm:font-raleway">We ensure that every vote counts with enterprise-grade security tailored for <br /> academic institutions</p>
                         <div className="grid grid-cols-3 gap-12 max-sm:grid-cols-1 max-sm:justify-self-center max-sm:justify-items-center">
                             <div className="grid grid-rows-[30%_20%_50%] gap-2 bg-white shadow-lg p-10 rounded-2xl w-92 max-sm:w-[95%] ">
                                 <div className="bg-custom-yellow w-12 h-12 flex items-center justify-center rounded-xl">
@@ -147,7 +148,7 @@ const Home = () => {
                     <div>
                         <h1 className="text-4xl max-sm:text-3xl">Trending Now</h1>
                         <div className="flex justify-between items-center">
-                            <p className="font-raleway my-2 text-gray-600 max-sm:text-[13px]">Active elections and polls from across the platform</p>
+                            <p className="font-raleway my-2 text-gray-600 max-sm:text-[3vw] max-sm:w-[70%]">Active elections and polls from across the platform</p>
                             <div className="flex gap-2 h-11 w-42 items-center justify-center border border-gray-300 rounded-lg max-sm:h-8 max-sm:w-24">
                                 <p className="max-sm:text-[13px]">Browse All</p>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 max-sm:hidden">
@@ -309,13 +310,16 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="bg-custom-blue text-center py-16 rounded-2xl my-24 max-sm:px-4">
-                    <h1 className="text-white text-4xl my-3 font-extrabold">Ready to host your next Election?</h1>
+                    <h1 className="text-white text-4xl my-3 font-extrabold max-sm:text-[9vw]">Ready to host your next Election?</h1>
                     <p className="text-gray-200 font-raleway">Get started with Votelive today. Secure, simple, and effective.</p>
-                    <div className="flex gap-4 justify-self-center items-center mt-8 max-sm:gap-6">
-                        <button className="bg-white text-custom-blue h-11 w-40 rounded-md max-sm:h-9 max-sm:w-32 max-sm:text-[14px]">
+                    <div className="flex gap-4 justify-self-center items-center mt-8 max-sm:w-full max-sm:gap-6 max-sm:flex-col">
+                        <button className="bg-white flex justify-center items-center gap-2 text-custom-blue h-11 w-fit px-4 rounded-md max-sm:h-11 max-sm:w-full max-sm:text-[4vw]">
                             Create Election
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                            </svg>
                         </button>
-                        <button className="bg-custom-blue border border-white text-white h-11 w-40 rounded-md max-sm:h-9 max-sm:w-32 max-sm:text-[14px]">
+                        <button className="bg-custom-blue border border-white text-white h-11 w-fit px-4 rounded-md max-sm:h-11 max-sm:w-full max-sm:text-[4vw]">
                             Contact Sales
                         </button>
                     </div>
