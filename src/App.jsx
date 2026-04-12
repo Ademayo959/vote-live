@@ -7,6 +7,7 @@ import Dashboard from './Dashboard';
 import Authpage from './Authpage';
 import HelpModal from './HelpModal';
 import CreateElectionModal from './CreateElectionModal';
+import CreatePollModal from './CreatePollModal';
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <Route path="/signup" element={<Authpage />} />
       <Route path="/login" element={<Authpage />} />
       <Route path="/create" element={<CreateElectionModal/>} />
+      <Route path='/createpoll' element={<CreatePollModal />}/>
     </Routes>
   )
 }

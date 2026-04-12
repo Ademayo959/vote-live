@@ -1,9 +1,15 @@
+import { useState } from "react"
+import CreateElectionModal from "./CreateElectionModal"
+
+
 const MainDashboardPage = ({ setactiveTab }) => {
+       const [isCreateElectionModal, setIsCreateElectionModal] = useState(false)
+
      return (
           <div className="bg-accent-blue">
                <div className="border-b border-gray-300 bg-white pt-4">
-                    <div className="flex justify-between px-6 pb-4 max-sm:px-3">
-                         <div className="flex gap-2  bg-gray-100 items-center rounded-md px-4 max-sm:px-1.5">
+                    <div className="flex justify-between px-6 pb-4 max-sm:px-3 max-sm:gap-6">
+                         <div className="flex gap-2  bg-gray-100 items-center rounded-md px-4 max-sm:px-1.5 max-sm:w-full">
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-gray-500 max-sm:w-5">
                                    <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                               </svg>
@@ -15,7 +21,7 @@ const MainDashboardPage = ({ setactiveTab }) => {
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
                                    </svg>
                               </div>
-                              <div className="flex cursor-pointer bg-custom-blue text-white w-40 h-11 items-center justify-center rounded-lg text-sm font-raleway gap-2 max-sm:w-30 max-sm:text-[13px] max-sm:gap-1 max-sm:h-8">
+                              <div onClick={()=>{setIsCreateElectionModal(true)}} className="flex cursor-pointer bg-custom-blue text-white w-40 h-11 items-center justify-center rounded-lg text-sm font-raleway gap-2 max-sm:w-30 max-sm:text-[13px] max-sm:gap-1 max-sm:h-8">
                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 max-sm:w-5">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                    </svg>
@@ -237,6 +243,11 @@ const MainDashboardPage = ({ setactiveTab }) => {
                          </div>
                     </div>
                </div>
+               { isCreateElectionModal && (
+                <div className="fixed inset-0 bg-black/70 z-99" onClick={() => setIsCreateElectionModal(false)}>
+                    <CreateElectionModal setIsCreateElectionModal={setIsCreateElectionModal} onClose={() => setIsCreateElectionModal(false)} />
+                </div>
+            )}
           </div>
      );
 }
