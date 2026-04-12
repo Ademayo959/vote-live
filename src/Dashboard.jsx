@@ -113,7 +113,11 @@ const Dashboard = () => {
                     {activeTab === "HistoryDashboard" && <HistoryDashboard setactiveTab={setactiveTab} />}
                 </div>
             </div>
-            {isModalActive && <HelpModal setIsModalActive={setIsModalActive} onClose={() => setIsModalActive(false)} />}
+            { isModalActive && (
+                <div className="fixed inset-0 bg-black/70 z-99" onClick={() => setIsModalActive(false)}>
+                    <HelpModal setIsModalActive={setIsModalActive} onClose={() => setIsModalActive(false)} />
+                </div>
+            )}
         </div>
     );
 }
