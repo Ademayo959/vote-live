@@ -106,7 +106,7 @@ const PollsDashboard = ({ setactiveTab }) => {
                         <div className='grid gap-y-3'>
                             {poll.options.map((option) => (
                                 <div className='w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md max-sm:w-full'>
-                                    <div className={`w-${option.percentage} h-10 z-0 bg-blue-100 flex items-center rounded-md whitespace-nowrap`}>
+                                    <div style={{ width: `${option.percentage}%` }} className={`h-10 z-0 bg-blue-100 flex items-center rounded-md whitespace-nowrap`}>
                                         <p className='ml-2 z-10'>{option.option}</p>
                                     </div>
                                     <p className='mr-2 font-sans text-blue-500'>{option.percentage}%</p>

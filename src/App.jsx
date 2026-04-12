@@ -5,12 +5,14 @@
 import Home from './Home'
 import Dashboard from './Dashboard';
 import Authpage from './Authpage';
+import HelpModal from './HelpModal';
 import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <Routes>
       <Route path='/' element={<Home />} />
+     <Route path='/help' element={<HelpModal/>}/>
       <Route path='/dashboard' element={<Dashboard />} />
       <Route path="signup" element={<Authpage />} />
       <Route path="login" element={<Authpage />} />
