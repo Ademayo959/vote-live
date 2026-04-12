@@ -6,6 +6,7 @@ import Home from './Home'
 import Dashboard from './Dashboard';
 import Authpage from './Authpage';
 import HelpModal from './HelpModal';
+import CreateElectionModal from './CreateElectionModal';
 import { Routes, Route } from "react-router-dom";
 
 function App() {
@@ -14,8 +15,9 @@ function App() {
       <Route path='/' element={<Home />} />
      <Route path='/help' element={<HelpModal/>}/>
       <Route path='/dashboard' element={<Dashboard />} />
-      <Route path="signup" element={<Authpage />} />
-      <Route path="login" element={<Authpage />} />
+      <Route path="/signup" element={<Authpage />} />
+      <Route path="/login" element={<Authpage />} />
+      <Route path="/create" element={<CreateElectionModal/>} />
     </Routes>
   )
 }

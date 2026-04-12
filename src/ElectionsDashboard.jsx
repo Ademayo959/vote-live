@@ -1,5 +1,6 @@
 import { useState } from "react"
 import HelpModal from "./HelpModal"
+import CreateElectionModal from "./CreateElectionModal"
 const ElectionsDashboard = ({ setactiveTab }) => {
     const elections = [
         { id: 1, title: "ACOMS 2026 Executives", voted: "540", positions: "6", endsIn: "17h: 03m: 59s" },
@@ -12,6 +13,8 @@ const ElectionsDashboard = ({ setactiveTab }) => {
     ]
     let ActiveElections = 3
     const [isModalActive, setIsModalActive] = useState(false);
+    const [isCreateElectionModal, setIsCreateElectionModal] = useState(false)
+
     return (
         <div>
             <div className='bg-white border-b border-gray-200 max-[840px]:hidden'>
@@ -44,7 +47,7 @@ const ElectionsDashboard = ({ setactiveTab }) => {
                         <p className="text-gray-500 font-raleway font-extralight max-[840px]:text-[12px] max-sm:w-48">View elections, vote for candidates, or create your own.</p>
                     </div>
                     <div>
-                        <div className="flex cursor-pointer bg-custom-blue text-white w-40 h-10 px-2 items-center justify-center rounded-lg text-sm font-raleway gap-2 max-sm:px-1 max-sm:gap-1 max-sm:w-30 max-sm:h-8">
+                        <div onClick={()=>{setIsCreateElectionModal(true)}} className="flex cursor-pointer bg-custom-blue text-white w-40 h-10 px-2 items-center justify-center rounded-lg text-sm font-raleway gap-2 max-sm:px-1 max-sm:gap-1 max-sm:w-30 max-sm:h-8">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 max-sm:w-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
@@ -122,6 +125,11 @@ const ElectionsDashboard = ({ setactiveTab }) => {
             { isModalActive && (
                 <div className="fixed inset-0 bg-black/70 z-99" onClick={() => setIsModalActive(false)}>
                     <HelpModal setIsModalActive={setIsModalActive} onClose={() => setIsModalActive(false)} />
+                </div>
+            )}
+            { isCreateElectionModal && (
+                <div className="fixed inset-0 bg-black/70 z-99" onClick={() => setIsCreateElectionModal(false)}>
+                    <CreateElectionModal setIsCreateElectionModal={setIsCreateElectionModal} onClose={() => setIsCreateElectionModal(false)} />
                 </div>
             )}
         </div>
