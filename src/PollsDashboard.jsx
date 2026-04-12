@@ -1,5 +1,6 @@
 import { useState } from "react"
 import HelpModal from "./HelpModal";
+import CreatePollModal from "./CreatePollModal";
 import ProfileOne from './assets/img/Profile-photo-one.jpeg';
 import ProfileTwo from './assets/img/about-us-dev9.jpg';
 import ProfileThree from './assets/img/about-us-dev11.jpg';
@@ -11,6 +12,7 @@ const PollsDashboard = ({ setactiveTab }) => {
         { id: 3, name: 'Geum Jan Di', time: "9", img: ProfileOne, question: 'Should lecturers implement the proposed test system', options: [{ option: 'Yes', percentage: "61" }, { option: 'No', percentage: "39" }], Votes: "92" }
     ]
     const [isModalActive, setIsModalActive] = useState(false);
+    const [isCreatePollModal, setIsCreatePollModal] = useState(false)
 
     return (
         <div>
@@ -43,7 +45,7 @@ const PollsDashboard = ({ setactiveTab }) => {
                         <p className="font-extrabold text-2xl font-montserrat max-sm:text-[16px]">Polls & Surveys</p>
                         <p className="text-gray-500 font-raleway font-extralight max-[840px]:text-[12px] max-sm:w-48">Participate in campus discussions or create your own.</p>
                     </div>
-                    <div className="flex cursor-pointer bg-custom-blue text-white w-40 h-10 px-2 items-center justify-center rounded-lg text-sm font-raleway gap-2 max-sm:w-[30%]">
+                    <div onClick={() =>{setIsCreatePollModal(true)}} className="flex cursor-pointer bg-custom-blue text-white w-40 h-10 px-2 items-center justify-center rounded-lg text-sm font-raleway gap-2 max-sm:w-[30%]">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                         </svg>
@@ -137,6 +139,11 @@ const PollsDashboard = ({ setactiveTab }) => {
             { isModalActive && (
                 <div className="fixed inset-0 bg-black/70 z-99" onClick={() => setIsModalActive(false)}>
                     <HelpModal setIsModalActive={setIsModalActive} onClose={() => setIsModalActive(false)} />
+                </div>
+            )}
+            { isCreatePollModal && (
+                <div className="fixed inset-0 bg-black/70 z-99" onClick={() => setIsCreatePollModal(false)}>
+                    <CreatePollModal setIsCreatePollModal={setIsCreatePollModal} onClose={() => setIsCreatePollModal(false)} />
                 </div>
             )}
         </div>

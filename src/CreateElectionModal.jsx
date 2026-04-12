@@ -27,7 +27,7 @@ const CreateElectionModal = ({setIsCreateElectionModal}) => {
 
     return (
         <div>
-            <div  onClick={(e) => e.stopPropagation()} className="bg-accent-blue w-[95%] max-w-3xl font-montserrat fixed top-1/2 left-1/2 -translate-x-1/2 z-100 -translate-y-1/2 max-h-[90vh] overflow-y-auto max-sm:w-full max-sm:max-h-screen max-sm:top-0 max-sm:left-0 max-sm:translate-x-0 max-sm:translate-y-0">
+            <div  onClick={(e) => e.stopPropagation()} className="rounded-xl bg-accent-blue w-[95%] max-w-3xl font-montserrat fixed top-1/2 left-1/2 -translate-x-1/2 z-100 -translate-y-1/2 max-h-[90vh] overflow-y-auto max-sm:rounded-none max-sm:w-full max-sm:max-h-screen max-sm:top-0 max-sm:left-0 max-sm:translate-x-0 max-sm:translate-y-0">
                 <div className="flex justify-between border-b border-gray-200 p-4">
                     <p className="font-extrabold">Create New Election</p>
                     <svg onClick={() => {setIsCreateElectionModal(false)}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 cursor-pointer">
