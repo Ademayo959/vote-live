@@ -13,7 +13,7 @@ const Navbar = ({scrollToFeatures}) => {
                     <Link to="/dashboard">
                         <p>Browse Elections</p>
                     </Link>
-                    <p>For Universities</p>
+                    <p>How it Works</p>
                     <Link to="/help">
                         <p>Support</p>
                     </Link>

@@ -54,7 +54,7 @@ const CreatePollModal = ( {setIsCreatePollModal} ) => {
                             </div>
                         </div>
                     </div>
-                    <button className="bg-blue-400 w-full h-10 rounded-lg text-white my-4 justify-self-center">Submit</button>
+                    <button className="bg-[#1a72ec] w-full h-10 rounded-lg text-white my-4 justify-self-center">Submit</button>
                 </div>
             </div>
         </div>
