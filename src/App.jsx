@@ -6,6 +6,7 @@ import Home from './Home'
 import Dashboard from './Dashboard';
 import Authpage from './Authpage';
 import HelpModal from './HelpModal';
+import HelpAndSupport from './HelpAndSupport'
 import CreateElectionModal from './CreateElectionModal';
 import CreatePollModal from './CreatePollModal';
 import { Routes, Route } from "react-router-dom";
@@ -14,7 +15,7 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<Home />} />
-     <Route path='/help' element={<HelpModal/>}/>
+     <Route path='/help' element={<HelpAndSupport />}/>
       <Route path='/dashboard' element={<Dashboard />} />
       <Route path="/signup" element={<Authpage />} />
       <Route path="/login" element={<Authpage />} />

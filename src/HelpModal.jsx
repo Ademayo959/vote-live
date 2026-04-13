@@ -1,6 +1,6 @@
 const HelpModal = ({ setIsModalActive }) => {
     return (
-        <div className="bg-white w-[95%] max-w-3xl font-montserrat fixed top-1/2 left-1/2 -translate-x-1/2 z-100 -translate-y-1/2 max-h-[90vh] overflow-y-auto">
+        <div onClick={(e) => e.stopPropagation()} className="bg-white w-[95%] max-w-3xl font-montserrat fixed top-1/2 left-1/2 -translate-x-1/2 z-100 -translate-y-1/2 max-h-[90vh] overflow-y-auto">
             <div className="px-6 bg-white pb-5">
                 <div onClick={() => { setIsModalActive(false) }} className="bg-blue-100 w-10 h-10 flex justify-center items-center rounded-md my-4">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">

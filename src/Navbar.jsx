@@ -1,7 +1,7 @@
 import logo from './assets/img/votelive-logo.png'
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({scrollToFeatures}) => {
     return (
         <div className='max-w-full bg-white border-b border-gray-100'>
             <div className=' grid grid-cols-[30%_50%_20%] items-center gap-3 w-full font-montserrat max-w-7xl justify-self-center py-4 max-sm:flex max-sm:justify-between max-sm:items-center max-sm:px-3'>
@@ -9,12 +9,14 @@ const Navbar = () => {
                     <img src={logo} alt="logo" className='h-16 w-auto object-contain max-sm:h-12' />
                 </div>
                 <div className='flex gap-8 max-sm:hidden'>
-                    <p>Features</p>
+                    <p onClick={()=>{scrollToFeatures()}} className='cursor-pointer'>Features</p>
                     <Link to="/dashboard">
                         <p>Browse Elections</p>
                     </Link>
                     <p>For Universities</p>
-                    <p>Support</p>
+                    <Link to="/help">
+                        <p>Support</p>
+                    </Link>
                 </div>
                 <div className='flex gap-8 max-sm:gap-2'>
                     <Link to="/login">

@@ -1,6 +1,7 @@
 import logo from './assets/img/votelive-logo.png'
+import { Link } from 'react-router-dom';
 
-const Footer = () => {
+const Footer = ({scrollToFeatures}) => {
     return (
         <div className="Footer m-w-full bg-white h-72 border-t border-gray-300 font-montserrat max-sm:px-4">
             <div className="max-w-7xl justify-self-center grid grid-rows-[70%_10%_20%] gap-1">
@@ -12,27 +13,39 @@ const Footer = () => {
                     <div className='grid gap-4'>
                         <b className='font-extrabold'>Platforms</b>
                         <div className='font-extralight text-gray-500 gap-2 grid'>
-                            <p>Features</p>
-                            <p>Live Elections</p>
-                            <p>Polls & Surveys</p>
-                            <p>Security</p>
+                            <p onClick={scrollToFeatures} className='cursor-pointer'>Features</p>
+                            <Link to="/dashboard">
+                                <p className='cursor-pointer'>Polls & Surveys</p>
+                            </Link>
+                            <Link to="/help">
+                                <p className='cursor-pointer'>Security</p>
+                            </Link>
                         </div>
                     </div>
                     <div className='grid gap-4'>
-                        <b className='font-extrabold'>Support</b>
+                        <b className='font-extrabold cursor-pointer'>Support</b>
                         <div className='font-extralight text-gray-500 grid gap-2'>
-                            <p>Help Center</p>
-                            <p>Documentation</p>
-                            <p>Contact Us</p>
-                            <p>Status</p>
+                            <Link to="/help">
+                                <p className='cursor-pointer'>Help Center</p>                            
+                            </Link>
+                            <Link to="/help">
+                                <p className='cursor-pointer'>Documentation</p>                            
+                            </Link>
+                            <Link to="/help">
+                                <p className='cursor-pointer'>Contact Us</p>                            
+                            </Link>
                         </div>
                     </div>
                     <div className='grid gap-4'>
-                        <b className='font-extrabold'>Legal</b>
+                        <b className='font-extrabold cursor-pointer'>Legal</b>
                         <div className='font-extralight text-gray-500 grid gap-2'>
-                            <p>Privacy Policy</p>
-                            <p>Live Elections</p>
-                            <p>Cookie Policy</p>
+                            <Link to="/help">
+                                <p className='cursor-pointer'>Privacy Policy</p>                            
+                            </Link>
+                            <Link to="/dashboard">
+                                <p className='cursor-pointer'>Live Elections</p>
+                            </Link>
+                            <a href='https://x.com/build_pixels' className='cursor-pointer'>Follow us on X</a>
                         </div>
                     </div>
                 </div>

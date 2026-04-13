@@ -7,9 +7,13 @@ import ProfileTwo from './assets/img/Profile-photo-two.jpeg';
 import ProfileThree from './assets/img/Profile-photo-three.jpeg';
 
 const Home = () => {
+    const scrollToFeatures = () => {
+        console.log(document.getElementById('features'));
+        document.getElementById('features').scrollIntoView({ behavior: 'smooth' });
+    };
     return (
         <div className="Home bg-accent-blue">
-            <Navbar />
+            <Navbar scrollToFeatures={scrollToFeatures} />
             <div className="Landing-Page justify-self-center mt-26 font-montserrat max-w-full max-sm:px-3 max-sm:mt-12 max-sm:w-full">
                 <div className="Hero-section flex gap-10 max-w-7xl max-sm:w-full max-sm:flex-col">
                     <div>
@@ -56,7 +60,7 @@ const Home = () => {
                 <hr className="hidden text-gray-300 max-sm:block" />
                 <div className="max-w-full ">
                     <div className="mt-28 max-w-7xl max-sm:mt-12">
-                        <h1 className="text-5xl text-center font-extrabold my-6 max-sm:text-[8vw] max-sm:text-left">Why choose Votelive?</h1>
+                        <h1 id="features" className="text-5xl text-center font-extrabold my-6 max-sm:text-[8vw] max-sm:text-left">Why choose Votelive?</h1>
                         <p className="text-md text-gray-500 text-center pb-12 max-sm:text-left max-sm:text-[4vw] max-sm:font-raleway">We ensure that every vote counts with enterprise-grade security tailored for <br /> academic institutions</p>
                         <div className="grid grid-cols-3 gap-12 max-sm:grid-cols-1 max-sm:justify-self-center max-sm:justify-items-center">
                             <div className="grid grid-rows-[30%_20%_50%] gap-2 bg-white shadow-lg p-10 rounded-2xl w-92 max-sm:w-[95%] ">
@@ -325,7 +329,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <Footer />
+            <Footer scrollToFeatures={scrollToFeatures} />
         </div>
     );
 }
