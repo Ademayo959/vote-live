@@ -66,7 +66,7 @@ const HowItWorks = () => {
                             <p className="text-[42px] -mb-2 font-medium font-sans max-sm:text-[9vw]">There is no Step 4 😏</p>
                             <p className="text-[42px] -my-2 font-medium font-sans max-sm:text-[10vw]">You're Done</p>
                             <Link to="/dashboard">
-                                <button className="bg-[#1a72ec] p-2 w-fit rounded-md text-white text-[13px] my-4 hover:mt-6 transition-all">Start your first Election</button>
+                                <button className="bg-[#1a72ec] p-2 w-fit rounded-md text-white text-[13px] my-4">Start your first Election</button>
                             </Link>
                         </div>
                     </div>

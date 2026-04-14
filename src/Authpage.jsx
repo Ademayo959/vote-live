@@ -1,11 +1,32 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ProfileTwo from './assets/img/Old Nigerian.jpg';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from './firebase/firebase';
+
 
 const Authpage = () => {
+    //useState for all the input fields
+    const [fullName, setfullName] = useState("");
+    const [matricNumber, setmatricNumber] = useState("");
+    const [email, setemail] = useState("");
+    const [password, setpassword] = useState("");
+
+    async function handleSignUp() {
+        try {
+            let createUser = await createUserWithEmailAndPassword(auth, email, password);
+            let user = createUser.user
+            console.log(user)
+        } catch (err) {
+            console.log("Request Failed Error:", err)
+        }
+    }
+
+
+
+
+    const [showPassword, setshowPassword] = useState(true)
     const [activeMenu, setactiveMenu] = useState("signup");
-    const [clickedOne, setClickedOne] = useState(true);
-    const [clickedTwo, setClickedTwo] = useState(false);
     return (
         <div className="auth-page flex font-montserrat">
             <div className="bg-linear-to-br from-[#1e40a9] to-[#1e2b42] w-[50%] h-screen text-white py-6 px-8 max-sm:hidden">
@@ -33,10 +54,10 @@ const Authpage = () => {
                         <p className='text-gray-500 text-center text-[14px] font-raleway'>Enter your details below to get started</p>
                     </div>
                     <div className='w-96 h-12 bg-soft-blue flex items-center justify-center gap-2 rounded-md mb-6 max-sm:w-[90%] max-sm:justify-self-center'>
-                        <div className={`flex items-center justify-center w-46 h-10 rounded-md ${clickedOne ? "bg-white shadow-sm" : "bg-transparent"}`} onClick={() => { setactiveMenu("signup"); setClickedOne(true) }}>
+                        <div className={`flex items-center justify-center w-46 h-10 rounded-md ${activeMenu === "signup" ? "bg-white shadow-sm" : "bg-transparent"}`} onClick={() => { setactiveMenu("signup"); }}>
                             <p>Sign Up</p>
                         </div>
-                        <div className={`flex items-center justify-center w-46 h-10 rounded-md ${clickedTwo ? "bg-white shadow-sm" : "bg-transparent"}`} onClick={() => { setactiveMenu("login"); setClickedTwo(true) }}>
+                        <div className={`flex items-center justify-center w-46 h-10 rounded-md ${activeMenu === "login" ? "bg-white shadow-sm" : "bg-transparent"}`} onClick={() => { setactiveMenu("login"); }}>
                             <p>Log In</p>
                         </div>
                     </div>
@@ -50,7 +71,7 @@ const Authpage = () => {
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                                             </svg>
-                                            <input type="text" placeholder='Johnny Doe' className='h-8 w-80 outline-0 placeholder:text-[14px] placeholder:font-raleway' />
+                                            <input name="fullName" onChange={(e) => setfullName(e.target.value)} type="text" placeholder='John Doe' className='fullname h-8 w-80 outline-0 placeholder:text-[14px] placeholder:font-raleway' />
                                         </div>
                                     </div>
                                     <div>
@@ -59,16 +80,16 @@ const Authpage = () => {
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
                                             </svg>
-                                            <input type="text" placeholder='e.g ABC/12/3456' className='h-8 w-80 outline-0 placeholder:text-[14px] placeholder:font-raleway' />
+                                            <input name="matricNumber" onChange={(e) => setmatricNumber(e.target.value)} type="text" placeholder='e.g ABC/12/3456' className='h-8 w-80 outline-0 placeholder:text-[14px] placeholder:font-raleway' />
                                         </div>
                                     </div>
                                     <div>
-                                        <p>Phone Number</p>
+                                        <p>Email</p>
                                         <div className='flex items-center gap-2 border border-gray-300 px-2 py-1 bg-white rounded-md my-2 w-96 max-sm:w-[93%]'>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                             </svg>
-                                            <input type="text" placeholder='+234 801 2222 333' className='h-8 w-80 outline-0 placeholder:text-[14px] placeholder:font-raleway' />
+                                            <input name="email" onChange={(e) => setemail(e.target.value)} type="text" placeholder='johndoe123@gmail.com' className='h-8 w-80 outline-0 placeholder:text-[14px] placeholder:font-raleway' />
                                         </div>
                                     </div>
                                     <div>
@@ -77,7 +98,18 @@ const Authpage = () => {
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                                             </svg>
-                                            <input type="text" placeholder='Create your Password' className='h-8 w-80 outline-0 placeholder:text-[14px] placeholder:font-raleway' />
+                                            <input name="password" onChange={(e) => setpassword(e.target.value)} type={showPassword ? "password" : "text"} placeholder='Create your Password' className='h-8 w-80 outline-0 placeholder:text-[14px] placeholder:font-raleway' />
+                                            <div>
+                                                {showPassword ?
+                                                    <svg onClick={()=>{setshowPassword(false)}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                                    </svg> :
+                                                    <svg onClick={()=>{setshowPassword(true)}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
+                                                    </svg>
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -86,7 +118,7 @@ const Authpage = () => {
                                         <p className='text-[12px] text-gray-600 text-center'><input type="checkbox" /> By clicking create account, I agree that I have read and <br /> accepted the <a href="#" className='text-blue-500 underline'>Terms of Use</a> and <a href="#" className='text-blue-500 underline'>Privacy Policy</a></p>
                                     </div>
                                     <div>
-                                        <div className='bg-blue-500 flex gap-2 text-white w-96 h-10 items-center justify-center rounded-md hover:gap-4 transition-all max-sm:w-[93%]'>
+                                        <div onClick={handleSignUp} className='bg-blue-500 flex gap-2 text-white w-96 h-10 items-center justify-center rounded-md hover:gap-4 transition-all max-sm:w-[93%]'>
                                             <p>Create Account</p>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
@@ -97,21 +129,21 @@ const Authpage = () => {
                                 <div className='text-center flex items-center justify-between max-sm:w-[93%]'>
                                     <p className='text-[12px] text-gray-500'>Having Trouble? <a href="#" className='text-blue-500 underline'>Contact Support</a></p>
                                     <Link to="/">
-                                    <p className='text-[13px] text-blue-500 font-raleway'>Back to Home</p>
-                                </Link>
+                                        <p className='text-[13px] text-blue-500 font-raleway'>Back to Home</p>
+                                    </Link>
                                 </div>
-                                
+
                             </div>}
                         {activeMenu === "login" &&
                             <div>
                                 <div className='mt-10'>
                                     <div>
-                                        <p>Matric Number</p>
+                                        <p>Email</p>
                                         <div className='flex items-center gap-2 border border-gray-300 px-2 py-1 bg-white rounded-md my-2 w-96 max-sm:w-[93%]'>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                             </svg>
-                                            <input type="text" placeholder='e.g ABC/12/3456' className='h-8 w-80 outline-0 placeholder:text-[14px] placeholder:font-raleway' />
+                                            <input type="text" placeholder='johdoe123@gmail.com' className='h-8 w-80 outline-0 placeholder:text-[14px] placeholder:font-raleway' />
                                         </div>
                                     </div>
                                     <div>
@@ -120,7 +152,7 @@ const Authpage = () => {
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                                             </svg>
-                                            <input type="text" placeholder='Create your Password' className='h-8 w-80 outline-0 placeholder:text-[14px] placeholder:font-raleway' />
+                                            <input type="password" placeholder='Create your Password' className='h-8 w-80 outline-0 placeholder:text-[14px] placeholder:font-raleway' />
                                         </div>
                                     </div>
                                 </div>
