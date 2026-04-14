@@ -48,7 +48,7 @@ const HowItWorks = () => {
                             <div className="flex items-center justify-center rounded-md h-9 w-9 bg-blue-200 max-sm:justify-self-center">
                                 <p className="text-blue-400 font-sans font-extrabold text-[14px]">03</p>
                             </div>
-                            <p className="text-[29px] my-2 font-medium font-sans">Add Positions & Candidates</p>
+                            <p className="text-[25px] my-2 font-medium font-sans">Add Positions & Candidates</p>
                             <p className="w-100 font-monteserrat text-[13px] max-sm:justify-self-center max-sm:w-90">Add every position up for contest and fill in the candidates running for each one. You can add as many as 10 positions and candidates as your election needs. When everything looks right, hit submit — VoteLive handles the rest.</p>
                         </div>
                         <div>
