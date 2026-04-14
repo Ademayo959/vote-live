@@ -14,8 +14,8 @@ const Footer = ({scrollToFeatures}) => {
                         <b className='font-extrabold'>Platforms</b>
                         <div className='font-extralight text-gray-500 gap-2 grid'>
                             <p onClick={scrollToFeatures} className='cursor-pointer'>Features</p>
-                            <Link to="/dashboard">
-                                <p className='cursor-pointer'>Polls & Surveys</p>
+                            <Link to="/howitworks">
+                                <p className='cursor-pointer'>How It Works</p>
                             </Link>
                             <Link to="/help">
                                 <p className='cursor-pointer'>Security</p>
