@@ -8,9 +8,9 @@ import StepFour from './assets/img/HowItWorks-Imgs/Step-4.png'
 
 const HowItWorks = () => {
     return (
-        <div className="font-montserrat justify-self-center w-full">
+        <div className="font-montserrat justify-self-center w-full ">
             <Navbar />
-            <div className="max-w-5xl w-full justify-self-center mb-14">
+            <div className="max-w-5xl w-full justify-self-center mb-14 overflow-x-hidden">
                 <div className="justify-self-center my-12">
                     <div className="py-1 px-2 rounded-2xl w-fit bg-blue-100 justify-self-center">
                         <p className="font-sans text-[#1a72ec] font-semibold text-[0.8vw] max-sm:text-[2vw]">SIMPLE PROCESS</p>
@@ -63,7 +63,7 @@ const HowItWorks = () => {
                             <div className="flex items-center justify-center rounded-md h-9 w-9 bg-blue-200 max-sm:justify-self-center">
                                 <p className="text-blue-400 font-sans font-extrabold text-[14px]">04</p>
                             </div>
-                            <p className="text-[42px] -mb-2 font-medium font-sans max-sm:text-[10vw]">There is no Step 4 😏</p>
+                            <p className="text-[42px] -mb-2 font-medium font-sans max-sm:text-[9vw]">There is no Step 4 😏</p>
                             <p className="text-[42px] -my-2 font-medium font-sans max-sm:text-[10vw]">You're Done</p>
                             <Link to="/dashboard">
                                 <button className="bg-[#1a72ec] p-2 w-fit rounded-md text-white text-[13px] my-4 hover:mt-6 transition-all">Start your first Election</button>
