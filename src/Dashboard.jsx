@@ -1,5 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
+import { db } from './firebase/firebase';
+import { auth } from './firebase/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 import logo from './assets/img/votelive-logo.png'
 import ProfileThree from './assets/img/Profile-photo-three.jpeg';
 import MainDashboardPage from './MainDashboardPage';
@@ -14,6 +18,38 @@ const Dashboard = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [isModalActive, setIsModalActive] = useState(false);
 
+    const [user, setuser] = useState(null)
+    const [userName, setuserName] = useState("")
+    const [userMatricNumber, setuserMatricNumber] = useState("")
+
+
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            setuser(user);
+        });
+        return () => unsubscribe();
+    }, [])
+
+    useEffect(() => {
+        if (!user) return;
+
+        async function getUserDetails() {
+            try {
+                const reference = doc(db, "users", user.uid);
+                const snapshot = await getDoc(reference);
+                const data = snapshot.data();
+                setuserName(data.fullName)
+                setuserMatricNumber(data.matricNumber)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        getUserDetails();
+    }, [user])
+
+
+
     return (
         <div className="dashboard font-montserrat">
             {/* Mobile top bar */}
@@ -27,7 +63,7 @@ const Dashboard = () => {
                     <img src={logo} alt="logo" className='h-12' />
                 </Link>
                 <div className='flex gap-2'>
-                    <div onClick={() => {setIsModalActive(true)}}  className='cursor-pointer p-2 border border-gray-300 w-10 flex items-center justify-center rounded-full h-10 text-gray-600'>
+                    <div onClick={() => { setIsModalActive(true) }} className='cursor-pointer p-2 border border-gray-300 w-10 flex items-center justify-center rounded-full h-10 text-gray-600'>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
                         </svg>
@@ -99,8 +135,8 @@ const Dashboard = () => {
                         <div className='flex gap-2 mt-4'>
                             <img src={ProfileThree} alt="A profile pic" className='h-12 w-12 rounded-full' />
                             <div className='font-raleway'>
-                                <p className='font-extrabold'>Adeleye Mayowa</p>
-                                <p className='text-gray-500'>Soft. Eng • 200L</p>
+                                <p className='font-extrabold'>{userName}</p>
+                                <p className='text-gray-500'>{userMatricNumber}</p>
                             </div>
                         </div>
                     </div>
@@ -113,7 +149,7 @@ const Dashboard = () => {
                     {activeTab === "HistoryDashboard" && <HistoryDashboard setactiveTab={setactiveTab} />}
                 </div>
             </div>
-            { isModalActive && (
+            {isModalActive && (
                 <div className="fixed inset-0 bg-black/70 z-99" onClick={() => setIsModalActive(false)}>
                     <HelpModal setIsModalActive={setIsModalActive} onClose={() => setIsModalActive(false)} />
                 </div>
