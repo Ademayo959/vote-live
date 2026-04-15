@@ -47,13 +47,13 @@ const Authpage = () => {
                     </div>
                 </div>
             </div>
-            <div className='bg-accent-blue flex w-[50%] max-sm:w-full max-sm:overflow-hidden max-sm:h-screen'>
-                <div className='mx-auto'>
+            <div className='bg-accent-blue flex w-[50%] max-sm:justify-self-center max-sm:w-full max-sm:overflow-hidden max-sm:h-screen'>
+                <div className='mx-auto w-96 max-sm:w-[85vw]'>
                     <div className='mb-8'>
                         <p className='text-2xl font-extrabold mt-4 mb-2 text-center'>Create an account</p>
                         <p className='text-gray-500 text-center text-[14px] font-raleway'>Enter your details below to get started</p>
                     </div>
-                    <div className='w-96 h-12 bg-soft-blue flex items-center justify-center gap-2 rounded-md mb-6 max-sm:w-[90%] max-sm:justify-self-center'>
+                    <div className='w-96 h-12 bg-soft-blue flex items-center justify-center gap-2 rounded-md mb-6 max-sm:w-full max-sm:justify-self-center'>
                         <div className={`flex items-center justify-center w-46 h-10 rounded-md ${activeMenu === "signup" ? "bg-white shadow-sm" : "bg-transparent"}`} onClick={() => { setactiveMenu("signup"); }}>
                             <p>Sign Up</p>
                         </div>
@@ -67,38 +67,38 @@ const Authpage = () => {
                                 <div>
                                     <div>
                                         <p>Full Name</p>
-                                        <div className='flex items-center gap-2 border border-gray-300 px-2 py-1 bg-white rounded-md my-2 w-96 max-sm:w-[93%]'>
+                                        <div className='flex items-center gap-2 border border-gray-300 px-2 py-1 bg-white rounded-md my-2 w-96 max-sm:w-full'>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                                             </svg>
-                                            <input name="fullName" onChange={(e) => setfullName(e.target.value)} type="text" placeholder='John Doe' className='fullname h-8 w-80 outline-0 placeholder:text-[14px] placeholder:font-raleway' />
+                                            <input name="fullName" onChange={(e) => setfullName(e.target.value)} type="text" placeholder='John Doe' className='fullname h-8 w-full outline-0 placeholder:text-[14px] placeholder:font-raleway' />
                                         </div>
                                     </div>
                                     <div>
                                         <p>Matric Number</p>
-                                        <div className='flex items-center gap-2 border border-gray-300 px-2 py-1 bg-white rounded-md my-2 w-96 max-sm:w-[93%]'>
+                                        <div className='flex items-center gap-2 border border-gray-300 px-2 py-1 bg-white rounded-md my-2 w-96 max-sm:w-full'>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
                                             </svg>
-                                            <input name="matricNumber" onChange={(e) => setmatricNumber(e.target.value)} type="text" placeholder='e.g ABC/12/3456' className='h-8 w-80 outline-0 placeholder:text-[14px] placeholder:font-raleway' />
+                                            <input name="matricNumber" onChange={(e) => setmatricNumber(e.target.value)} type="text" placeholder='e.g ABC/12/3456' className='h-8 w-full outline-0 placeholder:text-[14px] placeholder:font-raleway' />
                                         </div>
                                     </div>
                                     <div>
                                         <p>Email</p>
-                                        <div className='flex items-center gap-2 border border-gray-300 px-2 py-1 bg-white rounded-md my-2 w-96 max-sm:w-[93%]'>
+                                        <div className='flex items-center gap-2 border border-gray-300 px-2 py-1 bg-white rounded-md my-2 w-96 max-sm:w-full'>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                             </svg>
-                                            <input name="email" onChange={(e) => setemail(e.target.value)} type="text" placeholder='johndoe123@gmail.com' className='h-8 w-80 outline-0 placeholder:text-[14px] placeholder:font-raleway' />
+                                            <input name="email" onChange={(e) => setemail(e.target.value)} type="text" placeholder='johndoe123@gmail.com' className='h-8 w-full outline-0 placeholder:text-[14px] placeholder:font-raleway' />
                                         </div>
                                     </div>
                                     <div>
                                         <p>Password</p>
-                                        <div className='flex items-center gap-2 border border-gray-300 px-2 py-1 bg-white rounded-md my-2 w-96 max-sm:w-[93%]'>
+                                        <div className='flex items-center gap-2 border border-gray-300 px-2 py-1 bg-white rounded-md my-2 w-96 max-sm:w-full'>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                                             </svg>
-                                            <input name="password" onChange={(e) => setpassword(e.target.value)} type={showPassword ? "password" : "text"} placeholder='Create your Password' className='h-8 w-80 outline-0 placeholder:text-[14px] placeholder:font-raleway' />
+                                            <input name="password" onChange={(e) => setpassword(e.target.value)} type={showPassword ? "password" : "text"} placeholder='Create your Password' className='h-8 w-full outline-0 placeholder:text-[14px] placeholder:font-raleway' />
                                             <div>
                                                 {showPassword ?
                                                     <svg onClick={()=>{setshowPassword(false)}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
@@ -115,10 +115,10 @@ const Authpage = () => {
                                 </div>
                                 <div className='grid gap-4 my-4'>
                                     <div className='flex'>
-                                        <p className='text-[12px] text-gray-600 text-center'><input type="checkbox" /> By clicking create account, I agree that I have read and <br /> accepted the <a href="#" className='text-blue-500 underline'>Terms of Use</a> and <a href="#" className='text-blue-500 underline'>Privacy Policy</a></p>
+                                        <p className='text-[12px] text-gray-600 text-center'><input type="checkbox" /> By clicking create account, I agree that I have read and accepted the <a href="#" className='text-blue-500 underline'>Terms of Use</a> and <a href="#" className='text-blue-500 underline'>Privacy Policy</a></p>
                                     </div>
                                     <div>
-                                        <div onClick={handleSignUp} className='bg-blue-500 flex gap-2 text-white w-96 h-10 items-center justify-center rounded-md hover:gap-4 transition-all max-sm:w-[93%]'>
+                                        <div onClick={handleSignUp} className='bg-blue-500 flex gap-2 text-white w-96 h-10 items-center justify-center rounded-md hover:gap-4 transition-all max-sm:w-full'>
                                             <p>Create Account</p>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
@@ -126,7 +126,7 @@ const Authpage = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className='text-center flex items-center justify-between max-sm:w-[93%]'>
+                                <div className='text-center flex items-center justify-between max-sm:w-full'>
                                     <p className='text-[12px] text-gray-500'>Having Trouble? <a href="#" className='text-blue-500 underline'>Contact Support</a></p>
                                     <Link to="/">
                                         <p className='text-[13px] text-blue-500 font-raleway'>Back to Home</p>
@@ -135,30 +135,30 @@ const Authpage = () => {
 
                             </div>}
                         {activeMenu === "login" &&
-                            <div>
+                            <div className='w-96 max-sm:w-[85vw]'>
                                 <div className='mt-10'>
                                     <div>
                                         <p>Email</p>
-                                        <div className='flex items-center gap-2 border border-gray-300 px-2 py-1 bg-white rounded-md my-2 w-96 max-sm:w-[93%]'>
+                                        <div className='flex items-center gap-2 border border-gray-300 px-2 py-1 bg-white rounded-md my-2 w-96 max-sm:w-full'>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                             </svg>
-                                            <input type="text" placeholder='johdoe123@gmail.com' className='h-8 w-80 outline-0 placeholder:text-[14px] placeholder:font-raleway' />
+                                            <input type="text" placeholder='johdoe123@gmail.com' className='h-8 w-full outline-0 placeholder:text-[14px] placeholder:font-raleway' />
                                         </div>
                                     </div>
                                     <div>
                                         <p>Password</p>
-                                        <div className='flex items-center gap-2 border border-gray-300 px-2 py-1 bg-white rounded-md my-2 w-96 max-sm:w-[93%]'>
+                                        <div className='flex items-center gap-2 border border-gray-300 px-2 py-1 bg-white rounded-md my-2 w-96 max-sm:w-full'>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                                             </svg>
-                                            <input type="password" placeholder='Create your Password' className='h-8 w-80 outline-0 placeholder:text-[14px] placeholder:font-raleway' />
+                                            <input type="password" placeholder='Create your Password' className='h-8 w-full outline-0 placeholder:text-[14px] placeholder:font-raleway' />
                                         </div>
                                     </div>
                                 </div>
                                 <div className='grid gap-4 my-4'>
                                     <div>
-                                        <div className='bg-blue-500 flex gap-2 text-white w-96 h-10 items-center justify-center rounded-md hover:gap-4 transition-all max-sm:w-[93%]'>
+                                        <div className='bg-blue-500 flex gap-2 text-white w-96 h-10 items-center justify-center rounded-md hover:gap-4 transition-all max-sm:w-full'>
                                             <p>Log In</p>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
@@ -166,7 +166,7 @@ const Authpage = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className='text-center flex items-center justify-between max-sm:w-[93%]'>
+                                <div className='text-center flex items-center justify-between max-sm:w-full'>
                                     <p className='text-[12px] text-gray-500'>Having Trouble? <a href="#" className='text-blue-500 underline'>Contact Support</a></p>
                                     <Link to="/">
                                         <p className='text-[13px] text-blue-500 font-raleway'>Back to Home</p>
