@@ -153,12 +153,14 @@ const Home = () => {
                         <h1 className="text-4xl max-sm:text-3xl">Trending Now</h1>
                         <div className="flex justify-between items-center">
                             <p className="font-raleway my-2 text-gray-600 max-sm:text-[3vw] max-sm:w-[70%]">Active elections and polls from across the platform</p>
-                            <div className="flex gap-2 h-11 w-42 items-center justify-center border border-gray-300 rounded-lg max-sm:h-8 max-sm:w-24">
-                                <p className="max-sm:text-[13px]">Browse All</p>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 max-sm:hidden">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                </svg>
-                            </div>
+                            <Link to="/dashboard">
+                                <div className="flex gap-2 h-11 w-42 items-center justify-center border border-gray-300 rounded-lg max-sm:h-8 max-sm:w-24">
+                                    <p className="max-sm:text-[13px]">Browse All</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 max-sm:hidden">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                    </svg>
+                                </div>
+                            </Link>
                         </div>
                     </div>
                     <div className="grid grid-cols-3 gap-12 my-12 max-sm:grid-cols-1">
@@ -247,14 +249,16 @@ const Home = () => {
                                     <p className="font-raleway text-sm text-gray-600">Cast your vote for the best football Team on campus!</p>
                                 </div>
                                 <hr className="text-gray-300" />
-                                <div className="flex gap-1 hover:gap-3 transition-all items-center cursor-pointer">
-                                    <p className="text-custom-blue">Participate Now </p>
-                                    <span className="text-custom-blue">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-4">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                                        </svg>
-                                    </span>
-                                </div>
+                                <Link to="/dashboard">
+                                    <div className="flex gap-1 hover:gap-3 transition-all items-center cursor-pointer">
+                                        <p className="text-custom-blue">Participate Now </p>
+                                        <span className="text-custom-blue">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-4">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                                            </svg>
+                                        </span>
+                                    </div>
+                                </Link>
                             </div>
                         </div>
                         <div className="w-90 rounded-2xl bg-white shadow-lg h-70 grid grid-rows-[20%_10%_10%_50%] gap-2 py-6 px-6 pt-2 max-sm:px-3 max-sm:w-[99%]">
@@ -317,15 +321,19 @@ const Home = () => {
                     <h1 className="text-white text-4xl my-3 font-extrabold max-sm:text-[9vw]">Ready to host your next Election?</h1>
                     <p className="text-gray-200 font-raleway">Get started with Votelive today. Secure, simple, and effective.</p>
                     <div className="flex gap-4 justify-self-center items-center mt-8 max-sm:w-full max-sm:gap-6 max-sm:flex-col">
-                        <button className="bg-white flex justify-center items-center gap-2 text-custom-blue h-11 w-fit px-4 rounded-md max-sm:h-11 max-sm:w-full max-sm:text-[4vw]">
-                            Create Election
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                            </svg>
-                        </button>
-                        <button className="bg-custom-blue border border-white text-white h-11 w-fit px-4 rounded-md max-sm:h-11 max-sm:w-full max-sm:text-[4vw]">
-                            Contact Sales
-                        </button>
+                        <Link to="/dashboard">
+                            <button className="bg-white flex justify-center items-center gap-2 text-custom-blue h-11 w-fit px-4 rounded-md max-sm:h-11 max-sm:w-full max-sm:text-[4vw]">
+                                Create Election
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                </svg>
+                            </button>
+                        </Link>
+                        <Link to="/help">
+                            <button className="bg-custom-blue border border-white text-white h-11 w-fit px-4 rounded-md max-sm:h-11 max-sm:w-full max-sm:text-[4vw]">
+                                Contact Sales
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>
