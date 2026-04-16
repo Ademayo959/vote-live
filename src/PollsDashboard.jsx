@@ -1,18 +1,37 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "./firebase/firebase";
 import HelpModal from "./HelpModal";
 import CreatePollModal from "./CreatePollModal";
 import ProfileOne from './assets/img/Profile-photo-one.jpeg';
 import ProfileTwo from './assets/img/about-us-dev9.jpg';
 import ProfileThree from './assets/img/about-us-dev11.jpg';
 
-const PollsDashboard = ({ setactiveTab }) => {
-    let polls = [
-        { id: 1, name: 'Peter Tanner', time: "2", img: ProfileThree, question: 'Who should win Content Creator of the Year?', options: [{ option: 'Ishowspeed', percentage: "65" }, { option: 'Mirabel', percentage: "25" }, { option: 'Simi', percentage: "10" }], Votes: "2435" },
-        { id: 2, name: 'Adeleye Dolapo', time: "17", img: ProfileTwo, question: 'Anime of the Year????', options: [{ option: 'Demon Slayer', percentage: "31" }, { option: 'Jujustu Kaisen', percentage: "27" }, { option: 'Attack on titan', percentage: "42" }], Votes: "571" },
-        { id: 3, name: 'Geum Jan Di', time: "9", img: ProfileOne, question: 'Should lecturers implement the proposed test system', options: [{ option: 'Yes', percentage: "61" }, { option: 'No', percentage: "39" }], Votes: "92" }
-    ]
+const PollsDashboard = ({ setactiveTab, userName }) => {
+    let [polls, setpolls] = useState([]) 
     const [isModalActive, setIsModalActive] = useState(false);
     const [isCreatePollModal, setIsCreatePollModal] = useState(false)
+
+    useEffect(() => {
+        async function getPolls() {
+            try {
+                let collectionRef = collection(db, "polls");
+                const snapshot = await getDocs(collectionRef)
+                const pollsArray = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data()
+                }))
+                console.log(pollsArray)
+                setpolls(pollsArray)
+            } catch (err) {
+                console.log("Error detected", err)
+            }
+        }
+
+        getPolls();
+    }, [])
+    
+
 
     return (
         <div>
@@ -26,7 +45,7 @@ const PollsDashboard = ({ setactiveTab }) => {
                         <p className="cursor-pointer">Polls & Surveys</p>
                     </div>
                     <div className='flex gap-4'>
-                        <div onClick={() => {setIsModalActive(true)}} className='cursor-pointer p-2 border border-gray-300 w-10 flex items-center justify-center rounded-full h-10 text-gray-600'>
+                        <div onClick={() => { setIsModalActive(true) }} className='cursor-pointer p-2 border border-gray-300 w-10 flex items-center justify-center rounded-full h-10 text-gray-600'>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
                             </svg>
@@ -45,7 +64,7 @@ const PollsDashboard = ({ setactiveTab }) => {
                         <p className="font-extrabold text-2xl font-montserrat max-sm:text-[16px]">Polls & Surveys</p>
                         <p className="text-gray-500 font-raleway font-extralight max-[840px]:text-[12px] max-sm:w-48">Participate in campus discussions or create your own.</p>
                     </div>
-                    <div onClick={() =>{setIsCreatePollModal(true)}} className="flex cursor-pointer bg-custom-blue text-white w-40 h-10 px-2 items-center justify-center rounded-lg text-sm font-raleway gap-2 max-sm:w-[30%]">
+                    <div onClick={() => { setIsCreatePollModal(true) }} className="flex cursor-pointer bg-custom-blue text-white w-40 h-10 px-2 items-center justify-center rounded-lg text-sm font-raleway gap-2 max-sm:w-[30%]">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                         </svg>
@@ -91,13 +110,13 @@ const PollsDashboard = ({ setactiveTab }) => {
                     <div key={poll.id} className='w-fit rounded-lg bg-white shadow-md p-6 max-w-115 max-[840px]:w-full'>
                         <div className=''>
                             <div className='grid grid-cols-[0.1fr_1fr] gap-x-2 items-center'>
-                                <div>
-                                    <img src={poll.img} alt="" className='h-8 w-8 rounded-full object-cover max-sm:w-6 max-sm:h-6' />
+                                <div className='h-8 w-8 font-extrabold font-sans text-blue-600 flex items-center justify-center bg-blue-100 rounded-full object-cover max-sm:w-6 max-sm:h-6' >
+                                    <p className="text-[17px]">{poll.createdBy.charAt(0)}</p>
                                 </div>
                                 <div className='flex justify-between items-center '>
                                     <div>
-                                        <p className='text-extrabold'>{poll.name}</p>
-                                        <p className='text-[14px] text-gray-600 font raleway'>Posted {poll.time} hrs ago</p>
+                                        <p className='text-extrabold'>{poll.createdBy}</p>
+                                        <p className='text-[14px] text-gray-600 font raleway'>Posted {Math.floor((new Date() - poll.createdAt.toDate()) / (1000 * 60 * 60))} hrs ago</p>
                                     </div>
                                     <div className='h-7 w-13 bg-red-200 flex items-center justify-center rounded-md'>
                                         <p className='font-raleway text-red-600'>HOT</p>
@@ -111,10 +130,10 @@ const PollsDashboard = ({ setactiveTab }) => {
                         <div className='grid gap-y-3'>
                             {poll.options.map((option) => (
                                 <div className='w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md max-sm:w-full'>
-                                    <div style={{ width: `${option.percentage}%` }} className={`h-10 z-0 bg-blue-100 flex items-center rounded-md whitespace-nowrap`}>
+                                    <div style={{ width: `${(option.votes / poll.totalVotes) * 100}%` }} className={`h-10 z-0 bg-blue-100 flex items-center rounded-md whitespace-nowrap`}>
                                         <p className='ml-2 z-10'>{option.option}</p>
                                     </div>
-                                    <p className='mr-2 font-sans text-blue-500'>{option.percentage}%</p>
+                                    <p className='mr-2 font-sans text-blue-500'>{poll.totalVotes === 0 ? 0 : Math.floor((option.votes / poll.totalVotes) * 100)}%</p>
                                 </div>
                             ))}
                         </div>
@@ -124,26 +143,26 @@ const PollsDashboard = ({ setactiveTab }) => {
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-5">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
                                 </svg>
-                                <p className='font-raleway'>{poll.Votes} voted</p>
+                                <p className='font-raleway'>{poll.totalVotes} voted</p>
                             </span>
                             <span className='flex items-center'>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-5">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                 </svg>
-                                <p className='font-raleway'>Ends in {24 - poll.time}h</p>
+                                <p className='font-raleway'>Ends in {24 - Math.floor((new Date() - poll.createdAt.toDate()) / (1000 * 60 * 60))}h</p>
                             </span>
                         </div>
                     </div>
                 ))}
             </div>
-            { isModalActive && (
+            {isModalActive && (
                 <div className="fixed inset-0 bg-black/70 z-99" onClick={() => setIsModalActive(false)}>
                     <HelpModal setIsModalActive={setIsModalActive} onClose={() => setIsModalActive(false)} />
                 </div>
             )}
-            { isCreatePollModal && (
+            {isCreatePollModal && (
                 <div className="fixed inset-0 bg-black/70 z-99" onClick={() => setIsCreatePollModal(false)}>
-                    <CreatePollModal setIsCreatePollModal={setIsCreatePollModal} onClose={() => setIsCreatePollModal(false)} />
+                    <CreatePollModal userName={userName} setIsCreatePollModal={setIsCreatePollModal} onClose={() => setIsCreatePollModal(false)} />
                 </div>
             )}
         </div>

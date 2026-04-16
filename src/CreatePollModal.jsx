@@ -1,5 +1,11 @@
 import { useState } from "react";
-const CreatePollModal = ( {setIsCreatePollModal} ) => {
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "./firebase/firebase";
+
+const CreatePollModal = ({ setIsCreatePollModal, userName }) => {
+    const [errorMessage, seterrorMessage] = useState("")
+
+
     const [question, setQuestion] = useState(
         {
             title: "",
@@ -16,12 +22,41 @@ const CreatePollModal = ( {setIsCreatePollModal} ) => {
         }
     }
 
+
+    async function handleCreatePoll() {
+        //validation
+        if (question.title.trim() === "" || question.options.some((option) => option.trim() === "")) {
+            return seterrorMessage("Please enter values into the input fields")
+        }
+        //poll object
+        const pollObject = {
+            question: question.title,
+            options: question.options.map((data)=>{return {option: data, votes: 0}}),
+            createdBy: userName,
+            totalVotes: 0,
+            createdAt: serverTimestamp()
+        }
+
+        try {
+            let collectionRef = collection(db, "polls");
+            await addDoc(collectionRef, pollObject);
+            setIsCreatePollModal(false)
+        } catch (err) {
+            console.log("Error detected:", err);
+        }
+
+    }
+
+    console.log(userName)
+
+
+
     return (
         <div>
             <div onClick={(e) => e.stopPropagation()} className="rounded-xl bg-accent-blue w-[95%] max-w-3xl font-montserrat fixed top-1/2 left-1/2 -translate-x-1/2 z-100 -translate-y-1/2 max-h-[90vh] overflow-y-auto max-sm:rounded-none max-sm:w-full max-sm:max-h-screen max-sm:top-[20vh] max-sm:left-0 max-sm:translate-x-0 max-sm:translate-y-0">
                 <div className="flex justify-between border-b border-gray-200 p-4">
                     <p className="font-extrabold">Create New Poll</p>
-                    <svg onClick={() => {setIsCreatePollModal(false)}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 cursor-pointer">
+                    <svg onClick={() => { setIsCreatePollModal(false) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 cursor-pointer">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                     </svg>
                 </div>
@@ -33,9 +68,10 @@ const CreatePollModal = ( {setIsCreatePollModal} ) => {
                         <p className="text-[15px]">GENERAL INFO</p>
                     </div>
                     <div className="w-full bg-blue-50 p-4 rounded-sm grid items-start grid-cols-1 max-sm:grid-cols-1">
+                        <p className="text-center">{errorMessage}</p>
                         <div>
                             <p className="text-[17px] font-raleway max-sm:my-2">Question</p>
-                            <input className="w-full h-10 border border-gray-300 rounded-md px-3" type="text" placeholder="Question" />
+                            <input onChange={(e) => { setQuestion({ ...question, title: e.target.value }) }} className="w-full h-10 border border-gray-300 rounded-md px-3" type="text" placeholder="Question" />
                             <div className="px-6">
                                 <div>
                                     <div className="flex justify-between my-2">
@@ -48,13 +84,17 @@ const CreatePollModal = ( {setIsCreatePollModal} ) => {
                                         </div>
                                     </div>
                                     {question.options.map((_, optIndex) => (
-                                        <input key={optIndex} className="w-full h-10 border border-gray-300 rounded-md px-3 mb-2" type="text" placeholder={`Option ${optIndex + 1}`} />
+                                        <input onChange={(e) => {
+                                            const newOptions = [...question.options]
+                                            newOptions[optIndex] = e.target.value
+                                            setQuestion({ ...question, options: newOptions })
+                                        }} key={optIndex} className="w-full h-10 border border-gray-300 rounded-md px-3 mb-2" type="text" placeholder={`Option ${optIndex + 1}`} />
                                     ))}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button className="bg-[#1a72ec] w-full h-10 rounded-lg text-white my-4 justify-self-center">Submit</button>
+                    <button onClick={handleCreatePoll} className="bg-[#1a72ec] w-full h-10 rounded-lg text-white my-4 justify-self-center">Submit</button>
                 </div>
             </div>
         </div>

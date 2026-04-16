@@ -145,7 +145,7 @@ const Dashboard = () => {
                 <div className='bg-light-blue overflow-y-auto'>
                     {activeTab === "MainDashboardPage" && <MainDashboardPage setactiveTab={setactiveTab} />}
                     {activeTab === "ElectionsDashboard" && <ElectionsDashboard setactiveTab={setactiveTab} />}
-                    {activeTab === "PollsDashboard" && <PollsDashboard setactiveTab={setactiveTab} />}
+                    {activeTab === "PollsDashboard" && <PollsDashboard setactiveTab={setactiveTab} userName={userName} />}
                     {activeTab === "HistoryDashboard" && <HistoryDashboard setactiveTab={setactiveTab} />}
                 </div>
             </div>

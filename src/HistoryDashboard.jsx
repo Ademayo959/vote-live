@@ -35,9 +35,11 @@ const HistoryDashboard = ({ setactiveTab }) => {
             try {
                 const reference = doc(db, "users", currentUser.uid);
                 const snapshot = await getDoc(reference);
-                const data = snapshot.data();
-                setuserName(data.fullName)
-                setuserMatricNumber(data.matricNumber)
+                if (snapshot.exists()) {
+                    const data = snapshot.data();
+                    setuserName(data.fullName)
+                    setuserMatricNumber(data.matricNumber)
+                }
             } catch (err) {
                 console.log(err)
             }
@@ -98,19 +100,19 @@ const HistoryDashboard = ({ setactiveTab }) => {
                     <div className="grid grid-cols-2 gap-y-4 max-sm:grid-cols-1">
                         <div>
                             <p className="text-gray-600 text-[14px] font-extrabold">Full Name</p>
-                            <input value={userName} type="text" className="bg-white border border-gray-300 h-8 w-72 rounded-sm outline-0 px-3 text-[14px]" />
+                            <input readOnly value={userName} type="text" className="bg-white border border-gray-300 h-8 w-72 rounded-sm outline-0 px-3 text-[14px]" />
                         </div>
                         <div>
                             <p className="text-gray-600 text-[14px] font-extrabold">Email Address</p>
-                            <input value={userEmail} type="text" className="bg-white border border-gray-300 h-8 w-72 rounded-sm outline-0 px-3 text-[14px]" />
+                            <input readOnly value={userEmail} type="text" className="bg-white border border-gray-300 h-8 w-72 rounded-sm outline-0 px-3 text-[14px]" />
                         </div>
                         <div>
                             <p className="text-gray-600 text-[14px] font-extrabold">Matric Number</p>
-                            <input value={userMatricNumber} type="text" className="bg-white border border-gray-300 h-8 w-72 rounded-sm outline-0 px-3 text-[14px]" />
+                            <input readOnly value={userMatricNumber} type="text" className="bg-white border border-gray-300 h-8 w-72 rounded-sm outline-0 px-3 text-[14px]" />
                         </div>
                         <div>
                             <p className="text-gray-600 text-[14px] font-extrabold">Phone Number</p>
-                            <input type="text" className="bg-white border border-gray-300 h-8 w-72 rounded-sm outline-0 px-3 text-[14px]" />
+                            <input readOnly type="text" className="bg-white border border-gray-300 h-8 w-72 rounded-sm outline-0 px-3 text-[14px]" />
                         </div>
                     </div>
                     <div className="mt-4 flex cursor-pointer bg-custom-blue text-white w-32 h-9 px-2 items-center justify-center rounded-lg text-sm font-raleway gap-2">
