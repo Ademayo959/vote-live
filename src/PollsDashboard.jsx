@@ -110,7 +110,7 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
                     <div key={poll.id} className='w-fit rounded-lg bg-white shadow-md p-6 max-w-115 max-[840px]:w-full'>
                         <div className=''>
                             <div className='grid grid-cols-[0.1fr_1fr] gap-x-2 items-center'>
-                                <div className='h-8 w-8 font-extrabold font-sans text-blue-600 flex items-center justify-center bg-blue-100 rounded-full object-cover max-sm:w-6 max-sm:h-6' >
+                                <div className='h-8 w-8 font-extrabold font-sans text-blue-600 flex items-center justify-center bg-blue-100 rounded-full object-cover max-sm:w-8 max-sm:h-8' >
                                     <p className="text-[17px]">{poll.createdBy.charAt(0)}</p>
                                 </div>
                                 <div className='flex justify-between items-center '>

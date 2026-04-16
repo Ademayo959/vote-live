@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { onAuthStateChanged } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { db } from './firebase/firebase';
 import { auth } from './firebase/firebase';
 import { doc, getDoc } from 'firebase/firestore';
@@ -14,6 +15,7 @@ import HelpModal from './HelpModal';
 
 
 const Dashboard = () => {
+    const navigate = useNavigate();
     const [activeTab, setactiveTab] = useState("MainDashboardPage")
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [isModalActive, setIsModalActive] = useState(false);
@@ -47,6 +49,15 @@ const Dashboard = () => {
         }
         getUserDetails();
     }, [user])
+
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            navigate('./login')
+        } catch (err) {
+            console.log("Error detected:", err)
+        }
+    }
 
 
 
@@ -138,6 +149,12 @@ const Dashboard = () => {
                                 <p className='font-extrabold'>{userName}</p>
                                 <p className='text-gray-500'>{userMatricNumber}</p>
                             </div>
+                        </div>
+                        <div onClick={handleLogout} className="flex my-4 cursor-pointer bg-transparent border border-blue-600 text-blue-600 justify-self-center w-full h-10 px-2 items-center justify-center rounded-lg text-sm font-raleway gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-4">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M22 10.5h-6m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM4 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 10.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+                            </svg>
+                            <p className='max-sm:text-[13px]'>Logout</p>
                         </div>
                     </div>
                 </div>
