@@ -1,8 +1,51 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase/firebase";
+import { db } from './firebase/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 import HelpModal from "./HelpModal";
 
 const HistoryDashboard = ({ setactiveTab }) => {
     const [isModalActive, setIsModalActive] = useState(false);
+
+    //user info from the auth
+    const [currentUser, setcurrentUser] = useState(null)
+    const [userEmail, setuserEmail] = useState(null)
+
+    //user info from firestore
+    const [userName, setuserName] = useState("")
+    const [userMatricNumber, setuserMatricNumber] = useState("")
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setcurrentUser(user)
+                setuserEmail(user.email)
+            } else {
+                setcurrentUser(null)
+            }
+        });
+        return () => unsubscribe();
+    }, [])
+
+    useEffect(() => {
+        if (!currentUser) return;
+
+        async function getUserDetails() {
+            try {
+                const reference = doc(db, "users", currentUser.uid);
+                const snapshot = await getDoc(reference);
+                const data = snapshot.data();
+                setuserName(data.fullName)
+                setuserMatricNumber(data.matricNumber)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        getUserDetails();
+    }, [currentUser])
+
+    console.log(currentUser);
 
     return (
         <div>
@@ -16,7 +59,7 @@ const HistoryDashboard = ({ setactiveTab }) => {
                         <p className="cursor-pointer">History & Settings</p>
                     </div>
                     <div className='flex gap-4'>
-                        <div onClick={() => {setIsModalActive(true)}}  className='cursor-pointer p-2 border border-gray-300 w-10 flex items-center justify-center rounded-full h-10 text-gray-600'>
+                        <div onClick={() => { setIsModalActive(true) }} className='cursor-pointer p-2 border border-gray-300 w-10 flex items-center justify-center rounded-full h-10 text-gray-600'>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
                             </svg>
@@ -35,11 +78,11 @@ const HistoryDashboard = ({ setactiveTab }) => {
                 <div className="grid grid-cols-3 gap-x-10 max-sm:grid-cols-1 max-sm:gap-y-8 max-sm:px-2">
                     <div className="bg-white border border-gray-200 h-36 rounded-md p-6">
                         <p className="mb-3 text-gray-500">Total Votes Cast</p>
-                        <p className="text-4xl">28</p>
+                        <p className="text-4xl">0</p>
                     </div>
                     <div className="bg-white border border-gray-200 h-36 rounded-md p-6">
                         <p className="mb-3 text-gray-500">Total Polls Voted In</p>
-                        <p className="text-4xl">42</p>
+                        <p className="text-4xl">0</p>
                     </div>
                     <div className="bg-white border border-gray-200 h-36 rounded-md p-6">
                         <p className="mb-3 text-gray-500">Total Polls Created</p>
@@ -55,15 +98,15 @@ const HistoryDashboard = ({ setactiveTab }) => {
                     <div className="grid grid-cols-2 gap-y-4 max-sm:grid-cols-1">
                         <div>
                             <p className="text-gray-600 text-[14px] font-extrabold">Full Name</p>
-                            <input type="text" className="bg-white border border-gray-300 h-8 w-72 rounded-sm outline-0 px-3 text-[14px]" />
+                            <input value={userName} type="text" className="bg-white border border-gray-300 h-8 w-72 rounded-sm outline-0 px-3 text-[14px]" />
                         </div>
                         <div>
                             <p className="text-gray-600 text-[14px] font-extrabold">Email Address</p>
-                            <input type="text" className="bg-white border border-gray-300 h-8 w-72 rounded-sm outline-0 px-3 text-[14px]" />
+                            <input value={userEmail} type="text" className="bg-white border border-gray-300 h-8 w-72 rounded-sm outline-0 px-3 text-[14px]" />
                         </div>
                         <div>
                             <p className="text-gray-600 text-[14px] font-extrabold">Matric Number</p>
-                            <input type="text" className="bg-white border border-gray-300 h-8 w-72 rounded-sm outline-0 px-3 text-[14px]" />
+                            <input value={userMatricNumber} type="text" className="bg-white border border-gray-300 h-8 w-72 rounded-sm outline-0 px-3 text-[14px]" />
                         </div>
                         <div>
                             <p className="text-gray-600 text-[14px] font-extrabold">Phone Number</p>
@@ -75,7 +118,7 @@ const HistoryDashboard = ({ setactiveTab }) => {
                     </div>
                 </div>
             </div>
-            { isModalActive && (
+            {isModalActive && (
                 <div className="fixed inset-0 bg-black/70 z-99" onClick={() => setIsModalActive(false)}>
                     <HelpModal setIsModalActive={setIsModalActive} onClose={() => setIsModalActive(false)} />
                 </div>
