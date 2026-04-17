@@ -11,32 +11,39 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
     const [isCreatePollModal, setIsCreatePollModal] = useState(false)
 
     async function getPolls() {
-            try {
-                let collectionRef = collection(db, "polls");
-                const snapshot = await getDocs(collectionRef)
-                const pollsArray = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data()
-                }))
-                //console.log(pollsArray)
-                setpolls(pollsArray)
-            } catch (err) {
-                console.log("Error detected", err)
-            }
+        try {
+            let collectionRef = collection(db, "polls");
+            const snapshot = await getDocs(collectionRef)
+            const pollsArray = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data()
+            }))
+            //console.log(pollsArray)
+            setpolls(pollsArray)
+        } catch (err) {
+            console.log("Error detected", err)
         }
+    }
 
     useEffect(() => {
 
         getPolls();
     }, [])
 
-
+    const [lockedPolls, setLockedPolls] = useState({})
 
     async function handleVote(pollId, optionIndex) {
+        if (lockedPolls[pollId]) return;
+
+        setLockedPolls((prev) => ({
+            ...prev,
+            [pollId]: true
+        }));
+
         let stored = localStorage.getItem("votedPolls")
         const votedPolls = stored ? JSON.parse(stored) : []
         if (votedPolls.includes(pollId)) {
-            return
+            return;
         } else {
             try {
                 let reference = doc(db, "polls", pollId);
@@ -45,17 +52,19 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
                 console.log(data)
 
                 const newOptions = [...data.options]
-                newOptions[optionIndex].votes +=1
+                newOptions[optionIndex].votes += 1
 
-                await updateDoc(reference, {options: newOptions, totalVotes: increment(1)})
+                await updateDoc(reference, { options: newOptions, totalVotes: increment(1) })
 
                 JSON.stringify(votedPolls)
                 localStorage.setItem("votedPolls", JSON.stringify([...votedPolls, pollId]))
 
                 getPolls();
-                
+
             } catch (err) {
                 console.log(err)
+            } finally {
+                setVotingPollId(null)
             }
         }
     }
@@ -156,7 +165,12 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
                         </div>
                         <div className='grid gap-y-3'>
                             {poll.options.map((option, optIndex) => (
-                                <div onClick={()=> handleVote(poll.id, optIndex)} className='w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md max-sm:w-full'>
+                                <div onClick={() => {
+                                    if (!lockedPolls[poll.id]) {
+                                        handleVote(poll.id, optIndex)
+                                    }
+                                }} className={`w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md max-sm:w-full ${lockedPolls[poll.id] ? "pointer-events-none bg-gray-100" : "cursor-pointer"
+                                    }`}>
                                     <div style={{ width: `${(option.votes / poll.totalVotes) * 100}%` }} className={`h-10 z-0 bg-blue-100 flex items-center rounded-md whitespace-nowrap`}>
                                         <p className='ml-2 z-10'>{option.option}</p>
                                     </div>
