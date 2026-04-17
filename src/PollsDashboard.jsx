@@ -40,40 +40,35 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
     const [lockedPolls, setLockedPolls] = useState({})
 
     async function handleVote(pollId, optionIndex) {
-        if (lockedPolls[pollId]) return;
+        //local storage check
+        let stored = localStorage.getItem("votedPolls")
+        const votedPolls = stored ? JSON.parse(stored) : []
+        if (votedPolls.includes(pollId)) return;
+
 
         setLockedPolls((prev) => ({
             ...prev,
             [pollId]: true
         }));
 
-        let stored = localStorage.getItem("votedPolls")
-        const votedPolls = stored ? JSON.parse(stored) : []
-        if (votedPolls.includes(pollId)) {
-            return;
-        } else {
-            try {
-                let reference = doc(db, "polls", pollId);
-                const snapshot = await getDoc(reference);
-                let data = snapshot.data();
-                console.log(data)
 
-                const newOptions = [...data.options]
-                newOptions[optionIndex].votes += 1
+        try {
+            let reference = doc(db, "polls", pollId);
+            const snapshot = await getDoc(reference);
+            let data = snapshot.data();
+            console.log(data)
 
-                await updateDoc(reference, { options: newOptions, totalVotes: increment(1) })
+            const newOptions = [...data.options]
+            newOptions[optionIndex].votes += 1
 
-                JSON.stringify(votedPolls)
-                localStorage.setItem("votedPolls", JSON.stringify([...votedPolls, pollId]))
+            await updateDoc(reference, { options: newOptions, totalVotes: increment(1) })
 
-                getPolls();
-
-            } catch (err) {
-                console.log(err)
-            } finally {
-                setVotingPollId(null)
-            }
-        }
+            JSON.stringify(votedPolls)
+            localStorage.setItem("votedPolls", JSON.stringify([...votedPolls, pollId]))
+            getPolls();
+        } catch (err) {
+            console.log(err)
+        } 
     }
 
     return (
