@@ -189,7 +189,7 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
             )}
             {isCreatePollModal && (
                 <div className="fixed inset-0 bg-black/70 z-99" onClick={() => setIsCreatePollModal(false)}>
-                    <CreatePollModal userName={userName} setIsCreatePollModal={setIsCreatePollModal} onClose={() => setIsCreatePollModal(false)} />
+                    <CreatePollModal getPolls={getPolls} userName={userName} setIsCreatePollModal={setIsCreatePollModal} onClose={() => setIsCreatePollModal(false)} />
                 </div>
             )}
         </div>

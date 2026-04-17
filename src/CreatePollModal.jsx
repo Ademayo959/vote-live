@@ -2,7 +2,7 @@ import { useState } from "react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "./firebase/firebase";
 
-const CreatePollModal = ({ setIsCreatePollModal, userName }) => {
+const CreatePollModal = ({ setIsCreatePollModal, userName, getPolls }) => {
     const [errorMessage, seterrorMessage] = useState("")
 
 
@@ -40,6 +40,7 @@ const CreatePollModal = ({ setIsCreatePollModal, userName }) => {
         try {
             let collectionRef = collection(db, "polls");
             await addDoc(collectionRef, pollObject);
+            getPolls();
             setIsCreatePollModal(false)
         } catch (err) {
             console.log("Error detected:", err);
