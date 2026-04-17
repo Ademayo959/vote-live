@@ -178,7 +178,7 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
                                     }
                                 }} className={`w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md max-sm:w-full ${lockedPolls[poll.id] ? "pointer-events-none bg-gray-100" : "cursor-pointer"
                                     }`}>
-                                    <div style={{ width: `${(option.votes / poll.totalVotes) * 100}%` }} className={`h-10 z-0 bg-blue-100 flex items-center rounded-md whitespace-nowrap`}>
+                                    <div style={{ width: poll.totalVotes === 0 ? "0%" : `${(option.votes / poll.totalVotes) * 100}%` }} className={`h-10 z-0 bg-blue-100 flex items-center rounded-md whitespace-nowrap`}>
                                         <p className='ml-2 z-10'>{option.option}</p>
                                     </div>
                                     <p className='z-20 mr-2 font-sans text-blue-500'>{poll.totalVotes === 0 ? 0 : Math.floor((option.votes / poll.totalVotes) * 100)}%</p>

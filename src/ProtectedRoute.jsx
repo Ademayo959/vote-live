@@ -18,7 +18,7 @@ const ProtectedRoute = ({children}) => {
     if (currentUser === undefined) {
         return (
             <div>
-                <p>Loading....</p>
+                <p className="justify-self-center">Loading....</p>
             </div>
         )
     } else if (currentUser === null) {
