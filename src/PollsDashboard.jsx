@@ -20,6 +20,13 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
             }))
             //console.log(pollsArray)
             setpolls(pollsArray)
+
+            const sorted = pollsArray.sort(
+                (a, b) => b.createdAt.toDate() - a.createdAt.toDate()
+            );
+
+            setpolls(sorted);
+
         } catch (err) {
             console.log("Error detected", err)
         }
