@@ -49,6 +49,10 @@ const HistoryDashboard = ({ setactiveTab }) => {
 
     console.log(currentUser);
 
+    let storedPolls = localStorage.getItem("votedPolls")
+    const votedPolls = storedPolls ? JSON.parse(storedPolls) : []
+    const totalPollsVotedIn = votedPolls.length
+
     return (
         <div>
             <div className='bg-white border-b border-gray-200 max-[840px]:hidden'>
@@ -84,7 +88,7 @@ const HistoryDashboard = ({ setactiveTab }) => {
                     </div>
                     <div className="bg-white border border-gray-200 h-36 rounded-md p-6">
                         <p className="mb-3 text-gray-500">Total Polls Voted In</p>
-                        <p className="text-4xl">0</p>
+                        <p className="text-4xl">{totalPollsVotedIn}</p>
                     </div>
                     <div className="bg-white border border-gray-200 h-36 rounded-md p-6">
                         <p className="mb-3 text-gray-500">Total Polls Created</p>
