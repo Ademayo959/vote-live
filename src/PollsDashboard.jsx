@@ -1,19 +1,16 @@
 import { useState, useEffect } from "react"
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDoc, getDocs, doc, increment, updateDoc } from "firebase/firestore";
 import { db } from "./firebase/firebase";
 import HelpModal from "./HelpModal";
 import CreatePollModal from "./CreatePollModal";
-import ProfileOne from './assets/img/Profile-photo-one.jpeg';
-import ProfileTwo from './assets/img/about-us-dev9.jpg';
-import ProfileThree from './assets/img/about-us-dev11.jpg';
+
 
 const PollsDashboard = ({ setactiveTab, userName }) => {
-    let [polls, setpolls] = useState([]) 
+    let [polls, setpolls] = useState([])
     const [isModalActive, setIsModalActive] = useState(false);
     const [isCreatePollModal, setIsCreatePollModal] = useState(false)
 
-    useEffect(() => {
-        async function getPolls() {
+    async function getPolls() {
             try {
                 let collectionRef = collection(db, "polls");
                 const snapshot = await getDocs(collectionRef)
@@ -21,17 +18,47 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
                     id: doc.id,
                     ...doc.data()
                 }))
-                console.log(pollsArray)
+                //console.log(pollsArray)
                 setpolls(pollsArray)
             } catch (err) {
                 console.log("Error detected", err)
             }
         }
 
+    useEffect(() => {
+
         getPolls();
     }, [])
-    
 
+
+
+    async function handleVote(pollId, optionIndex) {
+        let stored = localStorage.getItem("votedPolls")
+        const votedPolls = stored ? JSON.parse(stored) : []
+        if (votedPolls.includes(pollId)) {
+            return
+        } else {
+            try {
+                let reference = doc(db, "polls", pollId);
+                const snapshot = await getDoc(reference);
+                let data = snapshot.data();
+                console.log(data)
+
+                const newOptions = [...data.options]
+                newOptions[optionIndex].votes +=1
+
+                await updateDoc(reference, {options: newOptions, totalVotes: increment(1)})
+
+                JSON.stringify(votedPolls)
+                localStorage.setItem("votedPolls", JSON.stringify([...votedPolls, pollId]))
+
+                getPolls();
+                
+            } catch (err) {
+                console.log(err)
+            }
+        }
+    }
 
     return (
         <div>
@@ -128,12 +155,12 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
                             <p className='my-4'>{poll.question}</p>
                         </div>
                         <div className='grid gap-y-3'>
-                            {poll.options.map((option) => (
-                                <div className='w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md max-sm:w-full'>
+                            {poll.options.map((option, optIndex) => (
+                                <div onClick={()=> handleVote(poll.id, optIndex)} className='w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md max-sm:w-full'>
                                     <div style={{ width: `${(option.votes / poll.totalVotes) * 100}%` }} className={`h-10 z-0 bg-blue-100 flex items-center rounded-md whitespace-nowrap`}>
                                         <p className='ml-2 z-10'>{option.option}</p>
                                     </div>
-                                    <p className='mr-2 font-sans text-blue-500'>{poll.totalVotes === 0 ? 0 : Math.floor((option.votes / poll.totalVotes) * 100)}%</p>
+                                    <p className='z-20 mr-2 font-sans text-blue-500'>{poll.totalVotes === 0 ? 0 : Math.floor((option.votes / poll.totalVotes) * 100)}%</p>
                                 </div>
                             ))}
                         </div>
