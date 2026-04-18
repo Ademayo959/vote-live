@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
-import { collection, getDoc, getDocs, doc, increment, updateDoc } from "firebase/firestore";
-import { db } from "./firebase/firebase";
+import { collection, getDoc, getDocs, doc, increment, updateDoc, arrayUnion } from "firebase/firestore";
+import { auth, db } from "./firebase/firebase";
 import HelpModal from "./HelpModal";
 import CreatePollModal from "./CreatePollModal";
 
@@ -37,21 +37,18 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
         getPolls();
     }, [])
 
+    
     const [lockedPolls, setLockedPolls] = useState({})
 
     async function handleVote(pollId, optionIndex) {
-        //local storage check
-        let stored = localStorage.getItem("votedPolls")
-        const votedPolls = stored ? JSON.parse(stored) : []
-        if (votedPolls.includes(pollId)) return;
 
+        const Userreference = doc(db, "users", auth.currentUser.uid)
+        const Usersnapshot = await getDoc(Userreference)
+        let Userdata = Usersnapshot.data();
 
-        setLockedPolls((prev) => ({
-            ...prev,
-            [pollId]: true
-        }));
-
-
+        if (Userdata.votedPolls && Userdata.votedPolls.includes(pollId)) return;
+        
+        setLockedPolls((prev) => ({ ...prev, [pollId]: true }))
         try {
             let reference = doc(db, "polls", pollId);
             const snapshot = await getDoc(reference);
@@ -62,9 +59,8 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
             newOptions[optionIndex].votes += 1
 
             await updateDoc(reference, { options: newOptions, totalVotes: increment(1) })
-
-            JSON.stringify(votedPolls)
-            localStorage.setItem("votedPolls", JSON.stringify([...votedPolls, pollId]))
+            await updateDoc(Userreference, {votedPolls: arrayUnion(pollId)})
+    
             getPolls();
         } catch (err) {
             console.log(err)
@@ -168,9 +164,9 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
                         <div className='grid gap-y-3'>
                             {poll.options.map((option, optIndex) => (
                                 <div onClick={() => {
-                                    if (!lockedPolls[poll.id]) {
+                                    if(!lockedPolls[poll.id]) {
                                         handleVote(poll.id, optIndex)
-                                    }
+                                    }    
                                 }} className={`w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md max-sm:w-full ${lockedPolls[poll.id] ? "pointer-events-none bg-gray-100" : "cursor-pointer"
                                     }`}>
                                     <div style={{ width: poll.totalVotes === 0 ? "0%" : `${(option.votes / poll.totalVotes) * 100}%` }} className={`h-10 z-0 bg-blue-100 flex items-center rounded-md whitespace-nowrap`}>
