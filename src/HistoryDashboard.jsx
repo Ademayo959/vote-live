@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react"
 import { onAuthStateChanged } from "firebase/auth";
+import { collection, query, where, getDocs } from "firebase/firestore"
 import { auth } from "./firebase/firebase";
 import { db } from './firebase/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import HelpModal from "./HelpModal";
+import { data } from "react-router-dom";
 
 const HistoryDashboard = ({ setactiveTab }) => {
     const [isModalActive, setIsModalActive] = useState(false);
+    const [totalPollCreated, settotalPollCreated] = useState()
 
     //user info from the auth
     const [currentUser, setcurrentUser] = useState(null)
@@ -37,9 +40,18 @@ const HistoryDashboard = ({ setactiveTab }) => {
                 const snapshot = await getDoc(reference);
                 if (snapshot.exists()) {
                     const data = snapshot.data();
+                    //console.log("user data:", data)
+                    //console.log("fullName:", data?.fullName)
                     setuserName(data.fullName)
                     setuserMatricNumber(data.matricNumber)
                 }
+                console.log(data.fullName)
+                const q = query(collection(db, "polls"), where("createdBy", "==", data.fullName))
+                const secondSnapshot = await getDocs(q)
+                console.log("query result count:", secondSnapshot.size)
+                const count = secondSnapshot.size
+                settotalPollCreated(count)
+                console.log(count)
             } catch (err) {
                 console.log(err)
             }
@@ -47,7 +59,7 @@ const HistoryDashboard = ({ setactiveTab }) => {
         getUserDetails();
     }, [currentUser])
 
-    console.log(currentUser);
+    //console.log(currentUser);
 
     let storedPolls = localStorage.getItem("votedPolls")
     const votedPolls = storedPolls ? JSON.parse(storedPolls) : []
@@ -92,7 +104,7 @@ const HistoryDashboard = ({ setactiveTab }) => {
                     </div>
                     <div className="bg-white border border-gray-200 h-36 rounded-md p-6">
                         <p className="mb-3 text-gray-500">Total Polls Created</p>
-                        <p className="text-4xl">0</p>
+                        <p className="text-4xl">{totalPollCreated}</p>
                     </div>
                 </div>
                 <h1 className="font-montserrat text-2xl font-extrabold mt-4">Settings</h1>
