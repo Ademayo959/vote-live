@@ -1,6 +1,11 @@
 import { useState } from "react";
 
-const CreateElectionModal = ({setIsCreateElectionModal}) => {
+const CreateElectionModal = ({ setIsCreateElectionModal }) => {
+    const [electionTitle, setelectionTitle] = useState("")
+    const [eligibleVoters, seteligibleVoters] = useState("")
+    const [duration, setDuration] = useState("")
+
+
     const [positions, setPositions] = useState([
         {
             title: "",
@@ -25,12 +30,28 @@ const CreateElectionModal = ({setIsCreateElectionModal}) => {
         }
     }
 
+    const removePosition = (posIndex) => {
+        if (positions.length > 1) {
+            setPositions(positions.filter((_, i) => i !== posIndex))
+        } else {
+            return
+        }
+    }
+
+    const removeCandidate = (posIndex, canIndex) => {
+        if (positions[posIndex].candidates.length > 1) {
+            let updated = JSON.parse(JSON.stringify(positions))
+            updated[posIndex].candidates = updated[posIndex].candidates.filter((_, i) => i !== canIndex)
+            setPositions(updated)
+        }
+    }
+
     return (
         <div>
-            <div  onClick={(e) => e.stopPropagation()} className="rounded-xl bg-accent-blue w-[95%] max-w-3xl font-montserrat fixed top-1/2 left-1/2 -translate-x-1/2 z-100 -translate-y-1/2 max-h-[90vh] overflow-y-auto max-sm:rounded-none max-sm:w-full max-sm:max-h-screen max-sm:top-0 max-sm:left-0 max-sm:translate-x-0 max-sm:translate-y-0">
+            <div onClick={(e) => e.stopPropagation()} className="rounded-xl bg-accent-blue w-[95%] max-w-3xl font-montserrat fixed top-1/2 left-1/2 -translate-x-1/2 z-100 -translate-y-1/2 max-h-[90vh] overflow-y-auto max-sm:rounded-none max-sm:w-full max-sm:max-h-screen max-sm:top-0 max-sm:left-0 max-sm:translate-x-0 max-sm:translate-y-0">
                 <div className="flex justify-between border-b border-gray-200 p-4">
                     <p className="font-extrabold">Create New Election</p>
-                    <svg onClick={() => {setIsCreateElectionModal(false)}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 cursor-pointer">
+                    <svg onClick={() => { setIsCreateElectionModal(false) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 cursor-pointer">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                     </svg>
                 </div>
@@ -44,14 +65,22 @@ const CreateElectionModal = ({setIsCreateElectionModal}) => {
                     <div className="grid gap-2 my-2">
                         <p>Election Name</p>
                         <div>
-                            <input className="w-full border border-gray-200 p-2 rounded-lg" type="text" placeholder="e.g. Student Union Presidency 2026" />
+                            <input name="electionTitle" onChange={(e) => { setelectionTitle(e.target.value) }} className="w-full border border-gray-200 p-2 rounded-lg" type="text" placeholder="e.g. Student Union Presidency 2026" />
                         </div>
                     </div>
                     <div className="grid gap-2 my-2">
                         <p>Eligible Voter List</p>
                         <div>
-                            <textarea className="resize-none h-24 w-full border border-gray-200 p-2 rounded-lg" type="text" placeholder="Just paste them here" />
+                            <textarea name="eligibleVoter" onChange={(e) => { seteligibleVoters(e.target.value) }} className="resize-none h-24 w-full border border-gray-200 p-2 rounded-lg" type="text" placeholder="Just paste them here" />
                         </div>
+                    </div>
+                    <div className="grid gap-2 my-2">
+                        <p>Election Duration</p>
+                        <select className="p-2 border border-gray-200 rounded-lg" value={duration} onChange={(e) => setDuration(Number(e.target.value))}>
+                            <option value={1}>1 Day</option>
+                            <option value={2}>2 Days</option>
+                            <option value={3}>3 Days</option>
+                        </select>
                     </div>
                     <hr className="text-gray-300 my-4" />
                     <div className="flex justify-between my-4">
@@ -61,7 +90,7 @@ const CreateElectionModal = ({setIsCreateElectionModal}) => {
                             </svg>
                             <p className="text-[15px]">BALLOT POSITION</p>
                         </div>
-                        <div onClick={addPosition}  className="bg-white cursor-pointer flex w-fit gap-2 rounded-md p-2">
+                        <div onClick={addPosition} className="bg-white cursor-pointer flex w-fit gap-2 rounded-md p-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-4">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
@@ -75,8 +104,20 @@ const CreateElectionModal = ({setIsCreateElectionModal}) => {
                                     <p>{posIndex + 1}</p>
                                 </div>
                                 <div>
-                                    <p className="text-[17px] font-raleway max-sm:my-2">Position</p>
-                                    <input className="w-full h-10 border border-gray-300 rounded-md px-3" type="text" placeholder="Position" />
+                                    <div className="flex justify-between items-center">
+                                        <p className="text-[17px] font-raleway max-sm:my-2">Position</p>
+                                        <div onClick={() => { removePosition(posIndex) }} className="bg-white cursor-pointer flex w-fit gap-2 rounded-md p-1 my-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-4">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
+                                            </svg>
+                                            <p className="text-[13px]">Remove Positions</p>
+                                        </div>
+                                    </div>
+                                    <input name="positions" onChange={(e) => {
+                                        const updated = [...positions]
+                                        updated[posIndex] = { ...updated[posIndex], title: e.target.value }
+                                        setPositions(updated)
+                                    }} className="w-full h-10 border border-gray-300 rounded-md px-3" type="text" placeholder="Position" />
                                     <div className="px-6">
                                         <div>
                                             <div className="flex justify-between my-2">
@@ -89,14 +130,26 @@ const CreateElectionModal = ({setIsCreateElectionModal}) => {
                                                 </div>
                                             </div>
                                             {position.candidates.map((_, canIndex) => (
-                                                <input key={canIndex} className="w-full h-10 border border-gray-300 rounded-md px-3 mb-2" type="text" placeholder={`Candidate ${canIndex + 1}`} />
+                                                <div className="grid my-2">
+                                                    <input onChange={(e) => {
+                                                        const updated = JSON.parse(JSON.stringify(positions))
+                                                        updated[posIndex].candidates[canIndex] = e.target.value
+                                                        setPositions(updated)
+                                                    }} key={canIndex} className="w-full h-10 border border-gray-300 rounded-md px-3 mb-2" type="text" placeholder={`Candidate ${canIndex + 1}`} />
+                                                    <div onClick={() => removeCandidate(posIndex, canIndex)} className="bg-white flex w-fit gap-1 items-center rounded-md p-1 cursor-pointer">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-4">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
+                                                        </svg>
+                                                        <p className="text-[13px]">Remove Candidates</p>
+                                                    </div>
+                                                </div>
                                             ))}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         ))}
-                           <button className="bg-[#1a72ec] w-full h-10 rounded-lg text-white my-4 justify-self-center">Submit</button>
+                        <button className="bg-[#1a72ec] w-full h-10 rounded-lg text-white my-4 justify-self-center">Submit</button>
                     </div>
                 </div>
             </div>
