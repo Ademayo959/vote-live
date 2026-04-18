@@ -42,13 +42,15 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
 
     async function handleVote(pollId, optionIndex) {
 
+        if (lockedPolls[pollId]) return;
+
+        setLockedPolls((prev) => ({ ...prev, [pollId]: true }))
+
         const Userreference = doc(db, "users", auth.currentUser.uid)
         const Usersnapshot = await getDoc(Userreference)
         let Userdata = Usersnapshot.data();
-
         if (Userdata.votedPolls && Userdata.votedPolls.includes(pollId)) return;
         
-        setLockedPolls((prev) => ({ ...prev, [pollId]: true }))
         try {
             let reference = doc(db, "polls", pollId);
             const snapshot = await getDoc(reference);
