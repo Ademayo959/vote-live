@@ -241,6 +241,13 @@ const MainDashboardPage = ({ setactiveTab }) => {
                                    <p className="text-sm">Contact Support</p>
                               </div>
                          </div>
+                         <div className="cursor-pointer rounded-xl shadow-lg w-76 py-6 px-6 bg-gray-100 text-center max-sm:w-full">
+                              <p>Have an Suggestion?</p>
+                              <p className="text-sm text-gray-400">Tell us what it is.</p>
+                              <div className="bg-white flex justify-center rounded-md my-2 h-8 items-center">
+                                   <p className="text-sm">Suggest a Feature</p>
+                              </div>
+                         </div>
                     </div>
                </div>
                { isCreateElectionModal && (

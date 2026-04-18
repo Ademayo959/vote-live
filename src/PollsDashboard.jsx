@@ -143,7 +143,7 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
             </div>
             <div className='grid grid-cols-2 gap-6 px-12 my-4 max-[840px]:px-4 max-[840px]:grid-cols-1'>
                 {polls.map((poll) => (
-                    <div key={poll.id} className='w-fit rounded-lg bg-white shadow-md p-6 max-w-115 max-[840px]:w-full'>
+                    <div key={poll.id} className='w-fit h-fit rounded-lg bg-white shadow-md p-6 max-w-115 max-[840px]:w-full'>
                         <div className=''>
                             <div className='grid grid-cols-[0.1fr_1fr] gap-x-2 items-center'>
                                 <div className='h-8 w-8 font-extrabold font-sans text-blue-600 flex items-center justify-center bg-blue-100 rounded-full object-cover max-sm:w-8 max-sm:h-8' >
