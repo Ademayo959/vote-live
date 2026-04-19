@@ -1,21 +1,24 @@
 import { useState } from "react";
+import { auth } from "./firebase/firebase";
+import { db } from "./firebase/firebase";
+import { serverTimestamp, addDoc, collection } from "firebase/firestore";
 
 const CreateElectionModal = ({ setIsCreateElectionModal }) => {
     const [electionTitle, setelectionTitle] = useState("")
     const [eligibleVoters, seteligibleVoters] = useState("")
-    const [duration, setDuration] = useState("")
+    const [duration, setDuration] = useState(1)
 
 
     const [positions, setPositions] = useState([
         {
             title: "",
-            candidates: ["", ""],
+            candidates: [{name: "", votes: 0}, {name: "", votes: 0}],
         }
     ]);
 
     const addPosition = () => {
         if (positions.length < 10) {
-            setPositions([...positions, { title: "", candidates: ["", ""] }])
+            setPositions([...positions, { title: "", candidates: [{name: "", votes: 0}, {name: "", votes: 0}] }])
         }
     }
 
@@ -24,7 +27,7 @@ const CreateElectionModal = ({ setIsCreateElectionModal }) => {
             const updated = [...positions]
             updated[positionIndex] = {
                 ...updated[positionIndex],
-                candidates: [...updated[positionIndex].candidates, ""]
+                candidates: [...updated[positionIndex].candidates, {name: "", votes: 0}]
             }
             setPositions(updated)
         }
@@ -46,6 +49,40 @@ const CreateElectionModal = ({ setIsCreateElectionModal }) => {
         }
     }
 
+
+    const [modalError, setmodalError] = useState("")
+
+    async function handleSubmit() {
+        const hasInvalidPosition = positions.some(pos => !pos.title)
+        const hasInvalidCandidate = positions.some(pos => pos.candidates.some(c => !c.name))
+
+        if (!electionTitle || !eligibleVoters || hasInvalidPosition || hasInvalidCandidate) {
+            setmodalError("Please enter all the fields")
+            return
+        }
+
+        const electionObject = {
+            title: electionTitle,
+            createdBy: auth.currentUser.displayName,
+            createdByUid: auth.currentUser.uid,
+            eligibleVoters: eligibleVoters.split("\n").map(v => v.trim()).filter(v => v),
+            positions: positions,
+            duration: duration,
+            status: "pending",
+            createdAt: serverTimestamp(),
+            totalVotes: 0
+        }
+
+        try {
+            let collectionRef = collection(db, "elections")
+            await addDoc(collectionRef, electionObject)
+            setIsCreateElectionModal(false)
+        } catch (error) {
+            console.log("Error Detected:", error)
+        }
+
+    }
+
     return (
         <div>
             <div onClick={(e) => e.stopPropagation()} className="rounded-xl bg-accent-blue w-[95%] max-w-3xl font-montserrat fixed top-1/2 left-1/2 -translate-x-1/2 z-100 -translate-y-1/2 max-h-[90vh] overflow-y-auto max-sm:rounded-none max-sm:w-full max-sm:max-h-screen max-sm:top-0 max-sm:left-0 max-sm:translate-x-0 max-sm:translate-y-0">
@@ -56,6 +93,7 @@ const CreateElectionModal = ({ setIsCreateElectionModal }) => {
                     </svg>
                 </div>
                 <div className="p-4">
+                    <p className="justify-self-center text-[15px]">{modalError}</p>
                     <div className="flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
@@ -133,7 +171,7 @@ const CreateElectionModal = ({ setIsCreateElectionModal }) => {
                                                 <div className="grid my-2">
                                                     <input onChange={(e) => {
                                                         const updated = JSON.parse(JSON.stringify(positions))
-                                                        updated[posIndex].candidates[canIndex] = e.target.value
+                                                        updated[posIndex].candidates[canIndex].name = e.target.value
                                                         setPositions(updated)
                                                     }} key={canIndex} className="w-full h-10 border border-gray-300 rounded-md px-3 mb-2" type="text" placeholder={`Candidate ${canIndex + 1}`} />
                                                     <div onClick={() => removeCandidate(posIndex, canIndex)} className="bg-white flex w-fit gap-1 items-center rounded-md p-1 cursor-pointer">
@@ -149,7 +187,7 @@ const CreateElectionModal = ({ setIsCreateElectionModal }) => {
                                 </div>
                             </div>
                         ))}
-                        <button className="bg-[#1a72ec] w-full h-10 rounded-lg text-white my-4 justify-self-center">Submit</button>
+                        <button onClick={handleSubmit} className="bg-[#1a72ec] w-full h-10 rounded-lg text-white my-4 justify-self-center">Submit</button>
                     </div>
                 </div>
             </div>

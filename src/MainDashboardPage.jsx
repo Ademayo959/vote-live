@@ -1,9 +1,43 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import CreateElectionModal from "./CreateElectionModal"
+import { collection, getDocs, getDoc, doc } from "firebase/firestore"
+import { db } from "./firebase/firebase"
+import { auth } from "./firebase/firebase"
 
 
 const MainDashboardPage = ({ setactiveTab }) => {
-       const [isCreateElectionModal, setIsCreateElectionModal] = useState(false)
+     const [isCreateElectionModal, setIsCreateElectionModal] = useState(false)
+
+     const [elections, setelections] = useState([])
+     const [eligibleElections, setEligibleElections] = useState([])
+
+     async function getElections() {
+          try {
+               let collectionRef = collection(db, "elections")
+               const snapshot = await getDocs(collectionRef)
+               const electionArray = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data()
+               }))
+
+               const Userreference = doc(db, "users", auth.currentUser.uid)
+               const Usersnapshot = await getDoc(Userreference)
+               let Userdata = Usersnapshot.data();
+               const eligibleElections = electionArray.filter(election =>
+                    election.eligibleVoters.includes(Userdata.matricNumber)
+               )
+
+               setelections(electionArray)
+               setEligibleElections(eligibleElections)
+          } catch (err) {
+               console.log("Error detected:", err)
+          }
+     }
+
+     useEffect(() => {
+          getElections()
+     }, [])
+
 
      return (
           <div className="bg-accent-blue">
@@ -21,7 +55,7 @@ const MainDashboardPage = ({ setactiveTab }) => {
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
                                    </svg>
                               </div>
-                              <div onClick={()=>{setIsCreateElectionModal(true)}} className="flex cursor-pointer bg-custom-blue text-white w-40 h-11 items-center justify-center rounded-lg text-sm font-raleway gap-2 max-sm:w-30 max-sm:text-[13px] max-sm:gap-1 max-sm:h-8">
+                              <div onClick={() => { setIsCreateElectionModal(true) }} className="flex cursor-pointer bg-custom-blue text-white w-40 h-11 items-center justify-center rounded-lg text-sm font-raleway gap-2 max-sm:w-30 max-sm:text-[13px] max-sm:gap-1 max-sm:h-8">
                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 max-sm:w-5">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                    </svg>
@@ -37,96 +71,91 @@ const MainDashboardPage = ({ setactiveTab }) => {
                               <p className="text-custom-blue underline text-sm cursor-pointer" onClick={() => { setactiveTab("ElectionsDashboard") }}>View All</p>
                          </div>
                          <div className="grid grid-cols-2 gap-10 mt-6 max-[840px]:grid-cols-1 max-md:grid-cols-1 max-sm:justify-self-center max-sm:w-full">
-                              <div className="border border-gray-300 h-60 w-90 rounded-lg grid grid-rows-2 shadow-lg max-sm:w-full">
-                                   <div className="bg-gray-100 p-4 rounded-lg">
-                                        <div className="bg-gray-900 w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
-                                             <div className="h-2 w-2 bg-red-500 rounded-full"></div>
-                                             <p className="font-mono text-[10px] text-white">LIVE</p>
-                                        </div>
-                                   </div>
-                                   <div className="grid grid-rows-3 gap-1 p-3">
-                                        <div>
-                                             <p className="text-lg">Student Union Presidency 2026</p>
-                                        </div>
-                                        <div className="flex gap-2 items-center font-raleway mb-3">
-                                             <div className="flex items-center text-gray-500 gap-1">
-                                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                                                  </svg>
-                                                  <p className="text-sm">11.7k Voted</p>
-                                             </div>
-                                             <div className="flex items-center text-gray-500 gap-1">
-                                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                                       <path strokeLinecap="round" strokeLinejoin="round" d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
-                                                  </svg>
-                                                  <p className="text-sm">10 Positions</p>
+                              {elections.sort((a, b) => { b.totalVotes - a.totalVotes }).slice(0, 4).map((election) => (
+                                   <div key={election.id} className="border border-gray-300 h-60 w-90 rounded-lg grid grid-rows-2 shadow-lg max-sm:w-full">
+                                        <div className="bg-gray-100 p-4 rounded-lg">
+                                             <div className="bg-gray-900 w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
+                                                  <div className="h-2 w-2 bg-red-500 rounded-full"></div>
+                                                  <p className="font-mono text-[10px] text-white">LIVE</p>
                                              </div>
                                         </div>
-                                        <div className="bg-soft-blue text-blue-900 flex justify-center items-center rounded-lg">
-                                             <p>Ends in: 4h: 32m: 15s </p>
-                                        </div>
-                                   </div>
-                              </div>
-                              <div className="border border-gray-300 h-60 w-90 rounded-lg grid grid-rows-2 shadow-lg max-sm:w-full">
-                                   <div className="bg-gray-100 p-4 rounded-lg">
-                                        <div className="bg-gray-900 w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
-                                             <div className="h-2 w-2 bg-red-500 rounded-full"></div>
-                                             <p className="font-mono text-[10px] text-white">LIVE</p>
-                                        </div>
-                                   </div>
-                                   <div className="grid grid-rows-3 gap-1 p-3">
-                                        <div>
-                                             <p className="text-lg">ACOMS 2026 Executives</p>
-                                        </div>
-                                        <div className="flex gap-2 items-center font-raleway mb-3">
-                                             <div className="flex items-center text-gray-500 gap-1">
-                                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                                                  </svg>
-                                                  <p className="text-sm">540 Voted</p>
+                                        <div className="grid grid-rows-3 gap-1 p-3">
+                                             <div>
+                                                  <p className="text-lg">{election.title}</p>
                                              </div>
-                                             <div className="flex items-center text-gray-500 gap-1">
-                                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                                       <path strokeLinecap="round" strokeLinejoin="round" d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
-                                                  </svg>
-                                                  <p className="text-sm">6 Positions</p>
+                                             <div className="flex gap-2 items-center font-raleway mb-3">
+                                                  <div className="flex items-center text-gray-500 gap-1">
+                                                       {/* voters icon */}
+                                                       <p className="text-sm">{election.totalVotes} Voted</p>
+                                                  </div>
+                                                  <div className="flex items-center text-gray-500 gap-1">
+                                                       {/* positions icon */}
+                                                       <p className="text-sm">{election.positions.length} Positions</p>
+                                                  </div>
+                                             </div>
+                                             <div className="flex gap-4 items-center">
+                                                  <div className="bg-soft-blue w-[60%] text-blue-900 flex h-8 justify-center items-center rounded-lg">
+                                                       <p className="text-sm">Ends in: {election.duration} days</p>
+                                                  </div>
+                                                  <div className="flex gap-2 items-center text-[15px] text-custom-blue font-extrabold hover:gap-4 transition-all">
+                                                       <p className="font-raleway">Vote Now</p>
+                                                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                                       </svg>
+                                                  </div>
                                              </div>
                                         </div>
-                                        <div className="bg-soft-blue text-blue-900 flex justify-center items-center rounded-lg">
-                                             <p>Ends in: 17h: 03m: 59s </p>
-                                        </div>
                                    </div>
-                              </div>
-                              <div className="border border-gray-300 h-60 w-90 rounded-lg grid grid-rows-2 shadow-lg max-sm:w-full">
-                                   <div className="bg-gray-100 p-4 rounded-lg">
-                                        <div className="bg-gray-900 w-fit px-2 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
-                                             <div className="h-2 w-2 bg-red-500 rounded-full"></div>
-                                             <p className="font-mono text-[10px] text-white">LIVE</p>
-                                        </div>
-                                   </div>
-                                   <div className="grid grid-rows-3 gap-1 p-3">
-                                        <div>
-                                             <p className="text-lg">NAOSS 2026 Executives</p>
-                                        </div>
-                                        <div className="flex gap-2 items-center font-raleway mb-3">
-                                             <div className="flex items-center text-gray-500 gap-1">
-                                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                                                  </svg>
-                                                  <p className="text-sm">36 Voted</p>
-                                             </div>
-                                             <div className="flex items-center text-gray-500 gap-1">
-                                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                                       <path strokeLinecap="round" strokeLinejoin="round" d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
-                                                  </svg>
-                                                  <p className="text-sm">4 Positions</p>
+                              ))}
+                         </div>
+                         <div className="flex justify-between mt-8 font-raleway max-sm:px-0">
+                              <p className="font-extrabold text-lg">Your Elections</p>
+                              <p className="text-custom-blue underline text-sm cursor-pointer" onClick={() => { setactiveTab("ElectionsDashboard") }}>View All</p>
+                         </div>
+                         <div className="grid grid-cols-2 gap-10 mt-6 max-[840px]:grid-cols-1 max-md:grid-cols-1 max-sm:justify-self-center max-sm:w-full">
+                              {eligibleElections.length > 0 ? (eligibleElections.sort((a, b) => { b.totalVotes - a.totalVotes }).slice(0, 4).map((election) => (
+                                   <div key={election.id} className="border border-gray-300 h-60 w-90 rounded-lg grid grid-rows-2 shadow-lg max-sm:w-full">
+                                        <div className="bg-gray-100 p-4 rounded-lg">
+                                             <div className="bg-gray-900 w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
+                                                  <div className="h-2 w-2 bg-red-500 rounded-full"></div>
+                                                  <p className="font-mono text-[10px] text-white">LIVE</p>
                                              </div>
                                         </div>
-                                        <div className="bg-soft-blue text-blue-900 flex justify-center items-center rounded-lg">
-                                             <p>Ends in: 9h: 52m: 02s </p>
+                                        <div className="grid grid-rows-3 gap-1 p-3">
+                                             <div>
+                                                  <p className="text-lg">{election.title}</p>
+                                             </div>
+                                             <div className="flex gap-2 items-center font-raleway mb-3">
+                                                  <div className="flex items-center text-gray-500 gap-1">
+                                                       {/* voters icon */}
+                                                       <p className="text-sm">{election.totalVotes} Voted</p>
+                                                  </div>
+                                                  <div className="flex items-center text-gray-500 gap-1">
+                                                       {/* positions icon */}
+                                                       <p className="text-sm">{election.positions.length} Positions</p>
+                                                  </div>
+                                             </div>
+                                             <div className="flex gap-4 items-center">
+                                                  <div className="bg-soft-blue w-[60%] text-blue-900 flex h-8 justify-center items-center rounded-lg">
+                                                       <p className="text-sm">Ends in: {election.duration} days</p>
+                                                  </div>
+                                                  <div className="flex gap-2 items-center text-[15px] text-custom-blue font-extrabold hover:gap-4 transition-all">
+                                                       <p className="font-raleway">Vote Now</p>
+                                                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                                       </svg>
+                                                  </div>
+                                             </div>
                                         </div>
                                    </div>
-                              </div>
+                              ))) : (
+                                   <div className="w-full bg-white p-2 flex-col text-center justify-center rounded-lg">
+                                        <p className="font-sanc font-semibold text-[16px] text-gray-700">No elections available for you yet</p>
+                                        <div className="bg-gray-200 w-fit px-2 py-1 justify-self-center my-2 rounded-lg">
+                                             Create an Election
+                                        </div>
+                                   </div>
+                              )}
                          </div>
                          <div className="flex justify-between font-raleway my-6 max-sm:px-4">
                               <p className="font-extrabold text-lg">Public Polls & Surveys</p>
@@ -250,11 +279,11 @@ const MainDashboardPage = ({ setactiveTab }) => {
                          </div>
                     </div>
                </div>
-               { isCreateElectionModal && (
-                <div className="fixed inset-0 bg-black/70 z-99" onClick={() => setIsCreateElectionModal(false)}>
-                    <CreateElectionModal setIsCreateElectionModal={setIsCreateElectionModal} onClose={() => setIsCreateElectionModal(false)} />
-                </div>
-            )}
+               {isCreateElectionModal && (
+                    <div className="fixed inset-0 bg-black/70 z-99" onClick={() => setIsCreateElectionModal(false)}>
+                         <CreateElectionModal setIsCreateElectionModal={setIsCreateElectionModal} onClose={() => setIsCreateElectionModal(false)} />
+                    </div>
+               )}
           </div>
      );
 }

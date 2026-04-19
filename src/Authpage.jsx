@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import ProfileTwo from './assets/img/Old Nigerian.jpg';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from './firebase/firebase';
 import { db } from './firebase/firebase';
 import { doc, setDoc } from 'firebase/firestore';
@@ -28,6 +28,8 @@ const Authpage = () => {
             let user = createUser.user
             const reference = doc(db, "users", user.uid)
             await setDoc(reference, { fullName, matricNumber })
+            await updateProfile(auth.currentUser, { displayName: fullName })
+            console.log(auth.currentUser.displayName)
             console.log(user)
             navigate('/dashboard');
         } catch (err) {
