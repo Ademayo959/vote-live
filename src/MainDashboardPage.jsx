@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
 import CreateElectionModal from "./CreateElectionModal"
 import { collection, getDocs, getDoc, doc } from "firebase/firestore"
 import { db } from "./firebase/firebase"
@@ -97,12 +98,14 @@ const MainDashboardPage = ({ setactiveTab }) => {
                                                   <div className="bg-soft-blue w-[60%] text-blue-900 flex h-8 justify-center items-center rounded-lg">
                                                        <p className="text-sm">Ends in: {election.duration} days</p>
                                                   </div>
-                                                  <div className="flex gap-2 items-center text-[15px] text-custom-blue font-extrabold hover:gap-4 transition-all">
-                                                       <p className="font-raleway">Vote Now</p>
-                                                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                                       </svg>
-                                                  </div>
+                                                  <Link to={`/election/${election.id}`}>
+                                                       <div className="flex gap-2 items-center text-[15px] text-custom-blue font-extrabold hover:gap-4 transition-all">
+                                                            <p className="font-raleway">Vote Now</p>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                                            </svg>
+                                                       </div>
+                                                  </Link>
                                              </div>
                                         </div>
                                    </div>
