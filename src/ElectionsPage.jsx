@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import { getDoc, doc } from "firebase/firestore"
+import { getDoc, doc, updateDoc, increment, arrayUnion } from "firebase/firestore"
 import { db } from "./firebase/firebase"
+import { auth } from "./firebase/firebase"
 
 
 
@@ -10,6 +11,8 @@ const ElectionsPage = () => {
     const navigate = useNavigate()
     //election state
     const [election, setelection] = useState(null)
+    //user Data state
+    const [userdata, setuserdata] = useState(null)
 
 
     async function getElections() {
@@ -28,6 +31,13 @@ const ElectionsPage = () => {
 
     useEffect(() => {
         getElections()
+        async function getUserDetails(params) {
+            const Userreference = doc(db, "users", auth.currentUser.uid)
+            const Usersnapshot = await getDoc(Userreference)
+            let Userdata = Usersnapshot.data();
+            setuserdata(Userdata)
+        }
+        getUserDetails()
     }, [])
 
     //ballot state
@@ -35,6 +45,39 @@ const ElectionsPage = () => {
 
     const handleSelectCandidate = (positionTitle, candidateIndex) => {
         setballot({ ...ballot, [positionTitle]: candidateIndex })
+    }
+
+    async function handleElectionVote() {
+        try {
+            // 1. Check if user's matric number is in eligibleVoters — if not, return
+            if (!election.eligibleVoters.includes(userdata.matricNumber)) {
+                return;
+            }
+            // 2. Check if user's uid is already in election's voters array — if yes, return
+            if (election.voters.includes(auth.currentUser.uid)) {
+                return;
+            }  
+            // 3. Check if all positions have selections in ballot — if not, return
+            if (Object.keys(ballot).length !== election.positions.length) {
+                return;
+            }
+            // 4. Fetch election, deep clone positions, increment selected candidate votes
+            const updatedElections = structuredClone(election.positions)
+            Object.entries(ballot).forEach(([positionTitle, candidateIndex]) => {
+                const posIndex = updatedElections.findIndex((p) => p.title === positionTitle)
+                updatedElections[posIndex].candidates[candidateIndex].votes += 1
+            })
+            // 5. updateDoc election — new positions array, increment totalVotes, arrayUnion uid to voters
+            const docRef = doc(db, "elections", electionId)
+            await updateDoc(docRef, { positions : updatedElections, totalVotes: increment(1), voters: arrayUnion(auth.currentUser.uid)})
+            // 6. updateDoc user — arrayUnion electionId to votedElections
+            const userRef = doc(db, "users", auth.currentUser.uid)
+            await updateDoc(userRef, {votedElections: arrayUnion(electionId)})
+            //calling getElection again
+            getElections()
+        } catch (err) {
+            console.log("Error detected:", err)
+        }
     }
 
 
@@ -106,12 +149,12 @@ const ElectionsPage = () => {
                         ))}
                     </div>
                     <div>
-                        <div className="bg-blue-950 text-white text-center p-4 m-4 rounded-xl grid gap-2">
+                        <div className="bg-custom-blue text-white text-center p-4 m-4 rounded-xl grid gap-2">
                             <p className="text-[13px]">TIME REMAINING</p>
                             <p className="text-[25px]">{election.duration * 24} HRS LEFT</p>
                         </div>
                         <div className="bg-white border border-gray-300 p-4 rounded-xl">
-                            <p className="text-blue-950 font-extrabold text-[19px]">My Ballot</p>
+                            <p className="text-custom-blue font-extrabold text-[19px]">My Ballot</p>
                             <div className="grid gap-2 my-4">
                                 {election.positions.map((position, posIndex) => (
                                     <div key={posIndex} className="flex bg-gray-100 py-3 px-2 rounded-lg text-gray-600 justify-between">
@@ -121,7 +164,7 @@ const ElectionsPage = () => {
                                 ))}
                             </div>
                             <div>
-                                <div className="bg-blue-950 text-white py-2 px-2 rounded-lg text-center">
+                                <div onClick={handleElectionVote} className="bg-custom-blue text-white py-2 px-2 rounded-lg text-center">
                                     <p>Submit Vote</p>
                                 </div>
                                 <p className="text-[12px] text-gray-400 text-center my-2 px-4">Please note action cannot be undone after submission</p>
