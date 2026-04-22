@@ -6,6 +6,7 @@ import Home from './Home'
 import Dashboard from './Dashboard';
 import Authpage from './Authpage';
 import HelpModal from './HelpModal';
+import ElectionsResult from './ElectionsResult';
 import ElectionsPage from './ElectionsPage';
 import HelpAndSupport from './HelpAndSupport'
 import CreateElectionModal from './CreateElectionModal';
@@ -21,11 +22,12 @@ function App() {
      <Route path='/help' element={<HelpAndSupport />}/>
       <Route path='/dashboard' element={<ProtectedRoute> <Dashboard /> </ProtectedRoute>} />
       <Route path="/election/:electionId" element={<ElectionsPage />}/>
+      <Route path="/election-result/:electionId" element={<ElectionsResult />}/>
       <Route path="/signup" element={<Authpage />} />
       <Route path="/login" element={<Authpage />} />
-      <Route path='/howitworks' element={<HowItWorks />} />
+      <Route path="/howitworks" element={<HowItWorks />} />
       <Route path="/create" element={<CreateElectionModal/>} />
-      <Route path='/createpoll' element={<CreatePollModal />}/>
+      <Route path="/createpoll" element={<CreatePollModal />}/>
     </Routes>
   )
 }
