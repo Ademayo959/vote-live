@@ -36,14 +36,6 @@ const ElectionsResult = () => {
     };
     const [electionObject, setelectionObject] = useState({})
 
-    const winner = electionObject.positions[0].candidates.reduce((biggest, current) => current.votes > biggest.votes ? current : biggest)
-
-    const runnerUp = electionObject.positions[0].candidates
-        .filter(c => c.name !== winner.name)
-        .reduce((biggest, current) =>
-            current.votes > biggest.votes ? current : biggest
-        )
-
 
     async function getElections() {
         try {
@@ -63,7 +55,14 @@ const ElectionsResult = () => {
         getElections()
     }, [])
 
-    if (!electionObject) return <p>Loading...</p>
+    if (!electionObject.positions) return <p>Loading...</p>
+    const winner = electionObject.positions[0].candidates.reduce((biggest, current) => current.votes > biggest.votes ? current : biggest)
+
+    const runnerUp = electionObject.positions[0].candidates
+        .filter(c => c.name !== winner.name)
+        .reduce((biggest, current) =>
+            current.votes > biggest.votes ? current : biggest
+        )
     return (
         <div className="font-montserrat max-w-full ">
             <div className='max-w-full bg-white border-b border-gray-100'>
@@ -213,6 +212,7 @@ const ElectionsResult = () => {
                         </div>
 
                     </div> :
+
                     <div>
                         <div>
                             <div className="grid grid-cols-[75%_25%] border border-gray-300 p-6 rounded-2xl">
