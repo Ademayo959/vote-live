@@ -75,6 +75,7 @@ const ElectionsPage = () => {
             await updateDoc(userRef, {votedElections: arrayUnion(electionId)})
             //calling getElection again
             getElections()
+            navigate(`/election/${electionId}/results`)
         } catch (err) {
             console.log("Error detected:", err)
         }

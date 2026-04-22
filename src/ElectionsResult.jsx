@@ -1,12 +1,15 @@
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import logo from './assets/img/votelive-logo.png'
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "./firebase/firebase";
 
 
 const ElectionsResult = () => {
     const { electionId } = useParams()
     const navigate = useNavigate()
 
-    const electionObject = {
+    const electinObject = {
         title: "SUG Presidential Election 2025",
         createdBy: "Oluwamayowa",
         createdByUid: "uid_abc123",
@@ -31,6 +34,7 @@ const ElectionsResult = () => {
         createdAt: new Date(),
         totalVotes: 0,
     };
+    const [electionObject, setelectionObject] = useState({})
 
     const winner = electionObject.positions[0].candidates.reduce((biggest, current) => current.votes > biggest.votes ? current : biggest)
 
@@ -41,6 +45,25 @@ const ElectionsResult = () => {
         )
 
 
+    async function getElections() {
+        try {
+            let docRef = doc(db, "elections", electionId)
+            const snapshot = await getDoc(docRef)
+            if (snapshot.exists()) {
+                const electionData = snapshot.data();
+                console.log(electionData)
+                setelectionObject(electionData)
+            }
+        } catch (err) {
+            console.log("Error detected:", err)
+        }
+    }
+
+    useEffect(() => {
+        getElections()
+    }, [])
+
+    if (!electionObject) return <p>Loading...</p>
     return (
         <div className="font-montserrat max-w-full ">
             <div className='max-w-full bg-white border-b border-gray-100'>
