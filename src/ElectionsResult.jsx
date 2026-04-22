@@ -78,7 +78,7 @@ const ElectionsResult = () => {
             <div className="mt-10 max-w-7xl justify-self-center w-full">
                 {electionObject.status == "pending" ?
                     <div>
-                        <div className="grid grid-cols-[75%_25%] border border-gray-300 p-6 rounded-2xl">
+                        <div className="grid grid-cols-[75%_25%] border border-gray-300 p-6 rounded-2xl max-sm:grid-cols-1">
                             <div>
                                 <div className="flex items-center gap-1 border border-gray-400 w-fit px-2 py-1 rounded-2xl">
                                     <div className="flex items-center justify-center h-4 w-4 bg-blue-200 rounded-full">
@@ -117,7 +117,7 @@ const ElectionsResult = () => {
                                 <p className="text-[13px] text-gray-500">Voting is still open. Rankimgs may change until the countdown reaches zero and the results are displayed</p>
                             </div>
                         </div>
-                        <div className="grid grid-cols-[3fr_1fr] my-4 gap-4">
+                        <div className="grid grid-cols-[3fr_1fr] my-4 gap-4 max-sm:grid-cols-1">
                             <div>
                                 <div className="border border-gray-300 p-6 rounded-2xl">
                                     <p className="text-[22px] font-sans font-semibold text-gray-700">Live Election Monitor</p>
@@ -172,8 +172,8 @@ const ElectionsResult = () => {
                                                                     <p className=" text-blue-950 font-semibold text-[17px]">{candidate.name}</p>
                                                                     <p className="text-gray-600">{(candidate.votes / electionObject.voters.length * 100).toFixed(0)}%</p>
                                                                 </div>
-                                                                <div className="bg-blue-100 h-2 rounded-2xl w-[700px] my-2">
-                                                                    <div style={{ width: `${(candidate.votes / electionObject.voters.length) * 700}px` }} className={`bg-blue-600 h-2 rounded-2xl`}></div>
+                                                                <div className="bg-blue-100 h-2 rounded-2xl w-full my-2">
+                                                                    <div style={{ width: `${(candidate.votes / electionObject.voters.length) * 100}%` }} className={`bg-blue-600 h-2 rounded-2xl`}></div>
                                                                 </div>
                                                             </div>
                                                         </div>
