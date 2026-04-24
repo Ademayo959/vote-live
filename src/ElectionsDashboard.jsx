@@ -1,19 +1,41 @@
-import { useState } from "react"
 import HelpModal from "./HelpModal"
+import { useState, useEffect } from "react"
 import CreateElectionModal from "./CreateElectionModal"
+import { collection, getDocs, getDoc, doc } from "firebase/firestore"
+import { db } from "./firebase/firebase"
+import { auth } from "./firebase/firebase"
+import { Link } from "react-router-dom"
+
+
 const ElectionsDashboard = ({ setactiveTab }) => {
-    const elections = [
-        { id: 1, title: "ACOMS 2026 Executives", voted: "540", positions: "6", endsIn: "17h: 03m: 59s" },
-        { id: 2, title: "IFT CLASS 29 Rep", voted: "24", positions: "1", endsIn: "23h: 49m: 09s" },
-        { id: 3, title: "SPS Governorship Election", voted: "114", positions: "2", endsIn: "07h: 12m: 29s" },
-        { id: 4, title: "NAOSS Executives Election", voted: "56", positions: "8", endsIn: "00h: 43m: 01s" },
-        { id: 5, title: "NUESA 2026 Executives", voted: "5.2k", positions: "10", endsIn: "17h: 03m: 59s" },
-        { id: 6, title: "MBBS'29 Course Representatives", voted: "19", positions: "2", endsIn: "20h: 20m: 19s" },
-        { id: 7, title: "MCE 2026 Executives", voted: "47", positions: "9", endsIn: "21h: 53m: 53s" },
-    ]
-    let ActiveElections = 3
     const [isModalActive, setIsModalActive] = useState(false);
     const [isCreateElectionModal, setIsCreateElectionModal] = useState(false)
+
+    const [elections, setelections] = useState([])
+
+    async function getElections() {
+        try {
+            let collectionRef = collection(db, "elections")
+            const snapshot = await getDocs(collectionRef)
+            const electionArray = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data()
+            }))
+
+            const Userreference = doc(db, "users", auth.currentUser.uid)
+            const Usersnapshot = await getDoc(Userreference)
+            let Userdata = Usersnapshot.data();
+
+            console.log(electionArray)
+            setelections(electionArray)
+        } catch (err) {
+            console.log("Error detected:", err)
+        }
+    }
+
+    useEffect(() => {
+        getElections()
+    }, [])
 
     return (
         <div>
@@ -27,7 +49,7 @@ const ElectionsDashboard = ({ setactiveTab }) => {
                         <p className="cursor-pointer">Elections</p>
                     </div>
                     <div className='flex gap-4'>
-                        <div onClick={() => {setIsModalActive(true)}} className='cursor-pointer p-2 border border-gray-300 w-10 flex items-center justify-center rounded-full h-10 text-gray-600'>
+                        <div onClick={() => { setIsModalActive(true) }} className='cursor-pointer p-2 border border-gray-300 w-10 flex items-center justify-center rounded-full h-10 text-gray-600'>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
                             </svg>
@@ -47,7 +69,7 @@ const ElectionsDashboard = ({ setactiveTab }) => {
                         <p className="text-gray-500 font-raleway font-extralight max-[840px]:text-[12px] max-sm:w-48">View elections, vote for candidates, or create your own.</p>
                     </div>
                     <div>
-                        <div onClick={()=>{setIsCreateElectionModal(true)}} className="flex cursor-pointer bg-custom-blue text-white w-40 h-10 px-2 items-center justify-center rounded-lg text-sm font-raleway gap-2 max-sm:px-1 max-sm:gap-1 max-sm:w-30 max-sm:h-8">
+                        <div onClick={() => { setIsCreateElectionModal(true) }} className="flex cursor-pointer bg-custom-blue text-white w-40 h-10 px-2 items-center justify-center rounded-lg text-sm font-raleway gap-2 max-sm:px-1 max-sm:gap-1 max-sm:w-30 max-sm:h-8">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 max-sm:w-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
@@ -97,37 +119,39 @@ const ElectionsDashboard = ({ setactiveTab }) => {
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
                                         </svg>
-                                        <p className="text-sm">{election.voted} Voted</p>
+                                        <p className="text-sm">{election.totalVotes} Voted</p>
                                     </div>
                                     <div className="flex items-center text-gray-500 gap-1">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
                                         </svg>
-                                        <p className="text-sm">{election.positions} Positions</p>
+                                        <p className="text-sm">{election.positions.length} Positions</p>
                                     </div>
                                 </div>
                                 <div className="flex gap-4 items-center">
                                     <div className="bg-soft-blue w-[60%] text-blue-900 flex h-8 justify-center items-center rounded-lg">
-                                        <p className="text-sm">Ends in: {election.endsIn}</p>
+                                        <p className="text-sm">Ends in: {election.duration}hrs</p>
                                     </div>
-                                    <div className="flex gap-2 items-center text-[15px] text-custom-blue font-extrabold hover:gap-4 transition-all">
-                                        <p className="font-raleway">Vote Now</p>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                        </svg>
-                                    </div>
+                                    <Link to={`/election/${election.id}`}>
+                                        <div className="flex gap-2 items-center text-[15px] text-custom-blue font-extrabold hover:gap-4 transition-all">
+                                            <p className="font-raleway">Vote Now</p>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                            </svg>
+                                        </div>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
                     ))}
                 </div>
             </div>
-            { isModalActive && (
+            {isModalActive && (
                 <div className="fixed inset-0 bg-black/70 z-99" onClick={() => setIsModalActive(false)}>
                     <HelpModal setIsModalActive={setIsModalActive} onClose={() => setIsModalActive(false)} />
                 </div>
             )}
-            { isCreateElectionModal && (
+            {isCreateElectionModal && (
                 <div className="fixed inset-0 bg-black/70 z-99" onClick={() => setIsCreateElectionModal(false)}>
                     <CreateElectionModal setIsCreateElectionModal={setIsCreateElectionModal} onClose={() => setIsCreateElectionModal(false)} />
                 </div>
