@@ -38,6 +38,7 @@ const ElectionsPage = () => {
             setuserdata(Userdata)
         }
         getUserDetails()
+
     }, [])
 
     //ballot state
@@ -56,7 +57,7 @@ const ElectionsPage = () => {
             // 2. Check if user's uid is already in election's voters array — if yes, return
             if (election.voters.includes(auth.currentUser.uid)) {
                 return;
-            }  
+            }
             // 3. Check if all positions have selections in ballot — if not, return
             if (Object.keys(ballot).length !== election.positions.length) {
                 return;
@@ -69,10 +70,10 @@ const ElectionsPage = () => {
             })
             // 5. updateDoc election — new positions array, increment totalVotes, arrayUnion uid to voters
             const docRef = doc(db, "elections", electionId)
-            await updateDoc(docRef, { positions : updatedElections, totalVotes: increment(1), voters: arrayUnion(auth.currentUser.uid)})
+            await updateDoc(docRef, { positions: updatedElections, totalVotes: increment(1), voters: arrayUnion(auth.currentUser.uid) })
             // 6. updateDoc user — arrayUnion electionId to votedElections
             const userRef = doc(db, "users", auth.currentUser.uid)
-            await updateDoc(userRef, {votedElections: arrayUnion(electionId)})
+            await updateDoc(userRef, { votedElections: arrayUnion(electionId) })
             //calling getElection again
             getElections()
             navigate(`/election/${electionId}/results`)
@@ -80,6 +81,16 @@ const ElectionsPage = () => {
             console.log("Error detected:", err)
         }
     }
+
+    useEffect(() => {
+        if (!election || !userdata) {
+            return;
+        }
+        if (!election.eligibleVoters.includes(userdata.matricNumber)) {
+            navigate(`/election/${electionId}/results`)
+        }
+
+    }, [election, userdata])
 
 
     if (!election) return <p>Loading...</p>
