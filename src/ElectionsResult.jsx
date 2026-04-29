@@ -107,7 +107,7 @@ const ElectionsResult = () => {
         )
     const { hours, minutes, seconds } = formatTimeParts(timeLeft);
     return (
-        <div className="font-montserrat max-w-full ">
+        <div className="font-montserrat max-w-full">
             <div className='max-w-full bg-white border-b border-gray-100'>
                 <div className='flex justify-between items-center w-full font-montserrat max-w-7xl justify-self-center py-4 max-sm:flex max-sm:justify-between max-sm:items-center max-sm:px-3'>
                     <div className='max-sm:w-fit'>
@@ -256,7 +256,7 @@ const ElectionsResult = () => {
 
                     </div> :
 
-                    <div>
+                    <div className="px-2">
                         <div>
                             <div className="grid grid-cols-[75%_25%] border border-gray-300 p-6 rounded-2xl max-sm:grid-cols-1">
                                 <div>
