@@ -9,6 +9,9 @@ const ElectionsResult = () => {
     const { electionId } = useParams()
     const navigate = useNavigate()
 
+    const [timeLeft, setTimeLeft] = useState(null);
+    const [isFinished, setIsFinished] = useState(false);
+
     const electinObject = {
         title: "SUG Presidential Election 2025",
         createdBy: "Oluwamayowa",
@@ -55,6 +58,45 @@ const ElectionsResult = () => {
         getElections()
     }, [])
 
+    useEffect(() => {
+        if (!electionObject.createdAt) return;
+
+        // handle Firestore timestamp
+        const createdAtMs = electionObject.createdAt.toMillis
+            ? electionObject.createdAt.toMillis()
+            : new Date(electionObject.createdAt).getTime();
+
+        const durationInMs = electionObject.duration * 24 * 60 * 60 * 1000;
+        const endTime = createdAtMs + durationInMs;
+
+        const interval = setInterval(() => {
+            const remaining = endTime - Date.now();
+
+            setTimeLeft(remaining);
+
+            if (remaining <= 0) {
+                setIsFinished(true);
+                clearInterval(interval);
+            }
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [electionObject]);
+
+    const formatTimeParts = (ms) => {
+        if (!ms || ms <= 0) {
+            return { hours: "00", minutes: "00", seconds: "00" };
+        }
+
+        const totalSeconds = Math.floor(ms / 1000);
+
+        const hours = Math.floor(totalSeconds / 3600).toString().padStart(2, "0");
+        const minutes = Math.floor((totalSeconds % 3600) / 60).toString().padStart(2, "0");
+        const seconds = (totalSeconds % 60).toString().padStart(2, "0");
+
+        return { hours, minutes, seconds };
+    };
+
     if (!electionObject.positions) return <p>Loading...</p>
     const winner = electionObject.positions[0].candidates.reduce((biggest, current) => current.votes > biggest.votes ? current : biggest)
 
@@ -63,6 +105,7 @@ const ElectionsResult = () => {
         .reduce((biggest, current) =>
             current.votes > biggest.votes ? current : biggest
         )
+    const { hours, minutes, seconds } = formatTimeParts(timeLeft);
     return (
         <div className="font-montserrat max-w-full ">
             <div className='max-w-full bg-white border-b border-gray-100'>
@@ -112,8 +155,8 @@ const ElectionsResult = () => {
                                 </div>
                             </div>
                             <div className="bg-blue-100 p-4 rounded-xl">
-                                <p className="font-mono text-[14px] text-gray-600">TURNOUT RATE</p>
-                                <p className="text-5xl font-sans font-semibold my-2">04:32:12</p>
+                                <p className="font-mono text-[14px] text-gray-600">LIVE COUNTDOWN</p>
+                                <p className="text-5xl font-sans font-semibold my-2">{hours}:{minutes}:{seconds}</p>
                                 <p className="text-[13px] text-gray-500">Voting is still open. Rankimgs may change until the countdown reaches zero and the results are displayed</p>
                             </div>
                         </div>
@@ -135,15 +178,15 @@ const ElectionsResult = () => {
                                         </div>
                                         <div className="my-4 flex gap-[5%] max-sm:grid max-sm:grid-cols-2">
                                             <div className="w-[20%] bg-white p-3 h-fit rounded-2xl grid items-center justify-center text-center max-sm:w-full">
-                                                <p className="font-sans text-[35px] text-blue-950">04</p>
+                                                <p className="font-sans text-[35px] text-blue-950">{hours}</p>
                                                 <p className="font-raleway text-[14px]">Hours</p>
                                             </div>
                                             <div className="w-[20%] bg-white p-3 h-fit rounded-2xl grid items-center justify-center text-center max-sm:w-full">
-                                                <p className="font-sans text-[35px] text-blue-950">32</p>
+                                                <p className="font-sans text-[35px] text-blue-950">{minutes}</p>
                                                 <p className="font-raleway text-[14px]">Minutes</p>
                                             </div>
                                             <div className="w-[20%] bg-white p-3 h-fit rounded-2xl grid items-center justify-center text-center max-sm:w-full">
-                                                <p className="font-sans text-[35px] text-blue-950">12</p>
+                                                <p className="font-sans text-[35px] text-blue-950">{seconds}</p>
                                                 <p className="font-raleway text-[14px]">Seconds</p>
                                             </div>
                                             <div className="w-[20%] bg-white p-3 h-fit rounded-2xl grid items-center justify-center text-center max-sm:w-full">

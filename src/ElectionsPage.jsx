@@ -13,6 +13,9 @@ const ElectionsPage = () => {
     const [election, setelection] = useState(null)
     //user Data state
     const [userdata, setuserdata] = useState(null)
+    //countdown states
+    const [timeLeft, setTimeLeft] = useState(null);
+    const [isFinished, setIsFinished] = useState(false);
 
 
     async function getElections() {
@@ -41,6 +44,32 @@ const ElectionsPage = () => {
 
     }, [])
 
+    //countdown useffect
+    useEffect(() => {
+        if (!election?.createdAt) return;
+
+        // handle Firestore timestamp
+        const createdAtMs = election.createdAt.toMillis
+            ? election.createdAt.toMillis()
+            : new Date(election.createdAt).getTime();
+
+        const durationInMs = election.duration * 24 * 60 * 60 * 1000;
+        const endTime = createdAtMs + durationInMs;
+
+        const interval = setInterval(() => {
+            const remaining = endTime - Date.now();
+
+            setTimeLeft(remaining);
+
+            if (remaining <= 0) {
+                setIsFinished(true);
+                clearInterval(interval);
+            }
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [election?.createdAt, election?.duration, electionId]);
+
     //ballot state
     const [ballot, setballot] = useState({})
 
@@ -50,6 +79,11 @@ const ElectionsPage = () => {
 
     async function handleElectionVote() {
         try {
+            //checking if the election has ended
+            if (isFinished) {
+                alert("Voting has ended");
+                return;
+            }
             // 1. Check if user's matric number is in eligibleVoters — if not, return
             if (!election.eligibleVoters.includes(userdata.matricNumber)) {
                 return;
@@ -86,11 +120,28 @@ const ElectionsPage = () => {
         if (!election || !userdata) {
             return;
         }
-        if (!election.eligibleVoters.includes(userdata.matricNumber)) {
+        if (!election?.eligibleVoters) return;
+        if (!election.eligibleVoters.includes(userdata.matricNumber) || isFinished) {
             navigate(`/election/${electionId}/results`)
         }
 
     }, [election, userdata])
+
+    const formatTimeParts = (ms) => {
+        if (!ms || ms <= 0) {
+            return { hours: "00", minutes: "00", seconds: "00" };
+        }
+
+        const totalSeconds = Math.floor(ms / 1000);
+
+        const hours = Math.floor(totalSeconds / 3600).toString().padStart(2, "0");
+        const minutes = Math.floor((totalSeconds % 3600) / 60).toString().padStart(2, "0");
+        const seconds = (totalSeconds % 60).toString().padStart(2, "0");
+
+        return { hours, minutes, seconds };
+    };
+
+    const { hours, minutes, seconds } = formatTimeParts(timeLeft);
 
 
     if (!election) return <p>Loading...</p>
@@ -99,7 +150,7 @@ const ElectionsPage = () => {
             <div className="font-montserrat bg-accent-blue max-w-6xl mx-auto max-sm:px-3">
                 <div className="border-b py-4 border-b-gray-400">
                     <div className="flex justify-between items-center">
-                        {election.status == "pending" ?
+                        {!isFinished ?
                             <div className="flex gap-1 items-center my-4 bg-red-50 w-fit px-2 py-1 rounded-3xl border border-red-600">
                                 <div className="h-2 w-2 bg-red-600 rounded-full"></div>
                                 <p className=" text-red-600 text-[12px] font-semibold">LIVE ELECTION</p>
@@ -163,7 +214,7 @@ const ElectionsPage = () => {
                     <div>
                         <div className="bg-custom-blue text-white text-center p-4 m-4 rounded-xl grid gap-2">
                             <p className="text-[13px]">TIME REMAINING</p>
-                            <p className="text-[25px]">{election.duration * 24} HRS LEFT</p>
+                            <p className="text-[25px]">{hours}:{minutes}:{seconds}</p>
                         </div>
                         <div className="bg-white border border-gray-300 p-4 rounded-xl">
                             <p className="text-custom-blue font-extrabold text-[19px]">My Ballot</p>
