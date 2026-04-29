@@ -125,7 +125,7 @@ const ElectionsPage = () => {
             navigate(`/election/${electionId}/results`)
         }
 
-    }, [election, userdata])
+    }, [election, userdata, isFinished])
 
     const formatTimeParts = (ms) => {
         if (!ms || ms <= 0) {

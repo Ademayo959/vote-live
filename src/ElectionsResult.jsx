@@ -119,7 +119,7 @@ const ElectionsResult = () => {
                 </div>
             </div>
             <div className="mt-10 max-w-7xl justify-self-center w-full">
-                {electionObject.status == "pending" ?
+                {!isFinished ?
                     <div className="px-2">
                         <div className="grid grid-cols-[75%_25%] border border-gray-300 p-6 rounded-2xl max-sm:grid-cols-1">
                             <div>
@@ -258,7 +258,7 @@ const ElectionsResult = () => {
 
                     <div>
                         <div>
-                            <div className="grid grid-cols-[75%_25%] border border-gray-300 p-6 rounded-2xl">
+                            <div className="grid grid-cols-[75%_25%] border border-gray-300 p-6 rounded-2xl max-sm:grid-cols-1">
                                 <div>
                                     <div className="flex items-center gap-1 border border-gray-400 w-fit px-2 py-1 rounded-2xl">
                                         <div className="flex items-center justify-center h-4 w-4 bg-gray-200 rounded-full">
@@ -268,8 +268,8 @@ const ElectionsResult = () => {
                                     </div>
                                     <div>
                                         <p className="text-blue-950 text-[40px] font-semibold">{electionObject.title}</p>
-                                        <p className="w-2xl text-gray-500">Final certified results for the {electionObject.title}, voting is closed, all ballots have been counted, all published ranking is now locked.</p>
-                                        <div className="text-gray-600 flex gap-4 my-3">
+                                        <p className="w-2xl text-gray-500 w-full">Final certified results for the {electionObject.title}, voting is closed, all ballots have been counted, all published ranking is now locked.</p>
+                                        <div className="text-gray-600 flex gap-4 my-3 max-sm:grid max-sm:gap-1 max-sm:text-gray-500 max-sm:font-raleway">
                                             <div className="flex items-center gap-2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4.5 h-4.5">
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
@@ -300,25 +300,26 @@ const ElectionsResult = () => {
                                     }</p>
                                 </div>
                             </div>
-                            <div className="grid grid-cols-[3fr_1fr] my-4 gap-4">
+                            <div className="grid grid-cols-[3fr_1fr] my-4 gap-4 max-sm:grid-cols-1">
                                 <div>
-                                    <div className="border border-gray-300 p-6 rounded-2xl">
+                                    <div className="border border-gray-300 p-6 rounded-2xl ">
                                         <p className="text-[22px] font-sans font-semibold text-gray-700">Declared Winner</p>
                                         <p className="text-gray-500">{electionObject.voters.length} total ballots</p>
-                                        <div className="bg-blue-100 p-4 my-2 flex rounded-2xl">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-10 w-10 text-blue-600">
+                                        <div className="bg-blue-100 p-4 my-2 flex rounded-2xl items-center gap-6 max-sm:grid">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-16 w-16 text-blue-600 ">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 0 1 3 3h-15a3 3 0 0 1 3-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 0 1-.982-3.172M9.497 14.25a7.454 7.454 0 0 0 .981-3.172M5.25 4.236c-.982.143-1.954.317-2.916.52A6.003 6.003 0 0 0 7.73 9.728M5.25 4.236V4.5c0 2.108.966 3.99 2.48 5.228M5.25 4.236V2.721C7.456 2.41 9.71 2.25 12 2.25c2.291 0 4.545.16 6.75.47v1.516M7.73 9.728a6.726 6.726 0 0 0 2.748 1.35m8.272-6.842V4.5c0 2.108-.966 3.99-2.48 5.228m2.48-5.492a46.32 46.32 0 0 1 2.916.52 6.003 6.003 0 0 1-5.395 4.972m0 0a6.726 6.726 0 0 1-2.749 1.35m0 0a6.772 6.772 0 0 1-3.044 0" />
                                             </svg>
-                                            <div>
+                                            <div className="flex justify-between items-center w-full max-sm:grid max-sm:w-full">
                                                 <div>
-                                                    <p className="text-[25px] text-blue-950 font-bold font-sans">{winner.name}</p>
-                                                    <p>{electionObject.positions[0].title}</p>
-                                                    <div>
-
+                                                    <p className="text-[28px] text-blue-950 font-bold font-sans">{winner.name}</p>
+                                                    <p className="my-1">{electionObject.positions[0].title}</p>
+                                                    <div className="bg-white px-2 py-1 rounded-2xl w-fit">
+                                                        <p className="font-sans font-light font-raleway">Winner by {winner.votes - runnerUp.votes} votes</p>
                                                     </div>
                                                 </div>
-                                                <div>
-
+                                                <div className="text-end max-sm:text-start">
+                                                    <p className="text-blue-950 text-4xl font-sans font-semibold">{winner.votes} votes</p>
+                                                    <p className="font-raleway text-[13px]">{winner.votes / electionObject.totalVotes * 100}% of total votes</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -332,18 +333,18 @@ const ElectionsResult = () => {
                                                 {position.candidates.map((candidate, canIndex) => (
                                                     <div>
                                                         <hr className="text-gray-300 my-3" />
-                                                        <div className="flex justify-between items-center">
+                                                        <div className="flex justify-between items-center max-sm:grid">
                                                             <div className="flex gap-4">
                                                                 <div className="bg-blue-600 flex items-center justify-center rounded-full text-white h-8 w-8">
                                                                     <p>{canIndex + 1}</p>
                                                                 </div>
-                                                                <div>
+                                                                <div className="w-[700px] max-sm:w-[calc(100vw-120px)]">
                                                                     <div className="flex justify-between gap-10">
                                                                         <p className=" text-blue-950 font-semibold text-[17px]">{candidate.name}</p>
                                                                         <p className="text-gray-600">{(candidate.votes / electionObject.voters.length * 100).toFixed(0)}%</p>
                                                                     </div>
-                                                                    <div className="bg-blue-100 h-2 rounded-2xl w-[700px] my-2">
-                                                                        <div style={{ width: `${(candidate.votes / electionObject.voters.length) * 700}px` }} className={`bg-blue-600 h-2 rounded-2xl`}></div>
+                                                                    <div className="bg-blue-100 h-2 rounded-2xl w-[700px] my-2 max-sm:w-full">
+                                                                        <div style={{ width: `${(candidate.votes / electionObject.voters.length) * 100}%` }} className={`bg-blue-600 h-2 rounded-2xl`}></div>
                                                                     </div>
                                                                 </div>
                                                             </div>
