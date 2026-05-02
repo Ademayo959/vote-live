@@ -7,10 +7,11 @@ import { auth } from './firebase/firebase';
 import { db } from './firebase/firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import Toast from './toast';
+import { isEmail, isAlphabetic, isStrongPassword, isEmpty, isMediumPassword } from 'valcade'
 
 const Authpage = () => {
     const navigate = useNavigate();
-    //useState for all the input fields
+    //useState for all the signup input fields
     const [fullName, setfullName] = useState("");
     const [matricNumber, setmatricNumber] = useState("");
     const [email, setemail] = useState("");
@@ -21,8 +22,36 @@ const Authpage = () => {
     // Error Messages
     const [loginErrorMessage, setloginErrorMessage] = useState("")
     const [signupErrorMessage, setsignupErrorMessage] = useState("")
+    // Toast state
+    const [IsVisible, setIsVisible] = useState(false)
+    const [toastMessage, setToastMessage] = useState("")
 
     async function handleSignUp() {
+        if (!fullName.split(" ").every((word) => {
+            return isAlphabetic(word).result;
+        })) {
+            setToastMessage('Please enter a valid name')
+            setIsVisible(true)
+            return;
+        }
+
+        if (isEmpty(matricNumber)) {
+            setToastMessage('Please enter a valid MatricNumber')
+            setIsVisible(true)
+            return;
+        }
+
+        if (!isEmail(email).result) {
+            setToastMessage('Please enter a valid Email')
+            setIsVisible(true)
+            return;
+        }
+
+        if (!isStrongPassword(password).result && !isMediumPassword(password).result) {
+            setToastMessage('Please enter a strong password')
+            setIsVisible(true)
+            return;
+        }
         try {
             let createUser = await createUserWithEmailAndPassword(auth, email, password);
             let user = createUser.user
@@ -51,6 +80,17 @@ const Authpage = () => {
     }
 
     async function handleLogin() {
+        if (!isEmail(loginEmail).result) {
+            setToastMessage('Please enter a valid Email')
+            setIsVisible(true)
+            return;
+        }
+
+        if (!isStrongPassword(loginPassword).result && !isMediumPassword(loginPassword).result) {
+            setToastMessage('Please enter a strong password')
+            setIsVisible(true)
+            return;
+        }
         try {
             let userLoggedIn = await signInWithEmailAndPassword(auth, loginEmail, loginPassword)
             let result = userLoggedIn.user
@@ -76,9 +116,6 @@ const Authpage = () => {
 
     const [showPassword, setshowPassword] = useState(true)
     const [activeMenu, setactiveMenu] = useState("signup");
-    // Toast state
-    const [IsVisible, setIsVisible] = useState(false)
-    const [toastMessage, setToastMessage] = useState("")
 
     return (
         <div className="auth-page flex font-montserrat">
@@ -181,7 +218,7 @@ const Authpage = () => {
                                     </div>
                                 </div>
                                 <div className='text-center flex items-center justify-between max-sm:w-full'>
-                                    <p className='text-[12px] text-gray-500'>Having Trouble? <a href="#" className='text-blue-500 underline'>Contact Support</a></p>
+                                    <p className='text-[12px] text-gray-500'>Validation done by <a href="https://cascadejs.netlify.app/" className='text-blue-500 underline'>Cascadejs</a></p>
                                     <Link to="/">
                                         <p className='text-[13px] text-blue-500 font-raleway'>Back to Home</p>
                                     </Link>

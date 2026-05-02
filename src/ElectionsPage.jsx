@@ -121,7 +121,7 @@ const ElectionsPage = () => {
             return;
         }
         if (!election?.eligibleVoters) return;
-        if (!election.eligibleVoters.includes(userdata.matricNumber) || isFinished) {
+        if (!election.eligibleVoters.includes(userdata.matricNumber) || isFinished || election.voters.includes(auth.currentUser.uid)) {
             navigate(`/election/${electionId}/results`)
         }
 

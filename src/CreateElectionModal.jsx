@@ -2,11 +2,15 @@ import { useState } from "react";
 import { auth } from "./firebase/firebase";
 import { db } from "./firebase/firebase";
 import { serverTimestamp, addDoc, collection } from "firebase/firestore";
+import Toast from "./toast";
 
 const CreateElectionModal = ({ setIsCreateElectionModal }) => {
     const [electionTitle, setelectionTitle] = useState("")
     const [eligibleVoters, seteligibleVoters] = useState("")
     const [duration, setDuration] = useState(1)
+    // Toast state
+    const [IsVisible, setIsVisible] = useState(false)
+    const [toastMessage, setToastMessage] = useState("")
 
 
     const [positions, setPositions] = useState([
@@ -57,7 +61,8 @@ const CreateElectionModal = ({ setIsCreateElectionModal }) => {
         const hasInvalidCandidate = positions.some(pos => pos.candidates.some(c => !c.name))
 
         if (!electionTitle || !eligibleVoters || hasInvalidPosition || hasInvalidCandidate) {
-            setmodalError("Please enter all the fields")
+            setIsVisible(true)
+            setToastMessage('Please enter all the fields')
             return
         }
 
@@ -192,6 +197,7 @@ const CreateElectionModal = ({ setIsCreateElectionModal }) => {
                     </div>
                 </div>
             </div>
+            <Toast IsVisible={IsVisible} message={toastMessage} type="error" setIsVisible={setIsVisible} />
         </div>
     );
 }

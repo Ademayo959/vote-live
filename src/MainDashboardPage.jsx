@@ -271,9 +271,11 @@ const MainDashboardPage = ({ setactiveTab }) => {
                          <div className="cursor-pointer rounded-xl shadow-lg w-76 py-6 px-6 bg-gray-100 text-center max-sm:w-full">
                               <p>Have an Issue?</p>
                               <p className="text-sm text-gray-400">Contact the electoral commitee or report irregularities.</p>
-                              <div className="bg-white flex justify-center rounded-md my-2 h-8 items-center">
-                                   <p className="text-sm">Contact Support</p>
-                              </div>
+                              <Link to="/help">
+                                   <div className="bg-white flex justify-center rounded-md my-2 h-8 items-center">
+                                        <p className="text-sm">Contact Support</p>
+                                   </div>
+                              </Link>
                          </div>
                          <div className="cursor-pointer rounded-xl shadow-lg w-76 py-6 px-6 bg-gray-100 text-center max-sm:w-full">
                               <p>Have an Suggestion?</p>
