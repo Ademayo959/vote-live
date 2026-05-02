@@ -6,7 +6,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfi
 import { auth } from './firebase/firebase';
 import { db } from './firebase/firebase';
 import { doc, setDoc } from 'firebase/firestore';
-
+import Toast from './toast';
 
 const Authpage = () => {
     const navigate = useNavigate();
@@ -76,6 +76,10 @@ const Authpage = () => {
 
     const [showPassword, setshowPassword] = useState(true)
     const [activeMenu, setactiveMenu] = useState("signup");
+    // Toast state
+    const [IsVisible, setIsVisible] = useState(false)
+    const [toastMessage, setToastMessage] = useState("")
+
     return (
         <div className="auth-page flex font-montserrat">
             <div className="bg-linear-to-br from-[#1e40a9] to-[#1e2b42] w-[50%] h-screen text-white py-6 px-8 max-sm:hidden">
@@ -239,6 +243,7 @@ const Authpage = () => {
                     </div>
                 </div>
             </div>
+            <Toast IsVisible={IsVisible} message={toastMessage} type="error" setIsVisible={setIsVisible} />
         </div>
     );
 }
