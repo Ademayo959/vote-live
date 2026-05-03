@@ -84,6 +84,8 @@ const ElectionsPage = () => {
                 alert("Voting has ended");
                 return;
             }
+            //checking if we have elections
+            if (!userdata) return;
             // 1. Check if user's matric number is in eligibleVoters — if not, return
             if (!election.eligibleVoters.includes(userdata.matricNumber)) {
                 return;
