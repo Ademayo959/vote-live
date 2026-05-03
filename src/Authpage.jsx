@@ -6,7 +6,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfi
 import { auth } from './firebase/firebase';
 import { db } from './firebase/firebase';
 import { doc, setDoc } from 'firebase/firestore';
-import Toast from './toast';
+import Toast from './Toast';
 import { isEmail, isAlphabetic, isStrongPassword, isEmpty, isMediumPassword } from 'valcade'
 
 const Authpage = () => {

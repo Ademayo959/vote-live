@@ -2,7 +2,7 @@ import { useState } from "react";
 import { auth } from "./firebase/firebase";
 import { db } from "./firebase/firebase";
 import { serverTimestamp, addDoc, collection } from "firebase/firestore";
-import Toast from "./toast";
+import Toast from "./Toast";
 
 const CreateElectionModal = ({ setIsCreateElectionModal }) => {
     const [electionTitle, setelectionTitle] = useState("")
