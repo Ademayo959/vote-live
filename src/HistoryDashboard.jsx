@@ -5,15 +5,18 @@ import { auth } from "./firebase/firebase";
 import { db } from './firebase/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import HelpModal from "./HelpModal";
-import { data } from "react-router-dom";
+
 
 const HistoryDashboard = ({ setactiveTab }) => {
     const [isModalActive, setIsModalActive] = useState(false);
+    // stats to be displayed
     const [totalPollCreated, settotalPollCreated] = useState()
+    const [totalPollsVotedIn, settotalPollVotedIn] = useState()
+    const [totalElectionVotedIn, settotalElectionVotedIn] = useState()
 
     //user info from the auth
-    const [currentUser, setcurrentUser] = useState(null)
-    const [userEmail, setuserEmail] = useState(null)
+    const [currentUser, setcurrentUser] = useState("")
+    const [userEmail, setuserEmail] = useState("")
 
     //user info from firestore
     const [userName, setuserName] = useState("")
@@ -44,14 +47,16 @@ const HistoryDashboard = ({ setactiveTab }) => {
                     //console.log("fullName:", data?.fullName)
                     setuserName(data.fullName)
                     setuserMatricNumber(data.matricNumber)
+                    settotalPollVotedIn(data.votedPolls.length)
+                    settotalElectionVotedIn(data.votedElections.length)
+                    const q = query(collection(db, "polls"), where("createdBy", "==", data.fullName))
+                    const secondSnapshot = await getDocs(q)
+                    const count = secondSnapshot.size
+                    settotalPollCreated(count)
+                    console.log(count)
                 }
-                console.log(data.fullName)
-                const q = query(collection(db, "polls"), where("createdBy", "==", data.fullName))
-                const secondSnapshot = await getDocs(q)
-                console.log("query result count:", secondSnapshot.size)
-                const count = secondSnapshot.size
-                settotalPollCreated(count)
-                console.log(count)
+
+
             } catch (err) {
                 console.log(err)
             }
@@ -61,9 +66,9 @@ const HistoryDashboard = ({ setactiveTab }) => {
 
     //console.log(currentUser);
 
-    let storedPolls = localStorage.getItem("votedPolls")
-    const votedPolls = storedPolls ? JSON.parse(storedPolls) : []
-    const totalPollsVotedIn = votedPolls.length
+    //let storedPolls = localStorage.getItem("votedPolls")
+    //const votedPolls = storedPolls ? JSON.parse(storedPolls) : []
+    //const totalPollsVotedIn = votedPolls.length
 
     return (
         <div>
@@ -96,7 +101,7 @@ const HistoryDashboard = ({ setactiveTab }) => {
                 <div className="grid grid-cols-3 gap-x-10 max-sm:grid-cols-1 max-sm:gap-y-8 max-sm:px-2">
                     <div className="bg-white border border-gray-200 h-36 rounded-md p-6">
                         <p className="mb-3 text-gray-500">Total Votes Cast</p>
-                        <p className="text-4xl">0</p>
+                        <p className="text-4xl">{totalElectionVotedIn}</p>
                     </div>
                     <div className="bg-white border border-gray-200 h-36 rounded-md p-6">
                         <p className="mb-3 text-gray-500">Total Polls Voted In</p>

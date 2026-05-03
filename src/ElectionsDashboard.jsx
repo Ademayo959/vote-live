@@ -5,11 +5,15 @@ import { collection, getDocs, getDoc, doc } from "firebase/firestore"
 import { db } from "./firebase/firebase"
 import { auth } from "./firebase/firebase"
 import { Link } from "react-router-dom"
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 
 const ElectionsDashboard = ({ setactiveTab }) => {
     const [isModalActive, setIsModalActive] = useState(false);
     const [isCreateElectionModal, setIsCreateElectionModal] = useState(false)
+    //loading state
+    const [IsLoading, setIsLoading] = useState(true)
 
     const [elections, setelections] = useState([])
 
@@ -28,6 +32,7 @@ const ElectionsDashboard = ({ setactiveTab }) => {
 
             console.log(electionArray)
             setelections(electionArray)
+            setIsLoading(false)
         } catch (err) {
             console.log("Error detected:", err)
         }
@@ -36,7 +41,7 @@ const ElectionsDashboard = ({ setactiveTab }) => {
     useEffect(() => {
         getElections()
     }, [])
-
+    console.log(IsLoading)
     return (
         <div>
             <div className='bg-white border-b border-gray-200 max-[840px]:hidden'>
@@ -102,7 +107,16 @@ const ElectionsDashboard = ({ setactiveTab }) => {
                     </div>
                 </div>
                 <div className="my-8 grid grid-cols-3 gap-y-6 gap-x-6 justify-self-center max-[840px]:grid-cols-2 max-sm:w-full max-sm:grid-cols-1">
-                    {elections.map((election) => (
+                    {IsLoading ? Array(6).fill(0).map((_, i) => (
+                        <div key={i} className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 animate-pulse">
+                            <div className="bg-gray-200 rounded-t-lg"></div>
+                            <div className="p-3 grid gap-2">
+                                <div className="bg-gray-200 h-4 rounded w-3/4"></div>
+                                <div className="bg-gray-200 h-3 rounded w-1/2"></div>
+                                <div className="bg-gray-200 h-8 rounded w-full"></div>
+                            </div>
+                        </div>
+                    )) : elections.map((election) => (
                         <div key={election.id} className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 shadow-md max-sm:w-full">
                             <div className="bg-gray-100 p-4 rounded-lg">
                                 <div className="bg-white w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">

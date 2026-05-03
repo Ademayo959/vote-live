@@ -47,7 +47,7 @@ const ElectionsPage = () => {
     //countdown useffect
     useEffect(() => {
         if (!election?.createdAt) return;
-
+        console.log(election.createdAt)
         // handle Firestore timestamp
         const createdAtMs = election.createdAt.toMillis
             ? election.createdAt.toMillis()
@@ -66,6 +66,10 @@ const ElectionsPage = () => {
                 clearInterval(interval);
             }
         }, 1000);
+        console.log(Date.now())
+        console.log('createdAt ms:', createdAtMs)
+        console.log('duration ms:', durationInMs)
+        console.log('endTime ms:', new Date(endTime).toLocaleString())
 
         return () => clearInterval(interval);
     }, [election?.createdAt, election?.duration, electionId]);

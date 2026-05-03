@@ -11,6 +11,8 @@ const MainDashboardPage = ({ setactiveTab }) => {
 
      const [elections, setelections] = useState([])
      const [eligibleElections, setEligibleElections] = useState([])
+     //loading state
+     const [IsLoading, setIsLoading] = useState(true)
 
      async function getElections() {
           try {
@@ -30,6 +32,7 @@ const MainDashboardPage = ({ setactiveTab }) => {
 
                setelections(electionArray)
                setEligibleElections(eligibleElections)
+               setIsLoading(false)
           } catch (err) {
                console.log("Error detected:", err)
           }
@@ -72,7 +75,16 @@ const MainDashboardPage = ({ setactiveTab }) => {
                               <p className="text-custom-blue underline text-sm cursor-pointer" onClick={() => { setactiveTab("ElectionsDashboard") }}>View All</p>
                          </div>
                          <div className="grid grid-cols-2 gap-10 mt-6 max-[840px]:grid-cols-1 max-md:grid-cols-1 max-sm:justify-self-center max-sm:w-full">
-                              {elections.sort((a, b) => { b.totalVotes - a.totalVotes }).slice(0, 4).map((election) => (
+                              {IsLoading ? Array(4).fill(0).map((_, i) => (
+                                   <div key={i} className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 animate-pulse">
+                                        <div className="bg-gray-200 rounded-t-lg"></div>
+                                        <div className="p-3 grid gap-2">
+                                             <div className="bg-gray-200 h-4 rounded w-3/4"></div>
+                                             <div className="bg-gray-200 h-3 rounded w-1/2"></div>
+                                             <div className="bg-gray-200 h-8 rounded w-full"></div>
+                                        </div>
+                                   </div>
+                              )) : elections.sort((a, b) => { b.totalVotes - a.totalVotes }).slice(0, 4).map((election) => (
                                    <div key={election.id} className="border border-gray-300 h-60 w-90 rounded-lg grid grid-rows-2 shadow-lg max-sm:w-full">
                                         <div className="bg-gray-100 p-4 rounded-lg">
                                              <div className="bg-gray-900 w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
@@ -116,7 +128,16 @@ const MainDashboardPage = ({ setactiveTab }) => {
                               <p className="text-custom-blue underline text-sm cursor-pointer" onClick={() => { setactiveTab("ElectionsDashboard") }}>View All</p>
                          </div>
                          <div className="grid grid-cols-2 gap-10 mt-6 max-[840px]:grid-cols-1 max-md:grid-cols-1 max-sm:justify-self-center max-sm:w-full">
-                              {eligibleElections.length > 0 ? (eligibleElections.sort((a, b) => { b.totalVotes - a.totalVotes }).slice(0, 4).map((election) => (
+                              {IsLoading ? Array(4).fill(0).map((_, i) => (
+                                   <div key={i} className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 animate-pulse">
+                                        <div className="bg-gray-200 rounded-t-lg"></div>
+                                        <div className="p-3 grid gap-2">
+                                             <div className="bg-gray-200 h-4 rounded w-3/4"></div>
+                                             <div className="bg-gray-200 h-3 rounded w-1/2"></div>
+                                             <div className="bg-gray-200 h-8 rounded w-full"></div>
+                                        </div>
+                                   </div>
+                              )) : eligibleElections.length > 0 ? (eligibleElections.sort((a, b) => { b.totalVotes - a.totalVotes }).slice(0, 100).map((election) => (
                                    <div key={election.id} className="border border-gray-300 h-60 w-90 rounded-lg grid grid-rows-2 shadow-lg max-sm:w-full">
                                         <div className="bg-gray-100 p-4 rounded-lg">
                                              <div className="bg-gray-900 w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
@@ -245,27 +266,20 @@ const MainDashboardPage = ({ setactiveTab }) => {
                          <div className="bg-white py-6 px-6 w-76 rounded-2xl shadow-md cursor-pointer max-sm:w-full">
                               <h1 className="font-extrabold text-lg font-raleway">Trending Elections</h1>
                               <div className="mt-6 flex flex-col gap-2">
-                                   <div className="flex gap-6 items-center border-b border-gray-300 py-2">
-                                        <p className="text-xl text-gray-500">1</p>
-                                        <div className="font-raleway text-sm">
-                                             <p className="font-extrabold">Student Union Presidency 2026</p>
-                                             <p className="font-light text-gray-400">12.3k Participants</p>
-                                        </div>
-                                   </div>
-                                   <div className="flex gap-6 items-center border-b border-gray-300 py-2">
-                                        <p className="text-xl text-gray-500">2</p>
-                                        <div className="font-raleway text-sm">
-                                             <p className="font-extrabold">Miss Campus 2026</p>
-                                             <p className="font-light text-gray-400">12.3k Participants</p>
-                                        </div>
-                                   </div>
-                                   <div className="flex gap-6 items-center border-b border-gray-300 py-2">
-                                        <p className="text-xl text-gray-500">3</p>
-                                        <div className="font-raleway text-sm">
-                                             <p className="font-extrabold">FUTA Got Talent 2026</p>
-                                             <p className="font-light text-gray-400">12.3k Participants</p>
-                                        </div>
-                                   </div>
+                                   {[...elections]
+                                        .sort((a, b) => b.totalVotes - a.totalVotes)
+                                        .slice(0, 4)
+                                        .map((election, index) => (
+                                             <div key={election.id} className="flex gap-6 items-center border-b border-gray-300 py-2">
+                                                  <p className="text-xl text-gray-500">{index + 1}</p>
+                                                  <div className="font-raleway text-sm">
+                                                       <p className="font-extrabold">{election.title}</p>
+                                                       <p className="font-light text-gray-400">
+                                                            {election.totalVotes} Participants
+                                                       </p>
+                                                  </div>
+                                             </div>
+                                        ))}
                               </div>
                          </div>
                          <div className="cursor-pointer rounded-xl shadow-lg w-76 py-6 px-6 bg-gray-100 text-center max-sm:w-full">

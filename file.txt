@@ -165,4 +165,4 @@ export default Dashboard;
 
 
 
-        
+        Array(6).fill(0).map((_, i) => (<Skeleton key={i} height={240} borderRadius={8} baseColor="#ff0000" />))

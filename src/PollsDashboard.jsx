@@ -9,6 +9,8 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
     let [polls, setpolls] = useState([])
     const [isModalActive, setIsModalActive] = useState(false);
     const [isCreatePollModal, setIsCreatePollModal] = useState(false)
+    //loading state
+    const [IsLoading, setIsLoading] = useState(true)
 
     async function getPolls() {
         try {
@@ -26,7 +28,7 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
             );
 
             setpolls(sorted);
-
+            setIsLoading(false)
         } catch (err) {
             console.log("Error detected", err)
         }
@@ -37,7 +39,7 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
         getPolls();
     }, [])
 
-    
+
     const [lockedPolls, setLockedPolls] = useState({})
 
     async function handleVote(pollId, optionIndex) {
@@ -50,23 +52,23 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
         const Usersnapshot = await getDoc(Userreference)
         let Userdata = Usersnapshot.data();
         if (Userdata.votedPolls && Userdata.votedPolls.includes(pollId)) return;
-        
+
         try {
             let reference = doc(db, "polls", pollId);
             const snapshot = await getDoc(reference);
             let data = snapshot.data();
-            console.log(data)
+            //console.log(data)
 
             const newOptions = [...data.options]
             newOptions[optionIndex].votes += 1
 
             await updateDoc(reference, { options: newOptions, totalVotes: increment(1) })
-            await updateDoc(Userreference, {votedPolls: arrayUnion(pollId)})
-    
+            await updateDoc(Userreference, { votedPolls: arrayUnion(pollId) })
+
             getPolls();
         } catch (err) {
             console.log(err)
-        } 
+        }
     }
 
     return (
@@ -142,7 +144,16 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
                 <p className="text-xl">Trending Now</p>
             </div>
             <div className='grid grid-cols-2 gap-6 px-12 my-4 max-[840px]:px-4 max-[840px]:grid-cols-1'>
-                {polls.map((poll) => (
+                {IsLoading ? Array(6).fill(0).map((_, i) => (
+                    <div key={i} className="border border-gray-300 p-6 gap-1 h-80 w-106 rounded-lg grid animate-pulse max-[840px]:w-full">
+                        <div className="bg-gray-200 h-12 rounded w-full"></div>
+                        <div className="bg-gray-200 h-6 rounded w-2/4"></div>
+                        <div className="bg-gray-200 h-10 rounded w-full"></div>
+                        <div className="bg-gray-200 h-10 rounded w-full"></div>
+                        <hr className="text-gray-200 "/>
+                        <div className="bg-gray-200 h-8 rounded w-full"></div>
+                    </div>
+                )) : polls.map((poll) => (
                     <div key={poll.id} className='w-fit h-fit rounded-lg bg-white shadow-md p-6 max-w-115 max-[840px]:w-full'>
                         <div className=''>
                             <div className='grid grid-cols-[0.1fr_1fr] gap-x-2 items-center'>
@@ -166,9 +177,9 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
                         <div className='grid gap-y-3'>
                             {poll.options.map((option, optIndex) => (
                                 <div onClick={() => {
-                                    if(!lockedPolls[poll.id]) {
+                                    if (!lockedPolls[poll.id]) {
                                         handleVote(poll.id, optIndex)
-                                    }    
+                                    }
                                 }} className={`w-100 h-10 bg-blue-50 flex items-center justify-between rounded-md max-sm:w-full ${lockedPolls[poll.id] ? "pointer-events-none bg-gray-100" : "cursor-pointer"
                                     }`}>
                                     <div style={{ width: poll.totalVotes === 0 ? "0%" : `${(option.votes / poll.totalVotes) * 100}%` }} className={`h-10 z-0 bg-blue-100 flex items-center rounded-md whitespace-nowrap`}>
