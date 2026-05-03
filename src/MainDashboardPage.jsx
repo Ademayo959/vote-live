@@ -76,7 +76,7 @@ const MainDashboardPage = ({ setactiveTab }) => {
                          </div>
                          <div className="grid grid-cols-2 gap-10 mt-6 max-[840px]:grid-cols-1 max-md:grid-cols-1 max-sm:justify-self-center max-sm:w-full">
                               {IsLoading ? Array(4).fill(0).map((_, i) => (
-                                   <div key={i} className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 animate-pulse">
+                                   <div key={i} className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 animate-pulse max-sm:w-full">
                                         <div className="bg-gray-200 rounded-t-lg"></div>
                                         <div className="p-3 grid gap-2">
                                              <div className="bg-gray-200 h-4 rounded w-3/4"></div>
@@ -129,7 +129,7 @@ const MainDashboardPage = ({ setactiveTab }) => {
                          </div>
                          <div className="grid grid-cols-2 gap-10 mt-6 max-[840px]:grid-cols-1 max-md:grid-cols-1 max-sm:justify-self-center max-sm:w-full">
                               {IsLoading ? Array(4).fill(0).map((_, i) => (
-                                   <div key={i} className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 animate-pulse">
+                                   <div key={i} className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 animate-pulse max-sm:w-full">
                                         <div className="bg-gray-200 rounded-t-lg"></div>
                                         <div className="p-3 grid gap-2">
                                              <div className="bg-gray-200 h-4 rounded w-3/4"></div>

@@ -108,7 +108,7 @@ const ElectionsDashboard = ({ setactiveTab }) => {
                 </div>
                 <div className="my-8 grid grid-cols-3 gap-y-6 gap-x-6 justify-self-center max-[840px]:grid-cols-2 max-sm:w-full max-sm:grid-cols-1">
                     {IsLoading ? Array(6).fill(0).map((_, i) => (
-                        <div key={i} className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 animate-pulse">
+                        <div key={i} className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 animate-pulse max-sm:w-full">
                             <div className="bg-gray-200 rounded-t-lg"></div>
                             <div className="p-3 grid gap-2">
                                 <div className="bg-gray-200 h-4 rounded w-3/4"></div>
