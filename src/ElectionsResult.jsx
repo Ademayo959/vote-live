@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import logo from './assets/img/votelive-logo.png'
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase/firebase";
+import { onSnapshot } from "firebase/firestore";
 
 
 const ElectionsResult = () => {
@@ -12,51 +13,19 @@ const ElectionsResult = () => {
     const [timeLeft, setTimeLeft] = useState(null);
     const [isFinished, setIsFinished] = useState(false);
 
-    const electinObject = {
-        title: "SUG Presidential Election 2025",
-        createdBy: "Oluwamayowa",
-        createdByUid: "uid_abc123",
-        eligibleVoters: ["200100", "200200", "200300", "200400", "200500", "200600", "200700", "200800", "200900", "200200", "200300", "200400", "200100", "200200", "200100", "200200", "200300", "200400"],
-        positions: [
-            {
-                title: "President",
-                candidates: [{ name: "Ade Bello", votes: 4 }, { name: "Chidi Okonkwo", votes: 1 }, { name: "Timi Dakolo", votes: 2 }],
-            },
-            {
-                title: "Vice President",
-                candidates: [{ name: "Fatima Yusuf", votes: 5 }, { name: "Tolu Adeyemi", votes: 2 }],
-            },
-            {
-                title: "Secretary",
-                candidates: [{ name: "Gboye David", votes: 1 }, { name: "Peter Adesike", votes: 6 }],
-            }
-        ],
-        voters: ["200100", "200200", "200300", "200400", "200300", "200400", "200500"],
-        duration: 48,
-        status: "pending",
-        createdAt: new Date(),
-        totalVotes: 0,
-    };
     const [electionObject, setelectionObject] = useState({})
 
 
-    async function getElections() {
-        try {
-            let docRef = doc(db, "elections", electionId)
-            const snapshot = await getDoc(docRef)
-            if (snapshot.exists()) {
-                const electionData = snapshot.data();
-                console.log(electionData)
-                setelectionObject(electionData)
-            }
-        } catch (err) {
-            console.log("Error detected:", err)
-        }
-    }
 
     useEffect(() => {
-        getElections()
-    }, [])
+        let docRef = doc(db, "elections", electionId)
+        const unsubscribe = onSnapshot(docRef, (snapshot) => {
+            const electionData = snapshot.data();
+            console.log(electionData)
+            setelectionObject(electionData)
+        })
+        return unsubscribe;
+    }, [electionId])
 
     useEffect(() => {
         if (!electionObject.createdAt) return;
