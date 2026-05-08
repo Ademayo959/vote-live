@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import { getDoc, doc, updateDoc, increment, arrayUnion } from "firebase/firestore"
+import { getDoc, doc, updateDoc, increment, arrayUnion, runTransaction } from "firebase/firestore"
 import { db } from "./firebase/firebase"
 import { auth } from "./firebase/firebase"
 
@@ -102,20 +102,26 @@ const ElectionsPage = () => {
             if (Object.keys(ballot).length !== election.positions.length) {
                 return;
             }
-            // 4. Fetch election, deep clone positions, increment selected candidate votes
-            const updatedElections = structuredClone(election.positions)
-            Object.entries(ballot).forEach(([positionTitle, candidateIndex]) => {
-                const posIndex = updatedElections.findIndex((p) => p.title === positionTitle)
-                updatedElections[posIndex].candidates[candidateIndex].votes += 1
+            await runTransaction(db, async (transaction) => {
+                // 4. Fetch election, deep clone positions, increment selected candidate votes
+                const docRef = doc(db, "elections", electionId)
+                const freshData = await transaction.get(docRef)
+                const updatedElections = structuredClone(freshData.data().positions)
+                Object.entries(ballot).forEach(([positionTitle, candidateIndex]) => {
+                    const posIndex = updatedElections.findIndex((p) => p.title === positionTitle)
+                    updatedElections[posIndex].candidates[candidateIndex].votes += 1
+                })
+                // 5. updateDoc election — new positions array, increment totalVotes, arrayUnion uid to voters
+                transaction.update(docRef, {
+                    positions: updatedElections,
+                    totalVotes: freshData.data().totalVotes + 1,
+                    voters: [...freshData.data().voters, auth.currentUser.uid]
+                })
             })
-            // 5. updateDoc election — new positions array, increment totalVotes, arrayUnion uid to voters
-            const docRef = doc(db, "elections", electionId)
-            await updateDoc(docRef, { positions: updatedElections, totalVotes: increment(1), voters: arrayUnion(auth.currentUser.uid) })
             // 6. updateDoc user — arrayUnion electionId to votedElections
             const userRef = doc(db, "users", auth.currentUser.uid)
             await updateDoc(userRef, { votedElections: arrayUnion(electionId) })
-            //calling getElection again
-            getElections()
+            //navigate away
             navigate(`/election/${electionId}/results`)
         } catch (err) {
             console.log("Error detected:", err)
