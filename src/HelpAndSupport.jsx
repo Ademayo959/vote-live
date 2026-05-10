@@ -183,7 +183,7 @@ export default function HelpSupport() {
                             VoteLive <span className="mx-1">›</span> Help & Support
                         </p>
                     </div>
-                    <Link to="/">
+                    <Link to="/dashboard">
                         <div className="text-gray-400 flex gap-1 items-center">
                             <p className="text-xs">Back to Home</p>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-3 w-3">

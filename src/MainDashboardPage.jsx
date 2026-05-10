@@ -185,7 +185,7 @@ const MainDashboardPage = ({ setactiveTab }) => {
                          </div>
                          <div className="flex justify-between font-raleway my-6 max-sm:px-4">
                               <p className="font-extrabold text-lg">Public Polls & Surveys</p>
-                              <p className="underline text-custom-blue text-sm cursor-pointer">Browse All</p>
+                              <p onClick={() => { setactiveTab("PollsDashboard") }} className="underline text-custom-blue text-sm cursor-pointer">Browse All</p>
                          </div>
                          <div className="grid gap-6">
                               <div className="flex gap-4 items-start bg-white p-4 rounded-md w-full max-[840px]:grid max-sm:p-3">

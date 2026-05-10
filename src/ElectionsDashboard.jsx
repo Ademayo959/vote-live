@@ -73,14 +73,6 @@ const ElectionsDashboard = ({ setactiveTab }) => {
                         <p className="font-extrabold text-2xl font-montserrat">Elections</p>
                         <p className="text-gray-500 font-raleway font-extralight max-[840px]:text-[12px] max-sm:w-48">View elections, vote for candidates, or create your own.</p>
                     </div>
-                    <div>
-                        <div onClick={() => { setIsCreateElectionModal(true) }} className="flex cursor-pointer bg-custom-blue text-white w-40 h-10 px-2 items-center justify-center rounded-lg text-sm font-raleway gap-2 max-sm:px-1 max-sm:gap-1 max-sm:w-30 max-sm:h-8">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 max-sm:w-5">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                            </svg>
-                            <p className="max-sm:text-[11px]">Create Elections</p>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div className="mx-6 my-6">
@@ -91,7 +83,13 @@ const ElectionsDashboard = ({ setactiveTab }) => {
                         </svg>
                         <input type="text" className="outline-none w-[99%] font-raleway placeholder:text-raleway placeholder:text-sm" placeholder="Search by Election Name, ID or Department...." />
                     </div>
-                    <div className="flex gap-6 max-sm:gap-3">
+                    <div className="flex max-sm:gap-3">
+                        <div onClick={() => { setIsCreateElectionModal(true) }} className="flex cursor-pointer bg-custom-blue text-white w-40 h-10 px-2 items-center justify-center rounded-lg text-sm font-raleway gap-2 max-sm:px-1 max-sm:gap-1 max-sm:w-30 max-sm:h-8">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 max-sm:w-5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            </svg>
+                            <p className="max-sm:text-[11px]">Create Elections</p>
+                        </div>
                     </div>
                 </div>
                 <div className="my-8 grid grid-cols-3 gap-y-6 gap-x-6 justify-self-center max-[840px]:grid-cols-2 max-sm:w-full max-sm:grid-cols-1">
