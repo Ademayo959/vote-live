@@ -262,7 +262,7 @@ const ElectionsResult = () => {
                                 </div>
                                 <div className="bg-blue-100 p-4 rounded-xl">
                                     <p className="font-mono text-[14px] text-gray-600">TURNOUT RATE</p>
-                                    <p className="text-5xl font-sans font-semibold my-2">{(electionObject.voters.length / electionObject.eligibleVoters.length * 100).toFixed(1)}%</p>
+                                    <p className="text-5xl font-sans font-semibold my-2">{(electionObject.voters.length / electionObject.eligibleVoters.length * 100).toFixed(0)}%</p>
                                     <p className="text-[13px] text-gray-500">{(electionObject.voters.length / electionObject.eligibleVoters.length * 100).toFixed(1) > 50 ?
                                         <p>A strong turnout across all eligible voters! The community showed up and made their voices heard. These results carry strong democratic weight.</p> :
                                         <p>Turnout was lower than expected. While the results are valid, they may not fully reflect the views of all eligible voters. Encourage wider participation next time.</p>
@@ -283,12 +283,12 @@ const ElectionsResult = () => {
                                                     <p className="text-[28px] text-blue-950 font-bold font-sans">{winner.name}</p>
                                                     <p className="my-1">{electionObject.positions[0].title}</p>
                                                     <div className="bg-white px-2 py-1 rounded-2xl w-fit">
-                                                        <p className="font-sans font-light font-raleway">Winner by {winner.votes - runnerUp.votes} votes</p>
+                                                        <p className="font-light font-raleway">Winner by {winner.votes - runnerUp.votes}{winner.votes - runnerUp.votes > 1 ? "votes" : "vote"}</p>
                                                     </div>
                                                 </div>
                                                 <div className="text-end max-sm:text-start">
                                                     <p className="text-blue-950 text-4xl font-sans font-semibold">{winner.votes} votes</p>
-                                                    <p className="font-raleway text-[13px]">{winner.votes / electionObject.totalVotes * 100}% of total votes</p>
+                                                    <p className="font-raleway text-[13px]">{(winner.votes / electionObject.totalVotes * 100).toFixed(1)}% of total votes</p>
                                                 </div>
                                             </div>
                                         </div>
