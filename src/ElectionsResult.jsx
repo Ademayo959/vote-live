@@ -283,7 +283,7 @@ const ElectionsResult = () => {
                                                     <p className="text-[28px] text-blue-950 font-bold font-sans">{winner.name}</p>
                                                     <p className="my-1">{electionObject.positions[0].title}</p>
                                                     <div className="bg-white px-2 py-1 rounded-2xl w-fit">
-                                                        <p className="font-light font-raleway">Winner by {winner.votes - runnerUp.votes}{winner.votes - runnerUp.votes > 1 ? "votes" : "vote"}</p>
+                                                        <p className="font-light font-raleway">Winner by {winner.votes - runnerUp.votes} {winner.votes - runnerUp.votes > 1 ? "votes" : "vote"}</p>
                                                     </div>
                                                 </div>
                                                 <div className="text-end max-sm:text-start">
