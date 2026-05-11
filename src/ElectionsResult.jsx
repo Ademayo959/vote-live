@@ -159,7 +159,7 @@ const ElectionsResult = () => {
                                                 <p className="font-raleway text-[14px]">Seconds</p>
                                             </div>
                                             <div className="w-[20%] bg-white p-3 h-fit rounded-2xl grid items-center justify-center text-center max-sm:w-full">
-                                                <p className="font-sans text-[35px] text-blue-950">{(electionObject.voters.length / electionObject.eligibleVoters.length * 100).toFixed(1)}%</p>
+                                                <p className="font-sans text-[35px] text-blue-950">{(electionObject.voters.length / electionObject.eligibleVoters.length * 100).toFixed(0)}%</p>
                                                 <p className="font-raleway text-[14px]">Turnout</p>
                                             </div>
                                         </div>

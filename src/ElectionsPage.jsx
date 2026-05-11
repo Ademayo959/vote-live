@@ -16,6 +16,8 @@ const ElectionsPage = () => {
     //countdown states
     const [timeLeft, setTimeLeft] = useState(null);
     const [isFinished, setIsFinished] = useState(false);
+    //state to disable the button
+    const [isVoteEnabled, setIsVoteEnabled] = useState(true)
 
 
     async function getElections() {
@@ -82,6 +84,7 @@ const ElectionsPage = () => {
     }
 
     async function handleElectionVote() {
+        setIsVoteEnabled(false)
         try {
             //checking if the election has ended
             if (isFinished) {
@@ -94,19 +97,27 @@ const ElectionsPage = () => {
             if (!election.eligibleVoters.includes(userdata.matricNumber)) {
                 return;
             }
-            // 2. Check if user's uid is already in election's voters array — if yes, return
-            if (election.voters.includes(auth.currentUser.uid)) {
-                return;
-            }
+
             // 3. Check if all positions have selections in ballot — if not, return
             if (Object.keys(ballot).length !== election.positions.length) {
                 return;
             }
+
+            let alreadyVoted = false;
+
             await runTransaction(db, async (transaction) => {
+
                 // 4. Fetch election, deep clone positions, increment selected candidate votes
                 const docRef = doc(db, "elections", electionId)
                 const freshData = await transaction.get(docRef)
                 const updatedElections = structuredClone(freshData.data().positions)
+
+                // 2. Check if user's uid is already in election's voters array — if yes, return
+                if (freshData.data().voters.includes(auth.currentUser.uid)) {
+                    alreadyVoted = true;
+                    return;
+                }
+
                 Object.entries(ballot).forEach(([positionTitle, candidateIndex]) => {
                     const posIndex = updatedElections.findIndex((p) => p.title === positionTitle)
                     updatedElections[posIndex].candidates[candidateIndex].votes += 1
@@ -118,6 +129,7 @@ const ElectionsPage = () => {
                     voters: [...freshData.data().voters, auth.currentUser.uid]
                 })
             })
+            if (alreadyVoted) return;
             // 6. updateDoc user — arrayUnion electionId to votedElections
             const userRef = doc(db, "users", auth.currentUser.uid)
             await updateDoc(userRef, { votedElections: arrayUnion(electionId) })
@@ -125,6 +137,7 @@ const ElectionsPage = () => {
             navigate(`/election/${electionId}/results`)
         } catch (err) {
             console.log("Error detected:", err)
+            setIsVoteEnabled(true)
         }
     }
 
@@ -239,7 +252,7 @@ const ElectionsPage = () => {
                                 ))}
                             </div>
                             <div>
-                                <div onClick={handleElectionVote} className="bg-custom-blue text-white py-2 px-2 rounded-lg text-center">
+                                <div onClick={handleElectionVote} className={`bg-custom-blue text-white py-2 px-2 rounded-lg text-center ${isVoteEnabled ? "cursor-pointer" : "pointer-events-none bg-gray-100" }`}>
                                     <p>Submit Vote</p>
                                 </div>
                                 <p className="text-[12px] text-gray-400 text-center my-2 px-4">Please note action cannot be undone after submission</p>

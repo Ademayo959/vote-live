@@ -110,32 +110,6 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
                     </div>
                 </div>
             </div>
-            <div className="px-6 flex gap-4 mt-4 max-sm:px-4 flex-wrap">
-                <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1 ">
-                    <p className="text-gray-600">All Polls</p>
-                </div>
-                <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1">
-                    <p className="text-gray-600">Trending</p>
-                </div>
-                <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1">
-                    <p className="text-gray-600">Campus Life</p>
-                </div>
-                <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1">
-                    <p className="text-gray-600">Academics</p>
-                </div>
-                <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1">
-                    <p className="text-gray-600">Relationships</p>
-                </div>
-                <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1">
-                    <p className="text-gray-600">Entertainment</p>
-                </div>
-                <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1">
-                    <p className="text-gray-600">Cafeteria</p>
-                </div>
-                <div className="px-3 py-1 border border-gray-300 w-fit rounded-3xl transition-all hover:-translate-y-1">
-                    <p className="text-gray-600">Sports</p>
-                </div>
-            </div>
             <div className="flex gap-2 px-6 mt-4 items-center max-sm:px-3">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6 text-red-700">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.047 8.287 8.287 0 0 0 9 9.601a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" />
