@@ -5,7 +5,6 @@ import { collection, getDocs, getDoc, doc } from "firebase/firestore"
 import { db } from "./firebase/firebase"
 import { auth } from "./firebase/firebase"
 import { Link } from "react-router-dom"
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
 
@@ -42,6 +41,8 @@ const ElectionsDashboard = ({ setactiveTab }) => {
         getElections()
     }, [])
     console.log(IsLoading)
+
+
     return (
         <div>
             <div className='bg-white border-b border-gray-200 max-[840px]:hidden'>
@@ -102,48 +103,67 @@ const ElectionsDashboard = ({ setactiveTab }) => {
                                 <div className="bg-gray-200 h-8 rounded w-full"></div>
                             </div>
                         </div>
-                    )) : elections.map((election) => (
-                        <div key={election.id} className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 shadow-md max-sm:w-full">
-                            <div className="bg-gray-100 p-4 rounded-lg">
-                                <div className="bg-white w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
-                                    <div className="h-2 w-2 bg-red-500 rounded-full"></div>
-                                    <p className="font-mono text-[10px] text-red-500">LIVE</p>
+                    )) : elections.map((election) => {
+                        if (!election.createdAt) return;
+
+                        // handle Firestore timestamp
+                        const createdAtMs = election.createdAt.toMillis
+                            ? election.createdAt.toMillis()
+                            : new Date(election.createdAt).getTime();
+
+                        const durationInMs = election.duration * 24 * 60 * 60 * 1000;
+                        const endTime = createdAtMs + durationInMs;
+
+                        const remaining = endTime - Date.now();
+
+                        return (
+                            <div key={election.id} className="border border-gray-300 h-60 w-86 rounded-lg grid grid-rows-2 shadow-md max-sm:w-full">
+                                <div className="bg-gray-100 p-4 rounded-lg">
+                                    {remaining <= 0 ?
+                                        <div className="bg-white w-22 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
+                                            <div className="h-2 w-2 bg-gray-500 rounded-full"></div>
+                                            <p className="font-mono text-[10px] text-gray-500">CONCLUDED</p>
+                                        </div> :
+                                        <div className="bg-white w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
+                                            <div className="h-2 w-2 bg-red-500 rounded-full"></div>
+                                            <p className="font-mono text-[10px] text-red-500">LIVE</p>
+                                        </div>}
                                 </div>
-                            </div>
-                            <div className="grid grid-rows-3 gap-1 p-3">
-                                <div>
-                                    <p className="text-[16px]">{election.title}</p>
-                                </div>
-                                <div className="flex gap-2 items-center font-raleway mb-3">
-                                    <div className="flex items-center text-gray-500 gap-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                                        </svg>
-                                        <p className="text-sm">{election.totalVotes} Voted</p>
+                                <div className="grid grid-rows-3 gap-1 p-3">
+                                    <div>
+                                        <p className="text-[16px]">{election.title}</p>
                                     </div>
-                                    <div className="flex items-center text-gray-500 gap-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
-                                        </svg>
-                                        <p className="text-sm">{election.positions.length} Positions</p>
-                                    </div>
-                                </div>
-                                <div className="flex gap-4 items-center">
-                                    <div className="bg-soft-blue w-[60%] text-blue-900 flex h-8 justify-center items-center rounded-lg">
-                                        <p className="text-sm">Ends in: {election.duration}hrs</p>
-                                    </div>
-                                    <Link to={`/election/${election.id}`}>
-                                        <div className="flex gap-2 items-center text-[15px] text-custom-blue font-extrabold hover:gap-4 transition-all">
-                                            <p className="font-raleway">Vote Now</p>
+                                    <div className="flex gap-2 items-center font-raleway mb-3">
+                                        <div className="flex items-center text-gray-500 gap-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
                                             </svg>
+                                            <p className="text-sm">{election.totalVotes} Voted</p>
                                         </div>
-                                    </Link>
+                                        <div className="flex items-center text-gray-500 gap-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="m7.875 14.25 1.214 1.942a2.25 2.25 0 0 0 1.908 1.058h2.006c.776 0 1.497-.4 1.908-1.058l1.214-1.942M2.41 9h4.636a2.25 2.25 0 0 1 1.872 1.002l.164.246a2.25 2.25 0 0 0 1.872 1.002h2.092a2.25 2.25 0 0 0 1.872-1.002l.164-.246A2.25 2.25 0 0 1 16.954 9h4.636M2.41 9a2.25 2.25 0 0 0-.16.832V12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 12V9.832c0-.287-.055-.57-.16-.832M2.41 9a2.25 2.25 0 0 1 .382-.632l3.285-3.832a2.25 2.25 0 0 1 1.708-.786h8.43c.657 0 1.281.287 1.709.786l3.284 3.832c.163.19.291.404.382.632M4.5 20.25h15A2.25 2.25 0 0 0 21.75 18v-2.625c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125V18a2.25 2.25 0 0 0 2.25 2.25Z" />
+                                            </svg>
+                                            <p className="text-sm">{election.positions.length} Positions</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-4 items-center">
+                                        <div className="bg-soft-blue w-[60%] text-blue-900 flex h-8 justify-center items-center rounded-lg">
+                                            <p className="text-sm">Ends in: {election.duration}hrs</p>
+                                        </div>
+                                        <Link to={`/election/${election.id}`}>
+                                            <div className="flex gap-2 items-center text-[15px] text-custom-blue font-extrabold hover:gap-4 transition-all">
+                                                <p className="font-raleway">Vote Now</p>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                                </svg>
+                                            </div>
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        )
+                    })}
                 </div>
             </div>
             {isModalActive && (

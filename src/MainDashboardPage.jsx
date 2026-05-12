@@ -84,44 +84,63 @@ const MainDashboardPage = ({ setactiveTab }) => {
                                              <div className="bg-gray-200 h-8 rounded w-full"></div>
                                         </div>
                                    </div>
-                              )) : elections.sort((a, b) => { b.totalVotes - a.totalVotes }).slice(0, 4).map((election) => (
-                                   <div key={election.id} className="border border-gray-300 h-60 w-90 rounded-lg grid grid-rows-2 shadow-lg max-sm:w-full">
-                                        <div className="bg-gray-100 p-4 rounded-lg">
-                                             <div className="bg-gray-900 w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
-                                                  <div className="h-2 w-2 bg-red-500 rounded-full"></div>
-                                                  <p className="font-mono text-[10px] text-white">LIVE</p>
-                                             </div>
-                                        </div>
-                                        <div className="grid grid-rows-3 gap-1 p-3">
-                                             <div>
-                                                  <p className="text-lg">{election.title}</p>
-                                             </div>
-                                             <div className="flex gap-2 items-center font-raleway mb-3">
-                                                  <div className="flex items-center text-gray-500 gap-1">
-                                                       {/* voters icon */}
-                                                       <p className="text-sm">{election.totalVotes} Voted</p>
-                                                  </div>
-                                                  <div className="flex items-center text-gray-500 gap-1">
-                                                       {/* positions icon */}
-                                                       <p className="text-sm">{election.positions.length} Positions</p>
-                                                  </div>
-                                             </div>
-                                             <div className="flex gap-4 items-center">
-                                                  <div className="bg-soft-blue w-[60%] text-blue-900 flex h-8 justify-center items-center rounded-lg">
-                                                       <p className="text-sm">Ends in: {election.duration} days</p>
-                                                  </div>
-                                                  <Link to={`/election/${election.id}`}>
-                                                       <div className="flex gap-2 items-center text-[15px] text-custom-blue font-extrabold hover:gap-4 transition-all">
-                                                            <p className="font-raleway">Vote Now</p>
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                                            </svg>
+                              )) : elections.sort((a, b) => { b.totalVotes - a.totalVotes }).slice(0, 4).map((election) => {
+                                   if (!election.createdAt) return;
+
+                                   // handle Firestore timestamp
+                                   const createdAtMs = election.createdAt.toMillis
+                                        ? election.createdAt.toMillis()
+                                        : new Date(election.createdAt).getTime();
+
+                                   const durationInMs = election.duration * 24 * 60 * 60 * 1000;
+                                   const endTime = createdAtMs + durationInMs;
+
+                                   const remaining = endTime - Date.now();
+
+                                   return (
+                                        <div key={election.id} className="border border-gray-300 h-60 w-90 rounded-lg grid grid-rows-2 shadow-lg max-sm:w-full">
+                                             <div className="bg-gray-100 p-4 rounded-lg">
+                                                  {remaining <= 0 ?
+                                                       <div className="bg-gray-900 w-22 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
+                                                            <div className="h-2 w-2 bg-gray-400 rounded-full"></div>
+                                                            <p className="font-mono text-[10px] text-gray-300">CONCLUDED</p>
                                                        </div>
-                                                  </Link>
+                                                       : <div className="bg-gray-900 w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
+                                                            <div className="h-2 w-2 bg-red-500 rounded-full"></div>
+                                                            <p className="font-mono text-[10px] text-white">LIVE</p>
+                                                       </div>}
+                                             </div>
+                                             <div className="grid grid-rows-3 gap-1 p-3">
+                                                  <div>
+                                                       <p className="text-lg">{election.title}</p>
+                                                  </div>
+                                                  <div className="flex gap-2 items-center font-raleway mb-3">
+                                                       <div className="flex items-center text-gray-500 gap-1">
+                                                            {/* voters icon */}
+                                                            <p className="text-sm">{election.totalVotes} Voted</p>
+                                                       </div>
+                                                       <div className="flex items-center text-gray-500 gap-1">
+                                                            {/* positions icon */}
+                                                            <p className="text-sm">{election.positions.length} Positions</p>
+                                                       </div>
+                                                  </div>
+                                                  <div className="flex gap-4 items-center">
+                                                       <div className="bg-soft-blue w-[60%] text-blue-900 flex h-8 justify-center items-center rounded-lg">
+                                                            <p className="text-sm">Ends in: {election.duration} days</p>
+                                                       </div>
+                                                       <Link to={`/election/${election.id}`}>
+                                                            <div className="flex gap-2 items-center text-[15px] text-custom-blue font-extrabold hover:gap-4 transition-all">
+                                                                 <p className="font-raleway">Vote Now</p>
+                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                                                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                                                 </svg>
+                                                            </div>
+                                                       </Link>
+                                                  </div>
                                              </div>
                                         </div>
-                                   </div>
-                              ))}
+                                   )
+                              })}
                          </div>
                          <div className="flex justify-between mt-8 font-raleway max-sm:px-0">
                               <p className="font-extrabold text-lg">Your Elections</p>
@@ -137,44 +156,62 @@ const MainDashboardPage = ({ setactiveTab }) => {
                                              <div className="bg-gray-200 h-8 rounded w-full"></div>
                                         </div>
                                    </div>
-                              )) : eligibleElections.length > 0 ? (eligibleElections.sort((a, b) => { b.totalVotes - a.totalVotes }).slice(0, 100).map((election) => (
-                                   <div key={election.id} className="border border-gray-300 h-60 w-90 rounded-lg grid grid-rows-2 shadow-lg max-sm:w-full">
-                                        <div className="bg-gray-100 p-4 rounded-lg">
-                                             <div className="bg-gray-900 w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
-                                                  <div className="h-2 w-2 bg-red-500 rounded-full"></div>
-                                                  <p className="font-mono text-[10px] text-white">LIVE</p>
-                                             </div>
-                                        </div>
-                                        <div className="grid grid-rows-3 gap-1 p-3">
-                                             <div>
-                                                  <p className="text-lg">{election.title}</p>
-                                             </div>
-                                             <div className="flex gap-2 items-center font-raleway mb-3">
-                                                  <div className="flex items-center text-gray-500 gap-1">
-                                                       {/* voters icon */}
-                                                       <p className="text-sm">{election.totalVotes} Voted</p>
-                                                  </div>
-                                                  <div className="flex items-center text-gray-500 gap-1">
-                                                       {/* positions icon */}
-                                                       <p className="text-sm">{election.positions.length} Positions</p>
-                                                  </div>
-                                             </div>
-                                             <div className="flex gap-4 items-center">
-                                                  <div className="bg-soft-blue w-[60%] text-blue-900 flex h-8 justify-center items-center rounded-lg">
-                                                       <p className="text-sm">Ends in: {election.duration} days</p>
-                                                  </div>
-                                                  <Link to={`/election/${election.id}`}>
-                                                       <div className="flex gap-2 items-center text-[15px] text-custom-blue font-extrabold hover:gap-4 transition-all">
-                                                            <p className="font-raleway">Vote Now</p>
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                                            </svg>
+                              )) : eligibleElections.length > 0 ? (eligibleElections.sort((a, b) => { b.totalVotes - a.totalVotes }).slice(0, 100).map((election) => {
+                                   if (!election.createdAt) return;
+
+                                   // handle Firestore timestamp
+                                   const createdAtMs = election.createdAt.toMillis
+                                        ? election.createdAt.toMillis()
+                                        : new Date(election.createdAt).getTime();
+
+                                   const durationInMs = election.duration * 24 * 60 * 60 * 1000;
+                                   const endTime = createdAtMs + durationInMs;
+
+                                   const remaining = endTime - Date.now();
+                                   return (
+                                        <div key={election.id} className="border border-gray-300 h-60 w-90 rounded-lg grid grid-rows-2 shadow-lg max-sm:w-full">
+                                             <div className="bg-gray-100 p-4 rounded-lg">
+                                                  {remaining <= 0 ?
+                                                       <div className="bg-gray-900 w-22 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
+                                                            <div className="h-2 w-2 bg-gray-400 rounded-full"></div>
+                                                            <p className="font-mono text-[10px] text-gray-300">CONCLUDED</p>
                                                        </div>
-                                                  </Link>
+                                                       : <div className="bg-gray-900 w-14 rounded-2xl flex gap-1.5 items-center justify-center h-6 float-right">
+                                                            <div className="h-2 w-2 bg-red-500 rounded-full"></div>
+                                                            <p className="font-mono text-[10px] text-white">LIVE</p>
+                                                       </div>}
+                                             </div>
+                                             <div className="grid grid-rows-3 gap-1 p-3">
+                                                  <div>
+                                                       <p className="text-lg">{election.title}</p>
+                                                  </div>
+                                                  <div className="flex gap-2 items-center font-raleway mb-3">
+                                                       <div className="flex items-center text-gray-500 gap-1">
+                                                            {/* voters icon */}
+                                                            <p className="text-sm">{election.totalVotes} Voted</p>
+                                                       </div>
+                                                       <div className="flex items-center text-gray-500 gap-1">
+                                                            {/* positions icon */}
+                                                            <p className="text-sm">{election.positions.length} Positions</p>
+                                                       </div>
+                                                  </div>
+                                                  <div className="flex gap-4 items-center">
+                                                       <div className="bg-soft-blue w-[60%] text-blue-900 flex h-8 justify-center items-center rounded-lg">
+                                                            <p className="text-sm">Ends in: {election.duration} days</p>
+                                                       </div>
+                                                       <Link to={`/election/${election.id}`}>
+                                                            <div className="flex gap-2 items-center text-[15px] text-custom-blue font-extrabold hover:gap-4 transition-all">
+                                                                 <p className="font-raleway">Vote Now</p>
+                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                                                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                                                 </svg>
+                                                            </div>
+                                                       </Link>
+                                                  </div>
                                              </div>
                                         </div>
-                                   </div>
-                              ))) : (
+                                   )
+                              })) : (
                                    <div className="w-full bg-white p-2 flex-col text-center justify-center rounded-lg">
                                         <p className="font-sanc font-semibold text-[16px] text-gray-700">No elections available for you yet</p>
                                         <div className="bg-gray-200 w-fit px-2 py-1 justify-self-center my-2 rounded-lg">
