@@ -137,7 +137,7 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
                                 <div className='flex justify-between items-center '>
                                     <div>
                                         <p className='text-extrabold'>{poll.createdBy}</p>
-                                        <p className='text-[14px] text-gray-600 font raleway'>Posted {Math.floor((new Date() - poll.createdAt.toDate()) / (1000 * 60 * 60))} hrs ago</p>
+                                        <p className='text-[14px] text-gray-600 font raleway'>{`Posted ${Math.floor((new Date() - poll.createdAt.toDate()) / (1000 * 60 * 60)) > 24 ? `${(Math.floor((new Date() - poll.createdAt.toDate()) / (1000 * 60 * 60)) / 24).toFixed(0)} days ago` : `${Math.floor((new Date() - poll.createdAt.toDate()) / (1000 * 60 * 60))} hrs ago`} `}</p>
                                     </div>
                                     <div className='h-7 w-13 bg-red-200 flex items-center justify-center rounded-md'>
                                         <p className='font-raleway text-red-600'>HOT</p>

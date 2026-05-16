@@ -13,6 +13,8 @@ const ElectionsDashboard = ({ setactiveTab }) => {
     const [isCreateElectionModal, setIsCreateElectionModal] = useState(false)
     //loading state
     const [IsLoading, setIsLoading] = useState(true)
+    //search bar state 
+    const [searchQuery, setSearchQuery] = useState("")
 
     const [elections, setelections] = useState([])
 
@@ -41,6 +43,10 @@ const ElectionsDashboard = ({ setactiveTab }) => {
         getElections()
     }, [])
     console.log(IsLoading)
+
+    const results = elections.filter((election) =>
+        election.title.toLowerCase().includes(searchQuery.toLowerCase())
+    )
 
 
     return (
@@ -82,7 +88,7 @@ const ElectionsDashboard = ({ setactiveTab }) => {
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-gray-500">
                             <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                         </svg>
-                        <input type="text" className="outline-none w-[99%] font-raleway placeholder:text-raleway placeholder:text-sm" placeholder="Search by Election Name, ID or Department...." />
+                        <input type="text" value={searchQuery} onChange={(e) => (setSearchQuery(e.target.value))} className="outline-none w-[99%] font-raleway placeholder:text-raleway placeholder:text-sm" placeholder="Search by Election Name, ID or Department...." />
                     </div>
                     <div className="flex max-sm:gap-3">
                         <div onClick={() => { setIsCreateElectionModal(true) }} className="flex cursor-pointer bg-custom-blue text-white w-40 h-10 px-2 items-center justify-center rounded-lg text-sm font-raleway gap-2 max-sm:px-1 max-sm:gap-1 max-sm:w-30 max-sm:h-8">
@@ -103,7 +109,7 @@ const ElectionsDashboard = ({ setactiveTab }) => {
                                 <div className="bg-gray-200 h-8 rounded w-full"></div>
                             </div>
                         </div>
-                    )) : elections.map((election) => {
+                    )) : results.map((election) => {
                         if (!election.createdAt) return;
 
                         // handle Firestore timestamp

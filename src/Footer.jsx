@@ -53,7 +53,7 @@ const Footer = ({scrollToFeatures}) => {
                     <hr className='text-gray-300 max-sm:hidden' />
                 </div>
                 <div className='flex items-center justify-between mt-0 text-gray-600 max-sm:grid'>
-                    <p>© 2025 Votelive platform. All rights reserved</p>
+                    <p>© 2026 Votelive platform. All rights reserved</p>
                     <div className='flex items-center text-sm max-sm:justify-self-center max-sm:text-[16px]'>
                         <span>Built with</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
