@@ -126,7 +126,7 @@ const MainDashboardPage = ({ setactiveTab }) => {
                                                   </div>
                                                   <div className="flex gap-4 items-center">
                                                        <div className="bg-soft-blue w-[60%] text-blue-900 flex h-8 justify-center items-center rounded-lg">
-                                                            <p className="text-sm">Ends in: {election.duration} days</p>
+                                                            <p className="text-sm">{`Duration: ${election.duration > 1 ? `${election.duration} days` : `${election.duration} day`} `}</p>
                                                        </div>
                                                        <Link to={`/election/${election.id}`}>
                                                             <div className="flex gap-2 items-center text-[15px] text-custom-blue font-extrabold hover:gap-4 transition-all">
@@ -197,7 +197,7 @@ const MainDashboardPage = ({ setactiveTab }) => {
                                                   </div>
                                                   <div className="flex gap-4 items-center">
                                                        <div className="bg-soft-blue w-[60%] text-blue-900 flex h-8 justify-center items-center rounded-lg">
-                                                            <p className="text-sm">Ends in: {election.duration} days</p>
+                                                            <p className="text-sm">{`Duration: ${election.duration > 1 ? `${election.duration} days` : `${election.duration} day`} `}</p>
                                                        </div>
                                                        <Link to={`/election/${election.id}`}>
                                                             <div className="flex gap-2 items-center text-[15px] text-custom-blue font-extrabold hover:gap-4 transition-all">
