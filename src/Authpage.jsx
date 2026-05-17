@@ -112,6 +112,38 @@ const Authpage = () => {
         }
     }
 
+    //carousel data
+    const reviews = [
+        {
+            name: "Chukwuemeka Obi",
+            position: "Computer Science, UNILAG",
+            review: "Votelive made our departmental elections seamless and transparent. Results were instant and every student trusted the process completely."
+        },
+        {
+            name: "Aisha Bello",
+            position: "Mass Com Student, ABU Zaria",
+            review: "The interface is so clean and intuitive. Even students who are not tech savvy had absolutely no trouble navigating or casting their votes."
+        },
+        {
+            name: "Ngozi Eze",
+            position: "Biochemistry, UNN",
+            review: "Live results ended all the manipulation accusations on our campus. Votelive brought real accountability to student governance for everyone."
+        },
+        {
+            name: "Babatunde Fashola",
+            position: "Business Administration, LASU",
+            review: "Setting up our election took under thirty minutes. On voting day the platform handled everything smoothly without a single complaint."
+        },
+    ]
+    //carousel states
+    const [currentState, setCurrentState] = useState(0)
+    const next = () =>{
+        setCurrentState(i => i == reviews.length - 1 ? 0 : i + 1)
+    }
+
+    const prev = () => {
+        setCurrentState(i => i == 0 ? reviews.length - 1  : i - 1)
+    }
 
 
     const [showPassword, setshowPassword] = useState(true)
@@ -119,37 +151,46 @@ const Authpage = () => {
 
     return (
         <div className="auth-page flex font-montserrat">
-            <div className="bg-[url('./assets/votelive-bg.png')] w-[50%] h-screen text-white py-6 px-8 max-sm:hidden">
-                <p className="text-5xl mb-4 mt-66">Your voice matters in building a better campus.</p>
-                <p className="font-raleway">Join thousands of students securely casting their votes for student union leaders, faculty representatives, and campus initiatives.</p>
+            <div className="bg-[url('./assets/votelive-bg.png')] w-[50%] h-[94vh] m-[3vh] rounded-3xl text-white py-6 px-8 max-sm:hidden">
+                <p className="text-5xl mb-4 mt-40 font-raleway">Your voice matters in building a better campus.</p>
+                <p className="font-raleway text-gray-200">Join thousands of students securely casting their votes for student union leaders, faculty representatives, and campus initiatives.</p>
                 <div className="px-4 py-8 my-8 grid gap-4 border border-gray-50/10 rounded-lg bg-white/10 backdrop-blur-md">
                     <div>
-                        <p>"Votelive made our students union eletions incredibly transparent and easy. The matric number verification completely eliminated voter's fraud concerns we had in previous years."</p>
+                        <p className='text-[30px] leading-10 font-raleway'>"{reviews[currentState].review}"</p>
                     </div>
-                    <div className='flex gap-2'>
+                    <div className='flex justify-between items-center'>
                         <div>
-                            <img src={ProfileTwo} alt="profile picture" className='w-12 h-12 rounded-full object-contain' />
+                            <p>{reviews[currentState].name}</p>
+                            <p className='text-gray-400'>{reviews[currentState].position}</p>
                         </div>
-                        <div>
-                            <p>Dr. Adewale Okoya</p>
-                            <p>Dean of Student Affairs</p>
+                        <div className='flex gap-2'>
+                            <div onClick={prev} className='h-8 w-8 backdrop-blur-2xl rounded-full flex items-center justify-center'>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-4">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                                </svg>
+                            </div>
+                            <div onClick={next} className='h-8 w-8 backdrop-blur-2xl rounded-full flex items-center justify-center'>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-4">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                                </svg>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className='bg-accent-blue flex w-[50%] max-sm:justify-self-center max-sm:w-full max-sm:overflow-hidden max-sm:h-screen'>
-                <div className='mx-auto w-96 max-sm:w-[85vw]'>
-                    <div className='mb-8'>
-                        <p className='text-2xl font-extrabold mt-4 mb-2 text-center'>Create an account</p>
-                        <p className='text-gray-500 text-center text-[14px] font-raleway'>Enter your details below to get started</p>
+            <div className='flex w-[50%] py-12 max-sm:justify-self-center max-sm:w-full max-sm:overflow-hidden max-sm:h-screen'>
+                <div className='mx-auto w-108 max-sm:w-[85vw]'>
+                    <div className='w-108 h-14 bg-soft-blue flex items-center justify-center gap-2 rounded-md mb-0 max-sm:h-12 max-sm:w-full max-sm:justify-self-center'>
+                        <div className={`flex cursor-pointer items-center justify-center w-52 h-12 rounded-md ${activeMenu === "signup" ? "bg-white shadow-sm" : "bg-transparent"}`} onClick={() => { setactiveMenu("signup"); }}>
+                            <p className='text-[20px] font-raleway'>Sign Up</p>
+                        </div>
+                        <div className={`flex items-center cursor-pointer justify-center w-52 h-12 rounded-md ${activeMenu === "login" ? "bg-white shadow-sm" : "bg-transparent"}`} onClick={() => { setactiveMenu("login"); }}>
+                            <p className='text-[20px] font-raleway'>Log In</p>
+                        </div>
                     </div>
-                    <div className='w-96 h-12 bg-soft-blue flex items-center justify-center gap-2 rounded-md mb-6 max-sm:w-full max-sm:justify-self-center'>
-                        <div className={`flex items-center justify-center w-46 h-10 rounded-md ${activeMenu === "signup" ? "bg-white shadow-sm" : "bg-transparent"}`} onClick={() => { setactiveMenu("signup"); }}>
-                            <p>Sign Up</p>
-                        </div>
-                        <div className={`flex items-center justify-center w-46 h-10 rounded-md ${activeMenu === "login" ? "bg-white shadow-sm" : "bg-transparent"}`} onClick={() => { setactiveMenu("login"); }}>
-                            <p>Log In</p>
-                        </div>
+                    <div className='mb-6'>
+                        <p className='text-[38px] font-extrabold mt-2 text-deep-blue max-sm:text-[24px]'>Create an account</p>
+                        <p className='text-gray-500 text-[16px] font-raleway'>Enter your details below to get started</p>
                     </div>
                     <div className='max-sm:justify-self-center'>
                         {activeMenu === "signup" &&
@@ -158,7 +199,7 @@ const Authpage = () => {
                                 <div>
                                     <div>
                                         <p>Full Name</p>
-                                        <div className='flex items-center gap-2 border border-gray-300 px-2 py-1 bg-white rounded-md my-2 w-96 max-sm:w-full'>
+                                        <div className='flex items-center gap-2 bg-soft-blue px-2 py-1 rounded-lg my-2 w-full max-sm:w-full'>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                                             </svg>
@@ -167,7 +208,7 @@ const Authpage = () => {
                                     </div>
                                     <div>
                                         <p>Matric Number</p>
-                                        <div className='flex items-center gap-2 border border-gray-300 px-2 py-1 bg-white rounded-md my-2 w-96 max-sm:w-full'>
+                                        <div className='flex items-center gap-2 bg-soft-blue px-2 py-1 rounded-lg my-2 w-full max-sm:w-full'>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
                                             </svg>
@@ -176,7 +217,7 @@ const Authpage = () => {
                                     </div>
                                     <div>
                                         <p>Email</p>
-                                        <div className='flex items-center gap-2 border border-gray-300 px-2 py-1 bg-white rounded-md my-2 w-96 max-sm:w-full'>
+                                        <div className='flex items-center gap-2 bg-soft-blue px-2 py-1 rounded-lg my-2 w-full max-sm:w-full'>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                             </svg>
@@ -185,7 +226,7 @@ const Authpage = () => {
                                     </div>
                                     <div>
                                         <p>Password</p>
-                                        <div className='flex items-center gap-2 border border-gray-300 px-2 py-1 bg-white rounded-md my-2 w-96 max-sm:w-full'>
+                                        <div className='flex items-center gap-2 bg-soft-blue px-2 py-1 rounded-lg my-2 w-full max-sm:w-full'>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                                             </svg>
@@ -205,11 +246,12 @@ const Authpage = () => {
                                     </div>
                                 </div>
                                 <div className='grid gap-4 my-4'>
-                                    <div className='flex'>
-                                        <p className='text-[12px] text-gray-600 text-center'><input type="checkbox" /> By clicking create account, I agree that I have read and accepted the <a href="#" className='text-blue-500 underline'>Terms of Use</a> and <a href="#" className='text-blue-500 underline'>Privacy Policy</a></p>
+                                    <div className='flex items-center gap-2'>
+                                        <input type="checkbox" className='accent-deep-blue h-8 w-8' />
+                                        <p className='text-[12px] text-gray-500 '> By clicking create account, I agree that I have read and accepted the <a href="#" className='text-deep-blue underline'>Terms of Use</a> and <a href="#" className='text-deep-blue underline'>Privacy Policy</a></p>
                                     </div>
                                     <div>
-                                        <div onClick={handleSignUp} className='bg-blue-500 flex gap-2 text-white w-96 h-10 items-center justify-center rounded-md hover:gap-4 transition-all max-sm:w-full'>
+                                        <div onClick={handleSignUp} className='bg-deep-blue flex gap-2 text-white w-full h-10 items-center justify-center rounded-md hover:gap-4 transition-all max-sm:w-full'>
                                             <p>Create Account</p>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
@@ -218,20 +260,20 @@ const Authpage = () => {
                                     </div>
                                 </div>
                                 <div className='text-center flex items-center justify-between max-sm:w-full'>
-                                    <p className='text-[12px] text-gray-500'>Validation done by <a href="https://cascadejs.netlify.app/" className='text-blue-500 underline'>Cascadejs</a></p>
+                                    <p className='text-[12px] text-gray-500'>Validation done by <a href="https://cascadejs.netlify.app/" className='text-deep-blue underline'>Cascadejs</a></p>
                                     <Link to="/">
-                                        <p className='text-[13px] text-blue-500 font-raleway'>Back to Home</p>
+                                        <p className='text-[13px] text-deep-blue font-raleway'>Back to Home</p>
                                     </Link>
                                 </div>
 
                             </div>}
                         {activeMenu === "login" &&
-                            <div className='w-96 max-sm:w-[85vw]'>
+                            <div className='w-108 max-sm:w-[85vw]'>
                                 <p className='text-center'>{loginErrorMessage}</p>
                                 <div className='mt-10'>
                                     <div>
                                         <p>Email</p>
-                                        <div className='flex items-center gap-2 border border-gray-300 px-2 py-1 bg-white rounded-md my-2 w-96 max-sm:w-full'>
+                                        <div className='flex items-center gap-2 bg-soft-blue px-2 py-1 rounded-lg my-2 w-full max-sm:w-full'>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                             </svg>
@@ -240,7 +282,7 @@ const Authpage = () => {
                                     </div>
                                     <div>
                                         <p>Password</p>
-                                        <div className='flex items-center gap-2 border border-gray-300 px-2 py-1 bg-white rounded-md my-2 w-96 max-sm:w-full'>
+                                        <div className='flex items-center gap-2 bg-soft-blue px-2 py-1 rounded-lg my-2 w-full max-sm:w-full'>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                                             </svg>
@@ -261,7 +303,7 @@ const Authpage = () => {
                                 </div>
                                 <div className='grid gap-4 my-4'>
                                     <div>
-                                        <div onClick={handleLogin} className='bg-blue-500 flex gap-2 text-white w-96 h-10 items-center justify-center rounded-md hover:gap-4 transition-all max-sm:w-full'>
+                                        <div onClick={handleLogin} className='bg-deep-blue flex gap-2 text-white w-108 h-10 items-center justify-center rounded-md hover:gap-4 transition-all max-sm:w-full'>
                                             <p>Log In</p>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
@@ -270,9 +312,9 @@ const Authpage = () => {
                                     </div>
                                 </div>
                                 <div className='text-center flex items-center justify-between max-sm:w-full'>
-                                    <p className='text-[12px] text-gray-500'>Having Trouble? <a href="#" className='text-blue-500 underline'>Contact Support</a></p>
+                                    <p className='text-[12px] text-gray-500'>Having Trouble? <a href="#" className='text-deep-blue underline'>Contact Support</a></p>
                                     <Link to="/">
-                                        <p className='text-[13px] text-blue-500 font-raleway'>Back to Home</p>
+                                        <p className='text-[13px] text-deep-blue font-raleway'>Back to Home</p>
                                     </Link>
                                 </div>
 
