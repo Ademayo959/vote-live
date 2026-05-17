@@ -12,6 +12,7 @@ import HelpAndSupport from './HelpAndSupport'
 import CreateElectionModal from './CreateElectionModal';
 import CreatePollModal from './CreatePollModal';
 import HowItWorks from './HowItWorks';
+import Adminmadeleye from './Admin-madeleye';
 import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from './ProtectedRoute';
 
@@ -19,12 +20,13 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<Home />} />
-     <Route path='/help' element={<HelpAndSupport />}/>
+      <Route path='/help' element={<HelpAndSupport />}/>
       <Route path='/dashboard' element={<ProtectedRoute> <Dashboard /> </ProtectedRoute>} />
       <Route path="/election/:electionId" element={<ElectionsPage />}/>
       <Route path="/election/:electionId/results" element={<ElectionsResult />}/>
       <Route path="/signup" element={<Authpage />} />
       <Route path="/login" element={<Authpage />} />
+      <Route path='/adminmadeleye' element={<Adminmadeleye />} />
       <Route path="/howitworks" element={<HowItWorks />} />
       <Route path="/create" element={<CreateElectionModal/>} />
       <Route path="/createpoll" element={<CreatePollModal />}/>
