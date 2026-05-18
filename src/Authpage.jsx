@@ -151,10 +151,10 @@ const Authpage = () => {
 
     return (
         <div className="auth-page flex font-montserrat">
-            <div className="bg-[url('./assets/votelive-bg.png')] w-[50%] h-[94vh] m-[3vh] rounded-3xl text-white py-6 px-8 max-sm:hidden">
-                <p className="text-5xl mb-4 mt-40 font-raleway">Your voice matters in building a better campus.</p>
+            <div className="bg-[url('./assets/votelive-bg.png')] w-[50%] h-[94vh] m-[3vh] flex flex-col justify-end rounded-3xl text-white py-2 px-8 max-sm:hidden">
+                <p className="text-5xl mb-4 mt-20 font-raleway">Your voice matters in building a better campus.</p>
                 <p className="font-raleway text-gray-200">Join thousands of students securely casting their votes for student union leaders, faculty representatives, and campus initiatives.</p>
-                <div className="px-4 py-8 my-8 grid gap-4 border border-gray-50/10 rounded-lg bg-white/10 backdrop-blur-md">
+                <div className="px-4 py-8 my-8 h-[40vh] grid gap-4 border border-gray-50/10 rounded-lg bg-white/10 backdrop-blur-md ">
                     <div>
                         <p className='text-[30px] leading-10 font-raleway'>"{reviews[currentState].review}"</p>
                     </div>
