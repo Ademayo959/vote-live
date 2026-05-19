@@ -52,7 +52,17 @@ const Authpage = () => {
             setIsVisible(true)
             return;
         }
+
         try {
+            // check matric number before anything else
+            const matricRef = doc(db, "matricNumbers", matricNumber)
+            const matricSnap = await getDoc(matricRef)
+
+            if (matricSnap.exists()) {
+                setToastMessage("This matric number is already registered")
+                return
+            }
+
             let createUser = await createUserWithEmailAndPassword(auth, email, password);
             let user = createUser.user
             const reference = doc(db, "users", user.uid)
@@ -137,12 +147,12 @@ const Authpage = () => {
     ]
     //carousel states
     const [currentState, setCurrentState] = useState(0)
-    const next = () =>{
+    const next = () => {
         setCurrentState(i => i == reviews.length - 1 ? 0 : i + 1)
     }
 
     const prev = () => {
-        setCurrentState(i => i == 0 ? reviews.length - 1  : i - 1)
+        setCurrentState(i => i == 0 ? reviews.length - 1 : i - 1)
     }
 
 

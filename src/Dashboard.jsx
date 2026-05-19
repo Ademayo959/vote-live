@@ -53,7 +53,7 @@ const Dashboard = () => {
     const handleLogout = async () => {
         try {
             await signOut(auth);
-            navigate('./login')
+            navigate('/login')
         } catch (err) {
             console.log("Error detected:", err)
         }

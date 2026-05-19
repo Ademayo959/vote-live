@@ -102,7 +102,10 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
                         <p className="font-extrabold text-2xl font-montserrat max-sm:text-[16px]">Polls & Surveys</p>
                         <p className="text-gray-500 font-raleway font-extralight max-[840px]:text-[12px] max-sm:w-48">Participate in campus discussions or create your own.</p>
                     </div>
-                    <div onClick={() => { setIsCreatePollModal(true) }} className="flex cursor-pointer bg-custom-blue text-white w-40 h-10 px-2 items-center justify-center rounded-lg text-sm font-raleway gap-2 max-sm:w-[30%]">
+                    <div
+                        onClick={() => { if (userName) setIsCreatePollModal(true) }}
+                        className={`flex cursor-pointer bg-custom-blue text-white w-40 h-10 px-2 items-center justify-center rounded-lg text-sm font-raleway gap-2 max-sm:w-[30%] ${!userName ? "opacity-50 cursor-not-allowed" : ""}`}
+                    >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                         </svg>

@@ -113,7 +113,7 @@ const ElectionsPage = () => {
                 const updatedElections = structuredClone(freshData.data().positions)
 
                 // 2. Check if user's uid is already in election's voters array — if yes, return
-                if (freshData.data().voters.includes(auth.currentUser.uid)) {
+                if (freshData.data().voters.includes(userdata.matricNumber)) {
                     alreadyVoted = true;
                     return;
                 }
@@ -126,7 +126,7 @@ const ElectionsPage = () => {
                 transaction.update(docRef, {
                     positions: updatedElections,
                     totalVotes: freshData.data().totalVotes + 1,
-                    voters: [...freshData.data().voters, auth.currentUser.uid]
+                    voters: [...freshData.data().voters, userdata.matricNumber]
                 })
             })
             if (alreadyVoted) return;
