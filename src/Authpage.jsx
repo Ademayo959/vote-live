@@ -55,8 +55,10 @@ const Authpage = () => {
         try {
             // check matric number before anything elseconst sanitizedMatric = matricNumber.replace(/\//g, "-")
             const sanitizedMatric = matricNumber.replace(/\//g, "-")
+            //console.log("sanitized matric:", sanitizedMatric)
             const matricRef = doc(db, "matricNumbers", sanitizedMatric)
             const matricSnap = await getDoc(matricRef)
+            //console.log("matric snap exists:", matricSnap.exists())
 
 
             if (matricSnap.exists()) {
@@ -71,8 +73,8 @@ const Authpage = () => {
             await setDoc(reference, { fullName, matricNumber })
             await setDoc(doc(db, "matricNumbers", sanitizedMatric), { userId: user.uid })
             await updateProfile(auth.currentUser, { displayName: fullName })
-            console.log(auth.currentUser.displayName)
-            console.log(user)
+            //console.log(auth.currentUser.displayName)
+            //console.log(user)
             navigate('/dashboard');
         } catch (err) {
             console.log("Request Failed Error:", err)
