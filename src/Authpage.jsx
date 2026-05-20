@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import ProfileTwo from './assets/img/Old Nigerian.jpg';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from './firebase/firebase';
 import { db } from './firebase/firebase';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import Toast from './Toast';
 import { isEmail, isAlphabetic, isStrongPassword, isEmpty, isMediumPassword } from 'valcade'
 
@@ -54,19 +53,23 @@ const Authpage = () => {
         }
 
         try {
-            // check matric number before anything else
-            const matricRef = doc(db, "matricNumbers", matricNumber)
+            // check matric number before anything elseconst sanitizedMatric = matricNumber.replace(/\//g, "-")
+            const sanitizedMatric = matricNumber.replace(/\//g, "-")
+            const matricRef = doc(db, "matricNumbers", sanitizedMatric)
             const matricSnap = await getDoc(matricRef)
+
 
             if (matricSnap.exists()) {
                 setToastMessage("This matric number is already registered")
-                return
+                setIsVisible(true)
+                return;
             }
 
             let createUser = await createUserWithEmailAndPassword(auth, email, password);
             let user = createUser.user
             const reference = doc(db, "users", user.uid)
             await setDoc(reference, { fullName, matricNumber })
+            await setDoc(doc(db, "matricNumbers", sanitizedMatric), { userId: user.uid })
             await updateProfile(auth.currentUser, { displayName: fullName })
             console.log(auth.currentUser.displayName)
             console.log(user)
