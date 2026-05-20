@@ -126,7 +126,8 @@ const ElectionsPage = () => {
                 transaction.update(docRef, {
                     positions: updatedElections,
                     totalVotes: freshData.data().totalVotes + 1,
-                    voters: [...freshData.data().voters, userdata.matricNumber, auth.currentUser.uid]
+                    voters: [...freshData.data().voters, userdata.matricNumber],
+                    votersUid: [...freshData.data().votersUid, auth.currentUser.uid]
                 })
             })
             if (alreadyVoted) return;
