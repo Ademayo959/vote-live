@@ -147,7 +147,7 @@ const ElectionsPage = () => {
             return;
         }
         if (!election?.eligibleVoters) return;
-        if (!election.eligibleVoters.includes(userdata.matricNumber) || isFinished || election.voters.includes(auth.currentUser.uid)) {
+        if (!election.eligibleVoters.includes(userdata.matricNumber) || isFinished || (election.votersUid || []).includes(auth.currentUser.uid)) {
             navigate(`/election/${electionId}/results`)
         }
 
@@ -253,7 +253,7 @@ const ElectionsPage = () => {
                                 ))}
                             </div>
                             <div>
-                                <div onClick={handleElectionVote} className={`bg-custom-blue text-white py-2 px-2 rounded-lg text-center ${isVoteEnabled ? "cursor-pointer" : "pointer-events-none bg-gray-100" }`}>
+                                <div onClick={handleElectionVote} className={`bg-custom-blue text-white py-2 px-2 rounded-lg text-center ${isVoteEnabled ? "cursor-pointer" : "pointer-events-none bg-gray-100"}`}>
                                     <p>Submit Vote</p>
                                 </div>
                                 <p className="text-[12px] text-gray-400 text-center my-2 px-4">Please note action cannot be undone after submission</p>
