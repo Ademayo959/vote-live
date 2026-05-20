@@ -127,7 +127,7 @@ const ElectionsPage = () => {
                     positions: updatedElections,
                     totalVotes: freshData.data().totalVotes + 1,
                     voters: [...freshData.data().voters, userdata.matricNumber],
-                    votersUid: [...freshData.data().votersUid, auth.currentUser.uid]
+                    votersUid: [...(freshData.data().votersUid || []), auth.currentUser.uid]
                 })
             })
             if (alreadyVoted) return;
