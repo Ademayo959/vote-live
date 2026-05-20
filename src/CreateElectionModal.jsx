@@ -73,6 +73,7 @@ const CreateElectionModal = ({ setIsCreateElectionModal }) => {
             eligibleVoters: eligibleVoters.split("\n").map(v => v.trim()).filter(v => v),
             positions: positions,
             voters: [],
+            votersUid: [],
             duration: duration,
             status: "pending",
             createdAt: serverTimestamp(),
