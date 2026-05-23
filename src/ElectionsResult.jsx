@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import logo from './assets/img/votelive-logo.png'
-import { doc, getDoc } from "firebase/firestore";
+import { doc } from "firebase/firestore";
 import { db } from "./firebase/firebase";
 import { onSnapshot } from "firebase/firestore";
 
@@ -21,7 +21,7 @@ const ElectionsResult = () => {
         let docRef = doc(db, "elections", electionId)
         const unsubscribe = onSnapshot(docRef, (snapshot) => {
             const electionData = snapshot.data();
-            console.log(electionData)
+            //console.log(electionData)
             setelectionObject(electionData)
         })
         return unsubscribe;
@@ -50,7 +50,7 @@ const ElectionsResult = () => {
         }, 1000);
 
         return () => clearInterval(interval);
-    }, [electionObject]);
+    }, [electionObject.createdAt, electionObject.duration]);
 
     const formatTimeParts = (ms) => {
         if (!ms || ms <= 0) {
@@ -126,7 +126,7 @@ const ElectionsResult = () => {
                             <div className="bg-blue-100 p-4 rounded-xl">
                                 <p className="font-mono text-[14px] text-gray-600">LIVE COUNTDOWN</p>
                                 <p className="text-5xl font-sans font-semibold my-2">{hours}:{minutes}:{seconds}</p>
-                                <p className="text-[13px] text-gray-500">Voting is still open. Rankimgs may change until the countdown reaches zero and the results are displayed</p>
+                                <p className="text-[13px] text-gray-500">Voting is still open. Rankings may change until the countdown reaches zero and the results are displayed</p>
                             </div>
                         </div>
                         <div className="grid grid-cols-[3fr_1fr] my-4 gap-4 max-sm:grid-cols-1">
@@ -159,7 +159,7 @@ const ElectionsResult = () => {
                                                 <p className="font-raleway text-[14px]">Seconds</p>
                                             </div>
                                             <div className="w-[20%] bg-white p-3 h-fit rounded-2xl grid items-center justify-center text-center max-sm:w-full">
-                                                <p className="font-sans text-[35px] text-blue-950">{(electionObject.voters.length / electionObject.eligibleVoters.length * 100).toFixed(0)}%</p>
+                                                <p className="font-sans text-[35px] text-blue-950">{electionObject.voters.length === 0 ? 0 : (electionObject.voters.length / electionObject.eligibleVoters.length * 100).toFixed(0)}%</p>
                                                 <p className="font-raleway text-[14px]">Turnout</p>
                                             </div>
                                         </div>
@@ -182,10 +182,10 @@ const ElectionsResult = () => {
                                                             <div className="w-[700px] max-sm:w-[calc(100vw-120px)]">
                                                                 <div className="flex justify-between gap-10">
                                                                     <p className=" text-blue-950 font-semibold text-[17px]">{candidate.name}</p>
-                                                                    <p className="text-gray-600">{(candidate.votes / electionObject.voters.length * 100).toFixed(0)}%</p>
+                                                                    <p className="text-gray-600">{(electionObject.voters.length === 0 ? 0 : (candidate.votes / electionObject.voters.length * 100)).toFixed(0)}%</p>
                                                                 </div>
                                                                 <div className="bg-blue-100 h-2 rounded-2xl w-full my-2 max-sm:w-full">
-                                                                    <div style={{ width: `${(candidate.votes / electionObject.voters.length) * 100}%` }} className={`bg-blue-600 h-2 rounded-2xl`}></div>
+                                                                    <div style={{ width: `${electionObject.voters.length === 0 ? 0 : (candidate.votes / electionObject.voters.length * 100)}%` }} className={`bg-blue-600 h-2 rounded-2xl`}></div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -217,7 +217,7 @@ const ElectionsResult = () => {
                                     </div>
                                     <div className="bg-gray-100 w-full rounded-lg grid items-center py-3.5 px-4">
                                         <p className="text-[13px] text-gray-600">Turnout</p>
-                                        <p className="text-[30px] text-blue-950 font-sans">{(electionObject.voters.length / electionObject.eligibleVoters.length * 100).toFixed(1)}%</p>
+                                        <p className="text-[30px] text-blue-950 font-sans">{electionObject.voters.length === 0 ? 0 : ((electionObject.voters.length / electionObject.eligibleVoters.length * 100).toFixed(1))}%</p>
                                     </div>
                                 </div>
                             </div>
@@ -255,15 +255,15 @@ const ElectionsResult = () => {
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4.5 h-4.5">
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605" />
                                                 </svg>
-                                                <p>Results refreshes in real time</p>
+                                                <p>Final Results</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="bg-blue-100 p-4 rounded-xl">
                                     <p className="font-mono text-[14px] text-gray-600">TURNOUT RATE</p>
-                                    <p className="text-5xl font-sans font-semibold my-2">{(electionObject.voters.length / electionObject.eligibleVoters.length * 100).toFixed(0)}%</p>
-                                    <p className="text-[13px] text-gray-500">{(electionObject.voters.length / electionObject.eligibleVoters.length * 100).toFixed(1) > 50 ?
+                                    <p className="text-5xl font-sans font-semibold my-2">{electionObject.voters.length === 0 ? 0 : (electionObject.voters.length / electionObject.eligibleVoters.length * 100).toFixed(0)}%</p>
+                                    <p className="text-[13px] text-gray-500">{electionObject.voters.length == 0 ? 0 : ((electionObject.voters.length / electionObject.eligibleVoters.length * 100).toFixed(1)) > 50 ?
                                         <p>A strong turnout across all eligible voters! The community showed up and made their voices heard. These results carry strong democratic weight.</p> :
                                         <p>Turnout was lower than expected. While the results are valid, they may not fully reflect the views of all eligible voters. Encourage wider participation next time.</p>
                                     }</p>
@@ -310,10 +310,10 @@ const ElectionsResult = () => {
                                                                 <div className="w-[700px] max-sm:w-[calc(100vw-120px)]">
                                                                     <div className="flex justify-between gap-10">
                                                                         <p className=" text-blue-950 font-semibold text-[17px]">{candidate.name}</p>
-                                                                        <p className="text-gray-600">{(candidate.votes / electionObject.voters.length * 100).toFixed(0)}%</p>
+                                                                        <p className="text-gray-600">{(electionObject.voters.length === 0 ? 0 : (candidate.votes / electionObject.voters.length * 100)).toFixed(0)}%</p>
                                                                     </div>
                                                                     <div className="bg-blue-100 h-2 rounded-2xl w-[700px] my-2 max-sm:w-full">
-                                                                        <div style={{ width: `${(candidate.votes / electionObject.voters.length) * 100}%` }} className={`bg-blue-600 h-2 rounded-2xl`}></div>
+                                                                        <div style={{ width: `${electionObject.voters.length === 0 ? 0 : (candidate.votes / electionObject.voters.length * 100)}%` }} className={`bg-blue-600 h-2 rounded-2xl`}></div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -345,7 +345,7 @@ const ElectionsResult = () => {
                                         </div>
                                         <div className="bg-gray-100 w-full rounded-lg grid items-center py-3.5 px-4">
                                             <p className="text-[13px] text-gray-600">Turnout</p>
-                                            <p className="text-[30px] text-blue-950 font-sans">{(electionObject.voters.length / electionObject.eligibleVoters.length * 100).toFixed(1)}%</p>
+                                            <p className="text-[30px] text-blue-950 font-sans">{electionObject.voters.length == 0 ? 0 : ((electionObject.voters.length / electionObject.eligibleVoters.length * 100).toFixed(1))}%</p>
                                         </div>
                                     </div>
                                 </div>

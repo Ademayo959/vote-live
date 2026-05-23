@@ -28,13 +28,17 @@ const Dashboard = () => {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                navigate('/login');
+                return;
+            }
             setuser(user);
         });
         return () => unsubscribe();
     }, [])
 
     useEffect(() => {
-        if (!user) return;
+        if (!user || userName) return;
 
         async function getUserDetails() {
             try {

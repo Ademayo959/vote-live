@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { collection, getDoc, getDocs, doc, increment, updateDoc, arrayUnion } from "firebase/firestore";
+import { collection, getDoc, getDocs, doc, arrayUnion, runTransaction } from "firebase/firestore";
 import { auth, db } from "./firebase/firebase";
 import HelpModal from "./HelpModal";
 import CreatePollModal from "./CreatePollModal";
@@ -11,6 +11,8 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
     const [isCreatePollModal, setIsCreatePollModal] = useState(false)
     //loading state
     const [IsLoading, setIsLoading] = useState(true)
+
+
 
     async function getPolls() {
         try {
@@ -42,6 +44,22 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
 
     const [lockedPolls, setLockedPolls] = useState({})
 
+    useEffect(() => {
+        async function getUser() {
+            const Userreference = doc(db, "users", auth.currentUser.uid)
+            const Usersnapshot = await getDoc(Userreference)
+            let Userdata = Usersnapshot.data();
+            if (!Userdata.votedPolls) {
+                return;
+            } else {
+                const locked = {};
+                Userdata.votedPolls.forEach(id => locked[id] = true);
+                setLockedPolls(locked);
+            }
+        }
+        getUser()
+    }, [])
+
     async function handleVote(pollId, optionIndex) {
 
         if (lockedPolls[pollId]) return;
@@ -49,23 +67,31 @@ const PollsDashboard = ({ setactiveTab, userName }) => {
         setLockedPolls((prev) => ({ ...prev, [pollId]: true }))
 
         const Userreference = doc(db, "users", auth.currentUser.uid)
-        const Usersnapshot = await getDoc(Userreference)
-        let Userdata = Usersnapshot.data();
-        if (Userdata.votedPolls && Userdata.votedPolls.includes(pollId)) return;
+        //const Usersnapshot = await getDoc(Userreference)
+        //let Userdata = Usersnapshot.data();
+        //if (Userdata.votedPolls && Userdata.votedPolls.includes(pollId)) return;
 
         try {
-            let reference = doc(db, "polls", pollId);
-            const snapshot = await getDoc(reference);
-            let data = snapshot.data();
-            //console.log(data)
 
-            const newOptions = [...data.options]
-            newOptions[optionIndex].votes += 1
+            await runTransaction(db, async (transaction) => {
+                let reference = doc(db, "polls", pollId);
+                const snapshot = await transaction.get(reference);
+                let data = snapshot.data();
+                //console.log(data)
 
-            await updateDoc(reference, { options: newOptions, totalVotes: increment(1) })
-            await updateDoc(Userreference, { votedPolls: arrayUnion(pollId) })
+                const newOptions = [...data.options]
+                newOptions[optionIndex].votes += 1
 
-            getPolls();
+                transaction.update(reference, { options: newOptions, totalVotes: data.totalVotes + 1 })
+                transaction.update(Userreference, { votedPolls: arrayUnion(pollId) })
+            })
+
+            setpolls(prev => prev.map(p => {
+                if (p.id !== pollId) return p;
+                const newOptions = [...p.options];
+                newOptions[optionIndex] = { ...newOptions[optionIndex], votes: newOptions[optionIndex].votes + 1 };
+                return { ...p, options: newOptions, totalVotes: p.totalVotes + 1 };
+            }));
         } catch (err) {
             console.log(err)
         }

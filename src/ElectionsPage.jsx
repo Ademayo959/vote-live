@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import { getDoc, doc, updateDoc, increment, arrayUnion, runTransaction } from "firebase/firestore"
+import { getDoc, doc, updateDoc, arrayUnion, runTransaction } from "firebase/firestore"
 import { db } from "./firebase/firebase"
 import { auth } from "./firebase/firebase"
+import Toast from './Toast';
 
 
 
@@ -18,6 +19,9 @@ const ElectionsPage = () => {
     const [isFinished, setIsFinished] = useState(false);
     //state to disable the button
     const [isVoteEnabled, setIsVoteEnabled] = useState(true)
+    // Toast state
+    const [IsVisible, setIsVisible] = useState(false)
+    const [toastMessage, setToastMessage] = useState("")
 
 
     async function getElections() {
@@ -27,7 +31,7 @@ const ElectionsPage = () => {
             if (snapshot.exists()) {
                 const electionData = snapshot.data();
                 setelection(electionData)
-                console.log(electionData)
+                //console.log(electionData)
             }
         } catch (err) {
             console.log("Error detected:", err)
@@ -49,7 +53,7 @@ const ElectionsPage = () => {
     //countdown useffect
     useEffect(() => {
         if (!election?.createdAt) return;
-        console.log(election.createdAt)
+        //console.log(election.createdAt)
         // handle Firestore timestamp
         const createdAtMs = election.createdAt.toMillis
             ? election.createdAt.toMillis()
@@ -68,10 +72,10 @@ const ElectionsPage = () => {
                 clearInterval(interval);
             }
         }, 1000);
-        console.log(Date.now())
-        console.log('createdAt ms:', createdAtMs)
-        console.log('duration ms:', durationInMs)
-        console.log('endTime ms:', new Date(endTime).toLocaleString())
+        //console.log(Date.now())
+        //console.log('createdAt ms:', createdAtMs)
+        //console.log('duration ms:', durationInMs)
+        //console.log('endTime ms:', new Date(endTime).toLocaleString())
 
         return () => clearInterval(interval);
     }, [election?.createdAt, election?.duration, electionId]);
@@ -84,25 +88,36 @@ const ElectionsPage = () => {
     }
 
     async function handleElectionVote() {
-        setIsVoteEnabled(false)
+        
         try {
             //checking if the election has ended
             if (isFinished) {
-                alert("Voting has ended");
+                setToastMessage("Voting has ended")
+                setIsVisible(true)
+                setIsVoteEnabled(true);
                 return;
             }
             //checking if we have elections
-            if (!userdata) return;
+            if (!userdata) {
+                setIsVoteEnabled(true);
+                return;
+            }
             // 1. Check if user's matric number is in eligibleVoters — if not, return
             if (!election.eligibleVoters.includes(userdata.matricNumber)) {
+                setToastMessage("What are you trying to do 😏, you are not eligible to vote in this election 🙂")
+                setIsVisible(true)
+                setIsVoteEnabled(true);
                 return;
             }
 
             // 3. Check if all positions have selections in ballot — if not, return
             if (Object.keys(ballot).length !== election.positions.length) {
+                setToastMessage("Please select candidates for each position")
+                setIsVisible(true)
+                setIsVoteEnabled(true);
                 return;
             }
-
+            setIsVoteEnabled(false)
             let alreadyVoted = false;
 
             await runTransaction(db, async (transaction) => {
@@ -130,7 +145,10 @@ const ElectionsPage = () => {
                     votersUid: [...(freshData.data().votersUid || []), auth.currentUser.uid]
                 })
             })
-            if (alreadyVoted) return;
+            if (alreadyVoted) {
+                setIsVoteEnabled(true)
+                return;
+            }
             // 6. updateDoc user — arrayUnion electionId to votedElections
             const userRef = doc(db, "users", auth.currentUser.uid)
             await updateDoc(userRef, { votedElections: arrayUnion(electionId) })
@@ -187,7 +205,7 @@ const ElectionsPage = () => {
                                 </svg>
                                 <p className=" text-gray-600 text-[12px] font-semibold">CLOSED</p>
                             </div>}
-                        <div className="flex gap-2 items-center transition-all hover:-mt-1">
+                        <div className="flex gap-2 items-center transition-all hover:-mt-1 cursor-pointer">
                             <p onClick={() => navigate('/dashboard')} className="text-[13px] text-gray-500">Back to Dashboard</p>
                         </div>
                     </div>
@@ -262,6 +280,7 @@ const ElectionsPage = () => {
                     </div>
                 </div>
             </div>
+            <Toast IsVisible={IsVisible} message={toastMessage} type="error" setIsVisible={setIsVisible} />
         </div>
     );
 }

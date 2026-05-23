@@ -32,7 +32,7 @@ const CreatePollModal = ({ setIsCreatePollModal, userName, getPolls }) => {
         const pollObject = {
             question: question.title,
             options: question.options.map((data)=>{return {option: data, votes: 0}}),
-            createdBy: userName,
+            createdBy: userName || auth.currentUser?.displayName || "Anonymous",
             totalVotes: 0,
             createdAt: serverTimestamp()
         }
@@ -48,7 +48,7 @@ const CreatePollModal = ({ setIsCreatePollModal, userName, getPolls }) => {
 
     }
 
-    console.log(userName)
+    //console.log(userName)
 
 
 

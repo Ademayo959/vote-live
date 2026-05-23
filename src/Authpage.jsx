@@ -18,14 +18,24 @@ const Authpage = () => {
     //login useStates
     const [loginEmail, setloginEmail] = useState("");
     const [loginPassword, setloginPassword] = useState("")
-    // Error Messages
-    const [loginErrorMessage, setloginErrorMessage] = useState("")
-    const [signupErrorMessage, setsignupErrorMessage] = useState("")
     // Toast state
     const [IsVisible, setIsVisible] = useState(false)
     const [toastMessage, setToastMessage] = useState("")
+    //loading state for the signup button
+    const [isLoading, setIsLoading] = useState(false)
+    //loading state for the login button
+    const [isLoginLoading, setIsLoginLoading] = useState(false)
+    //state for the check box 
+    const [isCheckbox, setIsCheckbox] = useState(false)
 
     async function handleSignUp() {
+        if (isLoading) {
+            setToastMessage('Please be patient while we create your profile')
+            setIsVisible(true)
+            return;
+        }
+
+
         if (!fullName.split(" ").every((word) => {
             return isAlphabetic(word).result;
         })) {
@@ -52,9 +62,20 @@ const Authpage = () => {
             return;
         }
 
+        if (!isCheckbox) {
+            setToastMessage('Please tick the checkbox')
+            setIsVisible(true)
+            return;
+        }
+
+        setIsLoading(true)
+        const trimmedMatric = matricNumber.trim().toUpperCase()
+        const trimmedEmail = email.trim()
+        const trimmedName = fullName.trim()
+
         try {
             // check matric number before anything elseconst sanitizedMatric = matricNumber.replace(/\//g, "-")
-            const sanitizedMatric = matricNumber.replace(/\//g, "-")
+            const sanitizedMatric = trimmedMatric.replace(/\//g, "-")
             //console.log("sanitized matric:", sanitizedMatric)
             const matricRef = doc(db, "matricNumbers", sanitizedMatric)
             const matricSnap = await getDoc(matricRef)
@@ -67,30 +88,38 @@ const Authpage = () => {
                 return;
             }
 
-            let createUser = await createUserWithEmailAndPassword(auth, email, password);
+            let createUser = await createUserWithEmailAndPassword(auth, trimmedEmail, password);
             let user = createUser.user
             const reference = doc(db, "users", user.uid)
-            await setDoc(reference, { fullName, matricNumber })
+            await setDoc(reference, { fullName: trimmedName, matricNumber: trimmedMatric })
             await setDoc(doc(db, "matricNumbers", sanitizedMatric), { userId: user.uid })
-            await updateProfile(auth.currentUser, { displayName: fullName })
+            await updateProfile(auth.currentUser, { displayName: trimmedName })
             //console.log(auth.currentUser.displayName)
             //console.log(user)
             navigate('/dashboard');
         } catch (err) {
             console.log("Request Failed Error:", err)
             if (err.code === "auth/email-already-in-use") {
-                setsignupErrorMessage("This email is already in use")
+                setToastMessage("This email is already in use")
+                setIsVisible(true)
             } else if (err.code === "auth/invalid-email") {
-                setsignupErrorMessage("This email is invalid")
+                setToastMessage("This email is invalid")
+                setIsVisible(true)
             } else if (err.code === "auth/weak-password") {
-                setsignupErrorMessage("Please enter a strong password")
+                setToastMessage("Please enter a strong password")
+                setIsVisible(true)
             } else if (err.code === "auth/too-many-requests") {
-                setsignupErrorMessage("Bro chill 😒")
+                setToastMessage("Bro chill 😒")
+                setIsVisible(true)
             } else if (err.code === "auth/network-request-failed") {
-                setsignupErrorMessage("Please be patient, try turning on your data")
+                setToastMessage("Please be patient, try turning on your data")
+                setIsVisible(true)
             } else {
-                setsignupErrorMessage("Something went wrong, please try again")
+                setToastMessage("Something went wrong, please try again")
+                setIsVisible(true)
             }
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -101,29 +130,32 @@ const Authpage = () => {
             return;
         }
 
-        if (!isStrongPassword(loginPassword).result && !isMediumPassword(loginPassword).result) {
-            setToastMessage('Please enter a strong password')
-            setIsVisible(true)
-            return;
-        }
+        setIsLoginLoading(true)
         try {
             let userLoggedIn = await signInWithEmailAndPassword(auth, loginEmail, loginPassword)
             let result = userLoggedIn.user
-            console.log(result)
+            //console.log(result)
             navigate('/dashboard');
         } catch (err) {
             console.log("Error detected:", err);
             if (err.code === "auth/invalid-email") {
-                setloginErrorMessage("Please enter a valid Email")
+                setToastMessage("Please enter a valid email")
+                setIsVisible(true)
             } else if (err.code === "auth/network-request-failed") {
-                setloginErrorMessage("Please be patient, try turning on your data")
+                setToastMessage("Please be patient, try turning on your data")
+                setIsVisible(true)
             } else if (err.code === "auth/invalid-credential") {
-                setloginErrorMessage("Please enter a valid password")
+                setToastMessage("Please enter a valid password")
+                setIsVisible(true)
             } else if (err.code === "auth/too-many-requests") {
-                setloginErrorMessage("Bro chill 😒")
+                setToastMessage("Bro chill 😒")
+                setIsVisible(true)
             } else {
-                setloginErrorMessage("Something went wrong, please try again")
+                setToastMessage("Something went wrong, please try again")
+                setIsVisible(true)
             }
+        } finally {
+            setIsLoginLoading(false)
         }
     }
 
@@ -160,9 +192,11 @@ const Authpage = () => {
         setCurrentState(i => i == 0 ? reviews.length - 1 : i - 1)
     }
 
-
-    const [showPassword, setshowPassword] = useState(true)
+    //password toggle state
+    const [showSignupPassword, setshowSignupPassword] = useState(true)
+    const [showLoginPassword, setshowLoginPassword] = useState(true)
     const [activeMenu, setactiveMenu] = useState("signup");
+
 
     return (
         <div className="auth-page flex font-montserrat">
@@ -193,13 +227,13 @@ const Authpage = () => {
                     </div>
                 </div>
             </div>
-            <div className='flex w-[50%] py-12 max-sm:justify-self-center max-sm:w-full max-sm:overflow-hidden max-sm:h-screen'>
+            <div className='flex w-[50%] py-12 max-sm:justify-self-center max-sm:w-full max-sm:min-h-screen'>
                 <div className='mx-auto w-108 max-sm:w-[85vw]'>
                     <div className='w-108 h-14 bg-soft-blue flex items-center justify-center gap-2 rounded-md mb-0 max-sm:h-12 max-sm:w-full max-sm:justify-self-center'>
-                        <div className={`flex cursor-pointer items-center justify-center w-52 h-12 rounded-md ${activeMenu === "signup" ? "bg-white shadow-sm" : "bg-transparent"}`} onClick={() => { setactiveMenu("signup"); }}>
+                        <div className={`flex cursor-pointer items-center justify-center w-52 h-12 rounded-md max-sm:h-10 max-sm:ml-1 ${activeMenu === "signup" ? "bg-white shadow-sm" : "bg-transparent"}`} onClick={() => { setactiveMenu("signup"); }}>
                             <p className='text-[20px] font-raleway'>Sign Up</p>
                         </div>
-                        <div className={`flex items-center cursor-pointer justify-center w-52 h-12 rounded-md ${activeMenu === "login" ? "bg-white shadow-sm" : "bg-transparent"}`} onClick={() => { setactiveMenu("login"); }}>
+                        <div className={`flex items-center cursor-pointer justify-center w-52 h-12 rounded-md max-sm:h-10 max-sm:mr-1 ${activeMenu === "login" ? "bg-white shadow-sm" : "bg-transparent"}`} onClick={() => { setactiveMenu("login"); }}>
                             <p className='text-[20px] font-raleway'>Log In</p>
                         </div>
                     </div>
@@ -210,7 +244,6 @@ const Authpage = () => {
                     <div className='max-sm:justify-self-center'>
                         {activeMenu === "signup" &&
                             <div>
-                                <p className='text-center'>{signupErrorMessage}</p>
                                 <div>
                                     <div>
                                         <p>Full Name</p>
@@ -245,14 +278,14 @@ const Authpage = () => {
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                                             </svg>
-                                            <input name="password" onChange={(e) => setpassword(e.target.value)} type={showPassword ? "password" : "text"} placeholder='Create your Password' className='h-8 w-full outline-0 placeholder:text-[14px] placeholder:font-raleway' />
+                                            <input name="password" onChange={(e) => setpassword(e.target.value)} type={showSignupPassword ? "password" : "text"} placeholder='Create your Password' className='h-8 w-full outline-0 placeholder:text-[14px] placeholder:font-raleway' />
                                             <div>
-                                                {showPassword ?
-                                                    <svg onClick={() => { setshowPassword(false) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
+                                                {showSignupPassword ?
+                                                    <svg onClick={() => { setshowSignupPassword(false) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                                     </svg> :
-                                                    <svg onClick={() => { setshowPassword(true) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
+                                                    <svg onClick={() => { setshowSignupPassword(true) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
                                                     </svg>
                                                 }
@@ -262,15 +295,15 @@ const Authpage = () => {
                                 </div>
                                 <div className='grid gap-4 my-4'>
                                     <div className='flex items-center gap-2'>
-                                        <input type="checkbox" className='accent-deep-blue h-8 w-8' />
+                                        <input onChange={(e) => setIsCheckbox(e.target.checked)} type="checkbox" className='accent-deep-blue h-8 w-8' />
                                         <p className='text-[12px] text-gray-500 '> By clicking create account, I agree that I have read and accepted the <a href="#" className='text-deep-blue underline'>Terms of Use</a> and <a href="#" className='text-deep-blue underline'>Privacy Policy</a></p>
                                     </div>
                                     <div>
-                                        <div onClick={handleSignUp} className='bg-deep-blue flex gap-2 text-white w-full h-10 items-center justify-center rounded-md hover:gap-4 transition-all max-sm:w-full'>
-                                            <p>Create Account</p>
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                                        <div onClick={isLoading ? null : handleSignUp} className={`${isLoading ? "bg-blue-400" : "bg-deep-blue"} flex gap-2 text-white w-full h-10 items-center justify-center rounded-md hover:gap-4 transition-all max-sm:w-full`}>
+                                            <p>{isLoading ? "loading..." : "Create Account"}</p>
+                                            <div>{isLoading ? null : <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                            </svg>
+                                            </svg>}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -284,7 +317,6 @@ const Authpage = () => {
                             </div>}
                         {activeMenu === "login" &&
                             <div className='w-108 max-sm:w-[85vw]'>
-                                <p className='text-center'>{loginErrorMessage}</p>
                                 <div className='mt-10'>
                                     <div>
                                         <p>Email</p>
@@ -301,14 +333,14 @@ const Authpage = () => {
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                                             </svg>
-                                            <input name='loginPassword' onChange={(e) => { setloginPassword(e.target.value) }} type={showPassword ? "password" : "text"} placeholder='Enter your Password' className='h-8 w-full outline-0 placeholder:text-[14px] placeholder:font-raleway' />
+                                            <input name='loginPassword' onChange={(e) => { setloginPassword(e.target.value) }} type={showLoginPassword ? "password" : "text"} placeholder='Enter your Password' className='h-8 w-full outline-0 placeholder:text-[14px] placeholder:font-raleway' />
                                             <div>
-                                                {showPassword ?
-                                                    <svg onClick={() => { setshowPassword(false) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
+                                                {showLoginPassword ?
+                                                    <svg onClick={() => { setshowLoginPassword(false) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                                     </svg> :
-                                                    <svg onClick={() => { setshowPassword(true) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
+                                                    <svg onClick={() => { setshowLoginPassword(true) }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-gray-600">
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
                                                     </svg>
                                                 }
@@ -318,11 +350,11 @@ const Authpage = () => {
                                 </div>
                                 <div className='grid gap-4 my-4'>
                                     <div>
-                                        <div onClick={handleLogin} className='bg-deep-blue flex gap-2 text-white w-108 h-10 items-center justify-center rounded-md hover:gap-4 transition-all max-sm:w-full'>
-                                            <p>Log In</p>
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                                        <div onClick={isLoginLoading ? null : handleLogin} className={`${isLoginLoading ? "bg-blue-400" : "bg-deep-blue"} flex gap-2 text-white w-full h-10 items-center justify-center rounded-md hover:gap-4 transition-all max-sm:w-full`}>
+                                            <p>{isLoginLoading ? "loading..." : "Login"}</p>
+                                            <div>{isLoginLoading ? null : <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                            </svg>
+                                            </svg>}</div>
                                         </div>
                                     </div>
                                 </div>
