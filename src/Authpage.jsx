@@ -57,7 +57,7 @@ const Authpage = () => {
         }
 
         if (!isStrongPassword(password).result && !isMediumPassword(password).result) {
-            setToastMessage('Please enter a strong password')
+            setToastMessage('Please enter a strong password: It must be made up of 8 chars, ')
             setIsVisible(true)
             return;
         }

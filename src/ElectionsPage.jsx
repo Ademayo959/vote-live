@@ -4,6 +4,7 @@ import { getDoc, doc, updateDoc, arrayUnion, runTransaction } from "firebase/fir
 import { db } from "./firebase/firebase"
 import { auth } from "./firebase/firebase"
 import Toast from './Toast';
+import ElectionLoadingScreen from "./ElectionLoadingScreen"
 
 
 
@@ -188,7 +189,7 @@ const ElectionsPage = () => {
     const { hours, minutes, seconds } = formatTimeParts(timeLeft);
 
 
-    if (!election) return <p>Loading...</p>
+    if (!election) return <ElectionLoadingScreen />;
     return (
         <div className="bg-accent-blue">
             <div className="font-montserrat bg-accent-blue max-w-6xl mx-auto max-sm:px-3">
