@@ -31,10 +31,10 @@ const Home = () => {
                             <p className=" text-gray-500 w-130 leading-6 text-lg max-sm:w-full max-sm:text-[4vw]">Secure, transparent, and easy-to-use digital voting platform for universities. Vote from anywhere using your matric number.</p>
                         </div>
                         <div className="flex gap-4 my-8 items-center max-sm:grid max-sm:w-full">
-                            <Link to="/dashboard" className="max-sm:w-full">
+                            <Link to="/dashboard" className="max-sm:w-full cursor-pointer">
                                 <button className="bg-custom-blue text-white h-12 w-36 rounded-lg max-sm:w-full max-sm:text-[5vw]">Start Voting</button>
                             </Link>
-                            <div className="flex gap-1 border border-gray-300 h-12 w-40 items-center justify-center rounded-lg max-sm:w-full">
+                            <div className="flex gap-1 border border-gray-300 h-12 w-40 items-center justify-center rounded-lg max-sm:w-full cursor-pointer">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.91 11.672a.375.375 0 0 1 0 .656l-5.603 3.113a.375.375 0 0 1-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112Z" />
@@ -321,7 +321,7 @@ const Home = () => {
                     <h1 className="text-white text-4xl my-3 font-extrabold max-sm:text-[9vw]">Ready to host your next Election?</h1>
                     <p className="text-gray-200 font-raleway">Get started with Votelive today. Secure, simple, and effective.</p>
                     <div className="flex gap-4 justify-self-center items-center mt-8 max-sm:w-full max-sm:gap-6 max-sm:flex-col">
-                        <Link to="/dashboard">
+                        <Link to="/dashboard" className="cursor-pointer">
                             <button className="bg-white flex justify-center items-center gap-2 text-custom-blue h-11 w-fit px-4 rounded-md max-sm:h-11 max-sm:w-full max-sm:text-[4vw]">
                                 Create Election
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5">
@@ -329,7 +329,7 @@ const Home = () => {
                                 </svg>
                             </button>
                         </Link>
-                        <Link to="/help">
+                        <Link to="/help" className="cursor-pointer">
                             <button className="bg-custom-blue border border-white text-white h-11 w-fit px-4 rounded-md max-sm:h-11 max-sm:w-full max-sm:text-[4vw]">
                                 Contact Sales
                             </button>

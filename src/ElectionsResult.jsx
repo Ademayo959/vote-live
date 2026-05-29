@@ -83,7 +83,7 @@ const ElectionsResult = () => {
                         <img src={logo} alt="logo" className='h-16 w-auto object-contain max-sm:h-12' />
                     </div>
                     <div className='flex gap-8 max-sm:gap-2'>
-                        <p onClick={() => navigate('/dashboard')} className="text-[13px] text-gray-500">Back to Dashboard</p>
+                        <p onClick={() => navigate('/dashboard')} className="text-[13px] text-gray-500 cursor-pointer">Back to Dashboard</p>
                     </div>
                 </div>
             </div>

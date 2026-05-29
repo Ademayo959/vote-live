@@ -10,22 +10,22 @@ const Navbar = ({ scrollToFeatures }) => {
                 </div>
                 <div className='flex gap-8 max-sm:hidden'>
                     <p onClick={() => { scrollToFeatures() }} className='cursor-pointer'>Features</p>
-                    <Link to="/dashboard">
+                    <Link to="/dashboard" className='cursor-pointer'>
                         <p>Browse Elections</p>
                     </Link>
-                    <Link to="/howitworks">
+                    <Link to="/howitworks" className='cursor-pointer'>
                         <p>How it Works</p>
                     </Link>
-                    <Link to="/help">
+                    <Link to="/help className='cursor-pointer'">
                         <p>Support</p>
                     </Link>
                 </div>
                 <div className='flex gap-8 max-sm:gap-2'>
                     <Link to="/login">
-                        <button className='w-28 bg-white h-10 text-black font-extrabold rounded-md border border-gray-300 max-sm:w-18 max-sm:h-8 max-sm:text-[13px]'>Log-In</button>
+                        <button className='w-28 cursor-pointer bg-white h-10 text-black font-extrabold rounded-md border border-gray-300 max-sm:w-18 max-sm:h-8 max-sm:text-[13px]'>Log-In</button>
                     </Link>
                     <Link to="/signup">
-                        <button className='w-28 bg-custom-blue h-10 text-white font-extrabold rounded-md max-sm:w-18 max-sm:h-8 max-sm:text-[13px]'>Sign-Up</button>
+                        <button className='w-28 cursor-pointer bg-custom-blue h-10 text-white font-extrabold rounded-md max-sm:w-18 max-sm:h-8 max-sm:text-[13px]'>Sign-Up</button>
                     </Link>
                 </div>
             </div>
