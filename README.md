@@ -47,6 +47,16 @@ If you run into a bug or want to suggest something, open an issue.
 
 ---
 
+## On AI assistance
+
+I used AI while building this, but not the way people usually mean when they say that.
+
+The architecture, the decisions, the debugging process, that's totally me. When I hit something i don't know (Firestore security rules behaving unexpectedly, transaction logic for double-vote prevention, stuff most Firebase tutorials don't bother to explain properly) I'd use it to think through the problem. Not to write the code.
+
+I wrote every line in this codebase myself. I told Claude not to give me any code but to guide me through it like i write the code and send it and he just approves it or tell me where i made a mistake.
+
+I think that distinction matters.
+
 ## Why I built this
 
 Student elections in Nigerian universities are messy. Paper ballots get lost. Google Forms don't enforce uniqueness. Results take forever. I wanted something purpose-built for this, simple to use, hard to cheat, and actually live.
