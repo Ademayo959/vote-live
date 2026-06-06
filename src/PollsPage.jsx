@@ -49,7 +49,7 @@ const PollsPage = () => {
 
         setLockedPolls((prev) => ({ ...prev, [pollId]: true }))
 
-        const Userreference = doc(db, "users", auth.currentUser.uid)
+        //const Userreference = doc(db, "users", auth.currentUser.uid)
         //const Usersnapshot = await getDoc(Userreference)
         //let Userdata = Usersnapshot.data();
         //if (Userdata.votedPolls && Userdata.votedPolls.includes(pollId)) return;
@@ -66,7 +66,7 @@ const PollsPage = () => {
                 newOptions[optionIndex].votes += 1
 
                 transaction.update(reference, { options: newOptions, totalVotes: data.totalVotes + 1 })
-                transaction.update(Userreference, { votedPolls: arrayUnion(pollId) })
+                //transaction.update(Userreference, { votedPolls: arrayUnion(pollId) })
             })
 
             getPoll()
