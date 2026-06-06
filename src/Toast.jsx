@@ -14,10 +14,10 @@ const Toast = ({ message, type, IsVisible, setIsVisible }) => {
     }, [IsVisible])
 
     return (
-        <div className={`z-10000 fixed top-4 transition-transform duration-300 whitespace-nowrap rounded-lg ${IsVisible ? `translate-y-0 opacity-100` : `-translate-y-full opacity-0`} ${type == "error" ? `bg-red-400` : `bg-green-500`}`} style={{ left: '50%', transform: 'translateX(-50%)' }}>
+        <div className={`z-10000 fixed top-4 max-sm:w-full max-sm:mx-4 transition-transform duration-300 whitespace-nowrap rounded-lg ${IsVisible ? `translate-y-0 opacity-100` : `-translate-y-full opacity-0`} ${type == "error" ? `bg-red-400` : `bg-green-500`}`} style={{ left: '50%', transform: 'translateX(-50%)' }} >
             <p className="p-3 font-montserrat text-lg">{message}</p>
         </div>
     );
 }
 
-export default Toast;
+export default Toast;  

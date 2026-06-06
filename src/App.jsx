@@ -10,6 +10,7 @@ import ElectionsResult from './ElectionsResult';
 import ElectionsPage from './ElectionsPage';
 import HelpAndSupport from './HelpAndSupport'
 import CreateElectionModal from './CreateElectionModal';
+import PollsPage from './PollsPage';
 import CreatePollModal from './CreatePollModal';
 import HowItWorks from './HowItWorks';
 import Adminmadeleye from './Admin-madeleye';
@@ -24,6 +25,7 @@ function App() {
       <Route path='/dashboard' element={<ProtectedRoute> <Dashboard /> </ProtectedRoute>} />
       <Route path="/election/:electionId" element={<ElectionsPage />}/>
       <Route path="/election/:electionId/results" element={<ElectionsResult />}/>
+      <Route path='/polls/:pollId' element={<PollsPage />} />
       <Route path="/signup" element={<Authpage />} />
       <Route path="/login" element={<Authpage />} />
       <Route path='/adminmadeleye' element={<Adminmadeleye />} />
